@@ -1,0 +1,3 @@
+[submodule "bundle/Professional-colorscheme-for-Vim"]
+	path = bundle/Professional-colorscheme-for-Vim
+	url = https://github.com/vim-scripts/Professional-colorscheme-for-Vim
