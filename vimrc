@@ -89,3 +89,12 @@ function! BindF9_C()
 endfunction
 au FileType c,cpp,h call BindF9_C()
 
+" Вешаем горячие клавиши для открытия/закрытия NERD-tree
+nmap <C-N>v :NERDTree<cr>
+vmap <C-N>v <esc>:NERDTree<cr>i
+imap <C-N>v <esc>:NERDTree<cr>i
+
+nmap <C-N>x :NERDTreeClose<cr>
+vmap <C-N>x <esc>:NERDTreeClose<cr>i
+imap <C-N>x <esc>:NERDTreeClose<cr>i
+

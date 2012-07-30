@@ -1,3 +1,6 @@
 [submodule "bundle/The-NERD-Commenter"]
 	path = bundle/The-NERD-Commenter
 	url = https://github.com/vim-scripts/The-NERD-Commenter
+[submodule "bundle/The-NERD-tree"]
+	path = bundle/The-NERD-tree
+	url = https://github.com/vim-scripts/The-NERD-tree
