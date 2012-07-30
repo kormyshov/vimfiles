@@ -98,3 +98,16 @@ nmap <C-N>x :NERDTreeClose<cr>
 vmap <C-N>x <esc>:NERDTreeClose<cr>i
 imap <C-N>x <esc>:NERDTreeClose<cr>i
 
+" Не переходить по звёздочке на следующее
+nnoremap * *N
+
+" В визуальном режиме подсвечивать выделение по звёздчке
+vnoremap * y :execute ":let @/=@\""<cr> :execute "set hlsearch"<cr>
+
+" По Alt-1 редактировать текущее слово
+nnoremap <M-1> ciw
+
+" По Alt-5 изменить хвост текущего слова
+nnoremap <M-5> cw
+
+
