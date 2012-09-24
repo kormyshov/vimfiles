@@ -10,6 +10,12 @@ filetype plugin indent on
 colorscheme xemacs
 " Установка кодировки отображения
 set enc=utf-8
+" Мигаем вместо пищания
+set visualbell
+" Текущий каталог всегда совпадает с содержимым окна
+set autochdir
+" Постоянно отображать вкладки табов
+set stal=2
 
 " Настройка отступов подробности на http://habr.ru/post/64224
 set tabstop=4
@@ -42,9 +48,9 @@ nmap <Space> <PageDown>
 imap <C-F> <C-X><C-O>
 
 " Сохрание на F2
-nmap <F2> :w<cr>
-vmap <F2> <esc>:w<cr>i
-imap <F2> <esc>:w<cr>i
+nmap <F2> :w!<cr>
+vmap <F2> <esc>:w!<cr>i
+imap <F2> <esc>:w!<cr>i
 
 " Автодополнение скобок
 imap [ []<LEFT>
@@ -68,11 +74,11 @@ set lines=46
 function! BindF5_C()
 	if filereadable("Makefile")
 		set makeprg=make
-		map <F5> :w<cr>:make<cr>:cw<cr>
-		imap <F5> <esc>:w<cr>:make<cr>:cw<cr>
+		map <F5> :w!<cr>:make<cr>:cw<cr>
+		imap <F5> <esc>:w!<cr>:make<cr>:cw<cr>
 	else
-		map <F5> :w<cr>:make %:r<cr>:cw<cr>
-		imap <F5> <esc>:w<cr>:make %:r<cr>:cw<cr>
+		map <F5> :w!<cr>:make %:r<cr>:cw<cr>
+		imap <F5> <esc>:w!<cr>:make %:r<cr>:cw<cr>
 	endif
 endfunction
 au FileType c,cpp,h call BindF5_C()
@@ -80,11 +86,11 @@ au FileType c,cpp,h call BindF5_C()
 function! BindF9_C()
 	if filereadable("Makefile")
 		set makeprg=make
-		map <F9> :w<cr>:make<cr>:cw<cr>:! %<<cr>
-		imap <F9> <esc>:w<cr>:make<cr>:cw<cr>:! %<<cr>
+		map <F9> :w!<cr>:make<cr>:cw<cr>:! %<<cr>
+		imap <F9> <esc>:w!<cr>:make<cr>:cw<cr>:! %<<cr>
 	else
-		map <F9> :w<cr>:make %:r<cr>:cw<cr>:! %<<cr>
-		imap <F9> <esc>:w<cr>:make %:r<cr>:cw<cr>:! %<<cr>
+		map <F9> :w!<cr>:make %:r<cr>:cw<cr>:! %<<cr>
+		imap <F9> <esc>:w!<cr>:make %:r<cr>:cw<cr>:! %<<cr>
 	endif
 endfunction
 au FileType c,cpp,h call BindF9_C()
