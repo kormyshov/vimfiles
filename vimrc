@@ -27,7 +27,7 @@ set smartindent
 set cin
 
 " Подключить сниппеты для С++ и из библиотеки
-set ft=cpp.lib
+au FileType c,cpp set ft=cpp.lib
 
 " Показывать положение курсора всё время
 set ruler
