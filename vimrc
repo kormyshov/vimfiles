@@ -89,11 +89,11 @@ au FileType c,cpp,h call BindF5_C()
 function! BindF9_C()
 	if filereadable("Makefile")
 		set makeprg=make
-		map <F9> :w!<cr>:make<cr>:cw<cr>:! %<<cr>
-		imap <F9> <esc>:w!<cr>:make<cr>:cw<cr>:! %<<cr>
+		map <F9> :w!<cr>:make<cr>:cw<cr>:! ./%<<cr>
+		imap <F9> <esc>:w!<cr>:make<cr>:cw<cr>:! ./%<<cr>
 	else
-		map <F9> :w!<cr>:make %:r<cr>:cw<cr>:! %<<cr>
-		imap <F9> <esc>:w!<cr>:make %:r<cr>:cw<cr>:! %<<cr>
+		map <F9> :w!<cr>:make %:r<cr>:cw<cr>:! ./%<<cr>
+		imap <F9> <esc>:w!<cr>:make %:r<cr>:cw<cr>:! ./%<<cr>
 	endif
 endfunction
 au FileType c,cpp,h call BindF9_C()
