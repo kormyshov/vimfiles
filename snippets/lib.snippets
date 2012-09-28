@@ -26,7 +26,6 @@ snippet pow
 		return _r;
 	}
 	${3}
-
 snippet algebra <T> phi(<T>)
 	${1:int} phi($1 _n)
 	{
@@ -55,7 +54,6 @@ snippet phi
 		return _res;
 	}
 	${2}
-
 snippet algebra <T> reverse(<T>, <T>)
 	${2:gcdex}
 	${1:int} reverse($1 _n, $1 _m)
@@ -74,7 +72,6 @@ snippet reverse
 		if(_g != 1) return -1;
 		else return (_x % _m + _m) % _m;
 	}
-
 snippet algebra <T> gcd(<T>, <T>)
 	${1:int} gcd($1 _a, $1 _b)
 	{
@@ -101,7 +98,6 @@ snippet gcd
 		return _b;
 	}
 	${2}
-
 snippet algebra <T> lcm(<T>, <T>)
 	${2:gcd}
 	${1:int} lcm($1 _a, $1 _b)
@@ -114,7 +110,6 @@ snippet lcm
 	{
 		return _a / gcd(_a, _b) * _b;
 	}
-
 snippet algebra <T> gcdex(<T>, <T>, <T> &, <T> &)
 	${1:int} gcdex($1 _a, $1 _b, $1 &_x, $1 &_y)
 	{
@@ -147,7 +142,6 @@ snippet gcdex
 		return _d;
 	}
 	${2}
-
 snippet algebra void eratosfen(int, <T> [])
 	void eratosfen(int _n, ${1:int} &_m[])
 	{
@@ -170,7 +164,51 @@ snippet eratosfen
 					_m[_j] = 0;
 	}
 	${2}
+snippet algebra <T> fibonacci(<T2>, <T>)
+	${1:int} fibonacci(${2:int} n, $1 mod=0)
+	{
+		$1 r11=1, r12=0, r21=0, r22=1;
+		$1 a1=0, a2=1, a3=1;
+		$1 t11, t12, t21, t22;
+		while(n){
+			if(n&1)
+			{
+				t11 = (r11 * a1 + r12 * a2) ${3:% mod};
+				t12 = (r11 * a2 + r12 * a3) $3;
+				t21 = (r21 * a1 + r22 * a2) $3;
+				t22 = (r21 * a2 + r22 * a3) $3;
 
+				r11 = t11; r12 = t12; r21 = t21; r22 = t22;
+			}
+			t11 = (a1 * a1 + a2 * a2) $3;
+			t12 = (a1 * a2 + a2 * a3) $3;
+			t22 = (a2 * a2 + a3 * a3) $3;
+			n >>= 1;
+		}
+		return r21;
+	}
+	${4}
+snippet fibonacci
+	${1:int} fibonacci(${2:int} n, $1 mod=0)
+	{
+		$1 r11=1, r12=0, r21=0, r22=1;
+		$1 a1=0, a2=1, a3=1;
+		$1 t11, t12, t21, t22;
+		while(n){
+			if(n&1)
+			{
+				t11 = (r11 * a1 + r12 * a2) ${3:% mod};
+				t12 = (r11 * a2 + r12 * a3) $3;
+				t21 = (r21 * a1 + r22 * a2) $3;
+				t22 = (r21 * a2 + r22 * a3) $3;
 
-
-
+				r11 = t11; r12 = t12; r21 = t21; r22 = t22;
+			}
+			t11 = (a1 * a1 + a2 * a2) $3;
+			t12 = (a1 * a2 + a2 * a3) $3;
+			t22 = (a2 * a2 + a3 * a3) $3;
+			n >>= 1;
+		}
+		return r21;
+	}
+	${4}

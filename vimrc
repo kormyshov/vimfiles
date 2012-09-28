@@ -6,6 +6,9 @@ call pathogen#runtime_append_all_bundles()
 
 filetype plugin indent on
 
+" Отображение дерева каталогов по умолчанию
+let NERDTreeShowHidden=0
+
 " Цветовая схема
 colorscheme xemacs
 " Установка кодировки отображения
@@ -107,11 +110,19 @@ nmap <C-N>x :NERDTreeClose<cr>
 vmap <C-N>x <esc>:NERDTreeClose<cr>i
 imap <C-N>x <esc>:NERDTreeClose<cr>i
 
+" Инвертирование комментариев по Ctrl+E с помощью NERDCommenter
+map <C-e> \ci
+nmap <C-e> \ci
+imap <C-e> <Esc>\cii
+
 " Не переходить по звёздочке на следующее
 nnoremap * *N
 
 " В визуальном режиме подсвечивать выделение по звёздчке
 vnoremap * y :execute ":let @/=@\""<cr> :execute "set hlsearch"<cr>
+
+" Подсвечивает все слова, совпадающие со словом под курсором
+autocmd CursorMoved * silent! exe printf("match Search /\\<%s\\>/", expand('<cword>'))
 
 " По Alt-1 редактировать текущее слово
 nnoremap <M-1> ciw
@@ -119,4 +130,10 @@ nnoremap <M-1> ciw
 " По Alt-5 изменить хвост текущего слова
 nnoremap <M-5> cw
 
+" Настройка сворачиваемости блоков кода
+set foldenable 			" Включить фолдинг
+set foldmethod=indent 	" Определять блоки на основе отступов
+set foldcolumn=3		" Ширина полосы управления
+set foldlevel=7			" Количество открытых уровней по умолчанию
+set foldopen=all		" Автоматическое открытие свёрток при заходе в них
 
