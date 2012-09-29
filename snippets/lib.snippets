@@ -264,3 +264,31 @@ snippet reverse_grey
 		return n;
 	}
 	${1}
+snippet algebra int factmod(<T>, int)
+	int factmod(${1:int} n, int MOD)
+	{
+		int res = 1;
+		while(n > 1)
+		{
+			res = (res * (((n/MOD)&1) ? MOD-1 : 1)) % MOD;
+			for(int i=2; i <= n % MOD; ++i)
+				res = (res ${2:* 1LL }* i) % MOD;
+			n /= MOD;
+		}
+		return res % p;
+	}
+	${3}
+snippet factmod
+	int factmod(${1:int} n, int MOD)
+	{
+		int res = 1;
+		while(n > 1)
+		{
+			res = (res * (((n/MOD)&1) ? MOD-1 : 1)) % MOD;
+			for(int i=2; i <= n % MOD; ++i)
+				res = (res ${2:* 1LL }* i) % MOD;
+			n /= MOD;
+		}
+		return res % p;
+	}
+	${3}
