@@ -72,6 +72,22 @@ snippet reverse
 		if(_g != 1) return -1;
 		else return (_x % _m + _m) % _m;
 	}
+snippet algebra void reverse_all(int, vector<int>)
+	void reverse_all(int MOD, vector<int> &v)
+	{
+		v[1] = 1;
+		for(int i=1; i<MOD; ++i)
+			v[i] = (MOD - (MOD / i) * v[MOD % i] % MOD) % MOD;
+	}
+	${1}
+snippet reverse_all
+	void reverse_all(int MOD, vector<int> &v)
+	{
+		v[1] = 1;
+		for(int i=1; i<MOD; ++i)
+			v[i] = (MOD - (MOD / i) * v[MOD % i] % MOD) % MOD;
+	}
+	${1}
 snippet algebra <T> gcd(<T>, <T>)
 	${1:int} gcd($1 _a, $1 _b)
 	{
@@ -183,6 +199,9 @@ snippet algebra <T> fibonacci(<T2>, <T>)
 			t11 = (a1 * a1 + a2 * a2) $3;
 			t12 = (a1 * a2 + a2 * a3) $3;
 			t22 = (a2 * a2 + a3 * a3) $3;
+
+			a1 = t11; a2 = t12; a3 = t22;
+
 			n >>= 1;
 		}
 		return r21;
@@ -207,8 +226,41 @@ snippet fibonacci
 			t11 = (a1 * a1 + a2 * a2) $3;
 			t12 = (a1 * a2 + a2 * a3) $3;
 			t22 = (a2 * a2 + a3 * a3) $3;
+		
+			a1 = t11; a2 = t12; a3 = t22;
+		
 			n >>= 1;
 		}
 		return r21;
 	}
 	${4}
+snippet algebra int grey(int)
+	int grey(int n)
+	{
+		return n ^ (n >> 1);
+	}
+	${1}
+snippet grey
+	int grey(int n)
+	{
+		return n ^ (n >> 1);
+	}
+	${1}
+snippet algebra int reverse_grey(int)
+	int reverse_grey(int code)
+	{
+		int n = 0;
+		for(; code; code >>= 1)
+			n ^= code;
+		return n;
+	}
+	${1}
+snippet reverse_grey
+	int reverse_grey(int code)
+	{
+		int n = 0;
+		for(; code; code >>= 1)
+			n ^= code;
+		return n;
+	}
+	${1}
