@@ -7,7 +7,7 @@ call pathogen#runtime_append_all_bundles()
 filetype plugin indent on
 
 " Отображение дерева каталогов по умолчанию
-let NERDTreeShowHidden=0
+let NERDTreeShowHidden=1
 
 " Цветовая схема
 colorscheme xemacs
@@ -50,8 +50,12 @@ set fo+=cr
 " Перелистывание страниц в командном режиме на пробел
 nmap <Space> <PageDown>
 
-" Ctrl-F для автодополнения
-imap <C-F> <C-X><C-O>
+" Ctrl-Space для автодополнения
+imap <C-Space> <C-X><C-O>
+
+" Copy/Paste в глобальный клипборд
+vmap <C-C> "+yi
+imap <C-V> <Esc>"+gPi
 
 " Сохрание на F2
 nmap <F2> :w!<cr>
