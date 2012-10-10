@@ -7,7 +7,7 @@ call pathogen#runtime_append_all_bundles()
 filetype plugin indent on
 
 " Отображение дерева каталогов по умолчанию
-let NERDTreeShowHidden=1
+let NERDTreeShowHidden=0
 
 " Цветовая схема
 colorscheme xemacs
