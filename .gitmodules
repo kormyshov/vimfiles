@@ -16,3 +16,6 @@
 [submodule "bundle/Gummybears"]
 	path = bundle/Gummybears
 	url = https://github.com/vim-scripts/Gummybears
+[submodule "bundle/cpp4cf"]
+	path = bundle/cpp4cf
+	url = https://github.com/kormyshov/cpp4cf
