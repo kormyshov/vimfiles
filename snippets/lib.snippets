@@ -1,3 +1,110 @@
+# =============================== BI ==========================
+
+snippet BI
+	struct BI
+	{
+		int d[BI_MAX_SIZE];
+		int l;
+	};
+	
+	void scanf(BI &a)
+	{
+		char s[BI_MAX_SIZE * 9];
+		cin>>s;
+		a.l = a.d[0] = 0;
+		for(int i=strlen(s); i>0; i-=9)
+		{
+			s[i] = 0;
+			a.d[a.l++] = atoi( ( i>=9 ? s+i-9 : s ) );
+		}
+	}
+	
+	void printf(BI &a)
+	{
+		printf("%d", a.l ? a.d[a.l-1] : 0);
+		for(int i=a.l-2; i>=0; --i)
+			printf("%09d", a.d[i]);
+	}
+	
+	void sum(BI &a, BI &b, BI &c)
+	{
+		int i, p = 0, m = max(a.l, b.l);
+		memset(c.d, 0, sizeof(c.d));
+		for(i=0; i<m || p; ++i)
+		{
+			c.d[i] = p + ( i<a.l ? a.d[i] : 0 ) + ( i<b.l ? b.d[i] : 0 );
+			p = c.d[i] >= BI_BASE;
+			if(p) c.d[i] -= BI_BASE;
+		}
+		c.l = i;
+	}
+	
+	void sub(BI &a, BI &b, BI &c)
+	{
+		int i, p = 0;
+		for(i=0; i<a.l || p; ++i)
+		{
+			c.d[i] = a.d[i] - p - ( i<b.l ? b.d[i] : 0 );
+			p = c.d[i] < 0;
+			if(p) c.d[i] += BI_BASE;
+		}
+		c.l = i;
+		while(c.l > 1 && c.d[c.l-1] == 0) --c.l;
+	}
+	
+	void mult(BI &a, int b, BI &c, int d = 0)
+	{
+		int i, p = 0;
+		LL t;
+		for(i=0; i<d; ++i) c.d[i] = 0;
+		for(i=0; i<a.l || p; ++i)
+		{
+			t = a.d[i] * 1LL * b + p;
+			p = int(t / BI_BASE);
+			c.d[i + d] = int(t - p * 1LL * BI_BASE);
+		}
+		c.l = i + d;
+	}
+	
+	void put(int a, BI &b)
+	{
+		b.l = 1;
+		b.d[0] = a;
+	}
+	
+	void copy(BI &a, BI &b)
+	{
+		a.l = b.l;
+		memcpy(a.d, b.d, sizeof(b.d));
+	}
+	
+	void mult(BI &a, BI &b, BI &c)
+	{
+		int i;
+		BI t, tmp;
+		put(0, c);
+		for(i=0; i<b.l; ++i)
+		{
+			mult(a, b.d[i], t, i);
+			sum(t, c, tmp);
+			copy(c, tmp);
+		}
+	}
+	
+	void div(BI &a, int b, BI &c)
+	{
+		int i, p = 0;
+		LL t;
+		for(i = a.l-1; i>=0; --i)
+		{
+			t = a.d[i] + p * 1LL * BI_BASE;
+			c.d[i] = int(t / b);
+			p = int(t - c.d[i] * 1LL * b);
+		}
+		c.l = a.l;
+		while(c.l > 1 && c.d[a.l-1] == 0) --c.l;
+	}
+	${1}
 # =============================== cpp4cf ======================
 
 snippet cpp4cf test
