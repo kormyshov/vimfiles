@@ -90,7 +90,7 @@ snippet algebra void reverse_all(int, vector<int>)
 	void reverse_all(int _m, vector<int> &_v)
 	{
 		_v[1] = 1;
-		for(int _i=1; _i < _m; ++_i)
+		for(int _i=2; _i < _m; ++_i)
 			_v[_i] = (_m - (_m / _i) * _v[_m % _i] % _m) % _m;
 	}
 	${1}
@@ -98,7 +98,7 @@ snippet reverse_all
 	void reverse_all(int _m, vector<int> &_v)
 	{
 		_v[1] = 1;
-		for(int _i=1; _i < _m; ++_i)
+		for(int _i=2; _i < _m; ++_i)
 			_v[_i] = (_m - (_m / _i) * _v[_m % _i] % _m) % _m;
 	}
 	${1}
