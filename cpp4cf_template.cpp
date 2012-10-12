@@ -29,7 +29,7 @@
 #define y1 stupid_cmath
 #define y0 stupid_cmath_too
 
-typedef long long LL
+typedef long long LL;
 
 using namespace std;
 
