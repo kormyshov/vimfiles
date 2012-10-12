@@ -1,3 +1,17 @@
+# =============================== cpp4cf ======================
+
+snippet cpp4cf test
+	/* Test on
+	${1}
+	// ${2}
+	*/
+	${3}
+snippet test
+	/* Test on
+	${1}
+	// ${2}
+	*/
+	${3}
 # =============================== algebra =====================
 
 snippet algebra <T> pow(<T>, <T>)
@@ -73,19 +87,19 @@ snippet reverse
 		else return (_x % _m + _m) % _m;
 	}
 snippet algebra void reverse_all(int, vector<int>)
-	void reverse_all(int MOD, vector<int> &v)
+	void reverse_all(int _m, vector<int> &_v)
 	{
-		v[1] = 1;
-		for(int i=1; i<MOD; ++i)
-			v[i] = (MOD - (MOD / i) * v[MOD % i] % MOD) % MOD;
+		_v[1] = 1;
+		for(int _i=1; _i < _m; ++_i)
+			_v[_i] = (_m - (_m / _i) * _v[_m % _i] % _m) % _m;
 	}
 	${1}
 snippet reverse_all
-	void reverse_all(int MOD, vector<int> &v)
+	void reverse_all(int _m, vector<int> &_v)
 	{
-		v[1] = 1;
-		for(int i=1; i<MOD; ++i)
-			v[i] = (MOD - (MOD / i) * v[MOD % i] % MOD) % MOD;
+		_v[1] = 1;
+		for(int _i=1; _i < _m; ++_i)
+			_v[_i] = (_m - (_m / _i) * _v[_m % _i] % _m) % _m;
 	}
 	${1}
 snippet algebra <T> gcd(<T>, <T>)
