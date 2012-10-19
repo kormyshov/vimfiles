@@ -11,6 +11,7 @@
 #include <stack>
 #include <set>
 #include <map>
+#include <list>
 #include <algorithm>
 
 #define ABS(a) ((a)<0?(-(a)):(a))
