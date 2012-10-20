@@ -1,12 +1,21 @@
-[submodule "bundle/Professional-colorscheme-for-Vim"]
-	path = bundle/Professional-colorscheme-for-Vim
-	url = https://github.com/vim-scripts/Professional-colorscheme-for-Vim
-[submodule "bundle/manxome-foes-colorscheme"]
-	path = bundle/manxome-foes-colorscheme
-	url = https://github.com/vim-scripts/manxome-foes-colorscheme
-[submodule "bundle/fog-colorscheme"]
-	path = bundle/fog-colorscheme
-	url = http://github.com/vim-scripts/fog-colorscheme
-[submodule "bundle/xemacs-colorscheme"]
-	path = bundle/xemacs-colorscheme
-	url = https://github.com/vim-scripts/xemacs-colorscheme
+[submodule "bundle/The-NERD-Commenter"]
+	path = bundle/The-NERD-Commenter
+	url = https://github.com/vim-scripts/The-NERD-Commenter
+[submodule "bundle/The-NERD-tree"]
+	path = bundle/The-NERD-tree
+	url = https://github.com/vim-scripts/The-NERD-tree
+[submodule "bundle/matchit"]
+	path = bundle/matchit
+	url = https://github.com/vim-scripts/matchit.zip
+[submodule "bundle/snipMate"]
+	path = bundle/snipMate
+	url = https://github.com/vim-scripts/snipMate
+[submodule "bundle/c.vim"]
+	path = bundle/c.vim
+	url = https://github.com/vim-scripts/c.vim
+[submodule "bundle/Gummybears"]
+	path = bundle/Gummybears
+	url = https://github.com/vim-scripts/Gummybears
+[submodule "bundle/cpp4cf"]
+	path = bundle/cpp4cf
+	url = https://github.com/kormyshov/cpp4cf
