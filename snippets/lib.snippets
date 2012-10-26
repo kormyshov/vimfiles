@@ -329,34 +329,34 @@ snippet phi
 		return _res;
 	}
 	${2}
-snippet algebra <T> reverse(<T>, <T>)
+snippet algebra <T> inverse(<T>, <T>)
 	${2:gcdex}
-	${1:int} reverse($1 _n, $1 _m)
+	${1:int} inverse($1 _n, $1 _m)
 	{
 		$1 _x, _y;
 		$1 _g = gcdex(_n, _m, _x, _y);
 		if(_g != 1) return -1;
 		else return (_x % _m + _m) % _m;
 	}
-snippet reverse
+snippet inverse
 	${2:gcdex}
-	${1:int} reverse($1 _n, $1 _m)
+	${1:int} inverse($1 _n, $1 _m)
 	{
 		$1 _x, _y;
 		$1 _g = gcdex(_n, _m, _x, _y);
 		if(_g != 1) return -1;
 		else return (_x % _m + _m) % _m;
 	}
-snippet algebra void reverse_all(int, vector<int>)
-	void reverse_all(int _m, vector<int> &_v)
+snippet algebra void inverse_all(int, vector<int>)
+	void inverse_all(int _m, vector<int> &_v)
 	{
 		_v[1] = 1;
 		for(int _i=2; _i < _m; ++_i)
 			_v[_i] = (_m - (_m / _i) * _v[_m % _i] % _m) % _m;
 	}
 	${1}
-snippet reverse_all
-	void reverse_all(int _m, vector<int> &_v)
+snippet inverse_all
+	void inverse_all(int _m, vector<int> &_v)
 	{
 		_v[1] = 1;
 		for(int _i=2; _i < _m; ++_i)
@@ -434,9 +434,10 @@ snippet gcdex
 	}
 	${2}
 snippet algebra void eratosfen(int, <T> [])
-	void eratosfen(int _n, ${1:int} &_m[])
+	void eratosfen(vector<int> &_m)
 	{
-		memset(_m, 1, sizeof(_m));
+		int _n = _m.size();
+		for(int _i=2; _i < _n; ++_i) _m[_i] = 1;
 		_m[0] = _m[1] = 0;
 		for(int _i=2; _i * 1LL * _i < _n; ++_i)
 			if(_m[i])
@@ -445,9 +446,10 @@ snippet algebra void eratosfen(int, <T> [])
 	}
 	${2}
 snippet eratosfen
-	void eratosfen(int _n, ${1:int} &_m[])
+	void eratosfen(vector<int> &_m)
 	{
-		memset(_m, 1, sizeof(_m));
+		int _n = _m.size();
+		for(int _i=2; _i < _n; ++_i) _m[_i] = 1;
 		_m[0] = _m[1] = 0;
 		for(int _i=2; _i * 1LL * _i < _n; ++_i)
 			if(_m[i])
@@ -456,114 +458,114 @@ snippet eratosfen
 	}
 	${2}
 snippet algebra <T> fibonacci(<T2>, <T>)
-	${1:int} fibonacci(${2:int} n, $1 mod=0)
+	${1:int} fibonacci(${2:int} _n, $1 _mod=0)
 	{
-		$1 r11=1, r12=0, r21=0, r22=1;
-		$1 a1=0, a2=1, a3=1;
-		$1 t11, t12, t21, t22;
-		while(n){
-			if(n&1)
+		$1 _r11=1, _r12=0, _r21=0, _r22=1;
+		$1 _a1=0, _a2=1, _a3=1;
+		$1 _t11, _t12, _t21, _t22;
+		while(_n){
+			if(_n&1)
 			{
-				t11 = (r11 * a1 + r12 * a2) ${3:% mod};
-				t12 = (r11 * a2 + r12 * a3) $3;
-				t21 = (r21 * a1 + r22 * a2) $3;
-				t22 = (r21 * a2 + r22 * a3) $3;
+				_t11 = (_r11 * _a1 + _r12 * _a2) ${3:% _mod};
+				_t12 = (_r11 * _a2 + _r12 * _a3) $3;
+				_t21 = (_r21 * _a1 + _r22 * _a2) $3;
+				_t22 = (_r21 * _a2 + _r22 * _a3) $3;
 
-				r11 = t11; r12 = t12; r21 = t21; r22 = t22;
+				_r11 = _t11; _r12 = _t12; _r21 = _t21; _r22 = _t22;
 			}
-			t11 = (a1 * a1 + a2 * a2) $3;
-			t12 = (a1 * a2 + a2 * a3) $3;
-			t22 = (a2 * a2 + a3 * a3) $3;
-
-			a1 = t11; a2 = t12; a3 = t22;
-
-			n >>= 1;
+			_t11 = (_a1 * _a1 + _a2 * _a2) $3;
+			_t12 = (_a1 * _a2 + _a2 * _a3) $3;
+			_t22 = (_a2 * _a2 + _a3 * _a3) $3;
+		
+			_a1 = _t11; _a2 = _t12; _a3 = _t22;
+		
+			_n >>= 1;
 		}
-		return r21;
+		return _r21;
 	}
 	${4}
 snippet fibonacci
-	${1:int} fibonacci(${2:int} n, $1 mod=0)
+	${1:int} fibonacci(${2:int} _n, $1 _mod=0)
 	{
-		$1 r11=1, r12=0, r21=0, r22=1;
-		$1 a1=0, a2=1, a3=1;
-		$1 t11, t12, t21, t22;
-		while(n){
-			if(n&1)
+		$1 _r11=1, _r12=0, _r21=0, _r22=1;
+		$1 _a1=0, _a2=1, _a3=1;
+		$1 _t11, _t12, _t21, _t22;
+		while(_n){
+			if(_n&1)
 			{
-				t11 = (r11 * a1 + r12 * a2) ${3:% mod};
-				t12 = (r11 * a2 + r12 * a3) $3;
-				t21 = (r21 * a1 + r22 * a2) $3;
-				t22 = (r21 * a2 + r22 * a3) $3;
+				_t11 = (_r11 * _a1 + _r12 * _a2) ${3:% _mod};
+				_t12 = (_r11 * _a2 + _r12 * _a3) $3;
+				_t21 = (_r21 * _a1 + _r22 * _a2) $3;
+				_t22 = (_r21 * _a2 + _r22 * _a3) $3;
 
-				r11 = t11; r12 = t12; r21 = t21; r22 = t22;
+				_r11 = _t11; _r12 = _t12; _r21 = _t21; _r22 = _t22;
 			}
-			t11 = (a1 * a1 + a2 * a2) $3;
-			t12 = (a1 * a2 + a2 * a3) $3;
-			t22 = (a2 * a2 + a3 * a3) $3;
+			_t11 = (_a1 * _a1 + _a2 * _a2) $3;
+			_t12 = (_a1 * _a2 + _a2 * _a3) $3;
+			_t22 = (_a2 * _a2 + _a3 * _a3) $3;
 		
-			a1 = t11; a2 = t12; a3 = t22;
+			_a1 = _t11; _a2 = _t12; _a3 = _t22;
 		
-			n >>= 1;
+			_n >>= 1;
 		}
-		return r21;
+		return _r21;
 	}
 	${4}
 snippet algebra int grey(int)
-	int grey(int n)
+	int grey(int _n)
 	{
-		return n ^ (n >> 1);
+		return _n ^ (_n >> 1);
 	}
 	${1}
 snippet grey
-	int grey(int n)
+	int grey(int _n)
 	{
-		return n ^ (n >> 1);
+		return _n ^ (_n >> 1);
 	}
 	${1}
 snippet algebra int reverse_grey(int)
-	int reverse_grey(int code)
+	int reverse_grey(int _code)
 	{
-		int n = 0;
-		for(; code; code >>= 1)
-			n ^= code;
-		return n;
+		int _n = 0;
+		for(; _code; _code >>= 1)
+			_n ^= _code;
+		return _n;
 	}
 	${1}
 snippet reverse_grey
-	int reverse_grey(int code)
+	int reverse_grey(int _code)
 	{
-		int n = 0;
-		for(; code; code >>= 1)
-			n ^= code;
-		return n;
+		int _n = 0;
+		for(; _code; _code >>= 1)
+			_n ^= _code;
+		return _n;
 	}
 	${1}
 snippet algebra int factmod(<T>, int)
-	int factmod(${1:int} n, int MOD)
+	int factmod(${1:int} _n, int _MOD)
 	{
-		int res = 1;
-		while(n > 1)
+		int _res = 1;
+		while(_n > 1)
 		{
-			res = (res * (((n/MOD)&1) ? MOD-1 : 1)) % MOD;
-			for(int i=2; i <= n % MOD; ++i)
-				res = (res ${2:* 1LL }* i) % MOD;
-			n /= MOD;
+			_res = (_res * (((_n/_MOD)&1) ? _MOD-1 : 1)) % _MOD;
+			for(int _i=2; _i <= _n % _MOD; ++_i)
+				_res = (_res ${2:* 1LL }* _i) % _MOD;
+			_n /= _MOD;
 		}
-		return res % p;
+		return _res % _MOD;
 	}
 	${3}
 snippet factmod
-	int factmod(${1:int} n, int MOD)
+	int factmod(${1:int} _n, int _MOD)
 	{
-		int res = 1;
-		while(n > 1)
+		int _res = 1;
+		while(_n > 1)
 		{
-			res = (res * (((n/MOD)&1) ? MOD-1 : 1)) % MOD;
-			for(int i=2; i <= n % MOD; ++i)
-				res = (res ${2:* 1LL }* i) % MOD;
-			n /= MOD;
+			_res = (_res * (((_n/_MOD)&1) ? _MOD-1 : 1)) % _MOD;
+			for(int _i=2; _i <= _n % _MOD; ++_i)
+				_res = (_res ${2:* 1LL }* _i) % _MOD;
+			_n /= _MOD;
 		}
-		return res % p;
+		return _res % _MOD;
 	}
 	${3}

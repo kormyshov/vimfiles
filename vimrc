@@ -6,8 +6,8 @@ call pathogen#runtime_append_all_bundles()
 
 filetype plugin indent on
 
-" Отображение дерева каталогов по умолчанию
-let NERDTreeShowHidden=0
+" Отключаем панель инструментов
+set guioptions-=T
 
 " Цветовая схема
 colorscheme xemacs
