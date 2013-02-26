@@ -1,0 +1,48 @@
+snippet graph clique
+	int n;
+    vector<LL> g;
+	
+    int clique(LL cl, LL cand, LL out, int size = 0)
+    {
+        int result = 0;
+        LL candintersect = (1LL << n) - 1;
+        for (int i = 0; i < n; ++i) if (cand & (1LL << i)) candintersect &= g[i];
+        if (out & candintersect) return result;
+		
+        for (int i = 0; i < n; ++i) if (cand & (1LL << i)) {
+            LL mask = 1LL << i;
+            LL ncand = cand & g[i], nout = out & g[i];
+            if (ncand == 0 && nout == 0)
+                result = max(result, size + 1);
+            else
+                result = max(result, clique(cl | mask, ncand, nout, size + 1));
+            cand = cand & ~mask;
+            if (!cand) return result;
+            out = out | mask;
+        }
+        return result;
+    }
+snippet clique
+	int n;
+    vector<LL> g;
+	
+    int clique(LL cl, LL cand, LL out, int size = 0)
+    {
+        int result = 0;
+        LL candintersect = (1LL << n) - 1;
+        for (int i = 0; i < n; ++i) if (cand & (1LL << i)) candintersect &= g[i];
+        if (out & candintersect) return result;
+		
+        for (int i = 0; i < n; ++i) if (cand & (1LL << i)) {
+            LL mask = 1LL << i;
+            LL ncand = cand & g[i], nout = out & g[i];
+            if (ncand == 0 && nout == 0)
+                result = max(result, size + 1);
+            else
+                result = max(result, clique(cl | mask, ncand, nout, size + 1));
+            cand = cand & ~mask;
+            if (!cand) return result;
+            out = out | mask;
+        }
+        return result;
+    }
