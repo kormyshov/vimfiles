@@ -6,8 +6,8 @@ call pathogen#runtime_append_all_bundles()
 
 filetype plugin indent on
 
-" Отображение дерева каталогов по умолчанию
-let NERDTreeShowHidden=0
+" Отключаем панель инструментов
+set guioptions-=T
 
 " Цветовая схема
 colorscheme xemacs
@@ -30,7 +30,7 @@ set smartindent
 set cin
 
 " Подключить сниппеты для С++ и из библиотеки
-au FileType c,cpp set ft=cpp.lib
+au FileType c,cpp set ft=cpp.lib.algebra.string.BI.compressor.array.graph
 
 " Показывать положение курсора всё время
 set ruler
@@ -104,6 +104,10 @@ function! BindF9_C()
 	endif
 endfunction
 au FileType c,cpp,h call BindF9_C()
+
+map <C-K> :! ./compile-g++.sh
+map <C-L> :! cat compilation.log
+map <C-P> :! ./local-runner.sh & sleep 2 && ./MyStrategy
 
 " Вешаем горячие клавиши для открытия/закрытия NERD-tree
 nmap <C-N>v :NERDTree<cr>

@@ -1,7 +1,7 @@
 snippet pb
-	push_back(${1})${2}
+	push_back(${1})
 snippet mp
-	make_pair(${1}, ${2})${3}
+	make_pair(${1}, ${2})
 snippet sz
 	size()${1}
 snippet vi
@@ -20,6 +20,10 @@ snippet #d
 	#define ${1}
 snippet fill
 	memset(${1:m}, ${2:0}, sizeof($1));${3}
+snippet sort
+	sort(${1:v}.begin(), $1.end());${2}
+snippet rsort
+	sort(${1:v}.rbegin(), $1.rend());${2}
 snippet if
 	if(${1:/* ... */}) ${2:// code...}
 snippet If
@@ -27,7 +31,6 @@ snippet If
 	{
 		${2:// code...}
 	}
-	${3}
 snippet ife
 	if(${1:/* ... */}) ${2:// code...}
 	else ${3:// code...}
@@ -40,7 +43,6 @@ snippet Ife
 	{
 		${3:// code...}
 	}
-	${4}
 snippet wh
 	while(${1:/* ... */}) ${2:// code...}
 snippet Wh
@@ -48,7 +50,6 @@ snippet Wh
 	{
 		${2:// code...}
 	}
-	${3}
 snippet for
 	for(${1:i}=0; $1<${2:N}; ++$1) ${3:// code...}
 snippet For
@@ -56,7 +57,6 @@ snippet For
 	{
 		${3:// code...}
 	}
-	${4}
 snippet forab
 	for(${1:i}=${2:1}; $1<=${3:N}; ++$1) ${4:// code...}
 snippet Forab
@@ -64,7 +64,6 @@ snippet Forab
 	{
 		${4:// code...}
 	}
-	${5}
 snippet forr
 	for(${1:i}=${2:N}-1; $1>=0; --$1) ${3:// code...}
 snippet Forr
@@ -72,7 +71,6 @@ snippet Forr
 	{
 		${3:// code...}
 	}
-	${4}
 snippet forrab
 	for(${1:i}=${2:N}; $1>=${3:1}; --$1) ${4:// code...}
 snippet Forrab
@@ -80,22 +78,21 @@ snippet Forrab
 	{
 		${4:// code...}
 	}
-	${5}
 snippet forv
-	for(${1:i}=0; $1<${2:v}.size(); ++$1) ${3:// code...}
+	for(${1:i}=0; $1<(int)${2:v}.size(); ++$1) ${3:// code...}
 snippet Forv
-	for(${1:i}=0; $1<${2:v}.size(); ++$1)
+	for(${1:i}=0; $1<(int)${2:v}.size(); ++$1)
 	{
 		${3:// code...}
 	}
-	${4}
 snippet forrv
-	for(${1:i}=${2:v}.size()-1; $1>=0; --$1) ${3:// code...}
+	for(${1:i}=(int)${2:v}.size()-1; $1>=0; --$1) ${3:// code...}
 snippet Forrv
-	for(${1:i}=${2:v}.size()-1; $1>=0; --$1)
+	for(${1:i}=(int)${2:v}.size()-1; $1>=0; --$1)
 	{
 		${3:// code...}
 	}
-	${4}
 snippet cont
 	continue ;${1}
+snippet br
+	break ;${1}
