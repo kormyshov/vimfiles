@@ -10,7 +10,8 @@ filetype plugin indent on
 set guioptions-=T
 
 " Цветовая схема
-colorscheme xemacs
+" colorscheme xemacs
+colorscheme sonoma
 " Установка кодировки отображения
 set enc=utf-8
 " Мигаем вместо пищания
@@ -30,7 +31,7 @@ set smartindent
 set cin
 
 " Подключить сниппеты для С++ и из библиотеки
-au FileType c,cpp set ft=cpp.lib.algebra.string.BI.compressor.array.graph
+au FileType c,cpp set ft=cpp.lib.algebra.string.BI.compressor.array.graph.segment
 
 " Показывать положение курсора всё время
 set ruler
@@ -52,15 +53,31 @@ nmap <Space> <PageDown>
 
 " Ctrl-Space для автодополнения
 imap <C-Space> <C-X><C-O>
+" F12 для обновления тэгов
+map <F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 
 " Copy/Paste в глобальный клипборд
 vmap <C-C> "+yi
-imap <C-V> <Esc>"+gPi
+imap <C-V> <Esc>"+gpi
 
 " Сохрание на F2
 nmap <F2> :w!<cr>
 vmap <F2> <esc>:w!<cr>i
 imap <F2> <esc>:w!<cr>i
+
+" Разделение окна по Ctrl+W+i и Ctrl+W+-
+nmap <C-W>i <C-W>v
+nmap <C-W>- <C-W>s
+
+" Перемещение по вкладкам
+map <S-tab> :tabprevious<cr>
+nmap <S-tab> :tabprevious<cr>
+imap <S-tab> <ESC>:tabprevious<cr>i
+map <C-tab> :tabnext<cr>
+nmap <C-tab> :tabnext<cr>
+imap <C-tab> <ESC>:tabnext<cr>i
+nmap <C-t> :tabnew<cr>
+imap <C-t> <ESC>:tabnew<cr>
 
 " Автодополнение скобок
 imap [ []<LEFT>
@@ -105,9 +122,10 @@ function! BindF9_C()
 endfunction
 au FileType c,cpp,h call BindF9_C()
 
-map <C-K> :! ./compile-g++.sh
-map <C-L> :! cat compilation.log
-map <C-P> :! ./local-runner.sh & sleep 2 && ./MyStrategy
+" Оптимизация для RCC
+" map <C-K> :! ./compile-g++.sh
+" map <C-L> :! cat compilation.log
+" map <C-P> :! ./local-runner.sh & sleep 2 && ./MyStrategy
 
 " Вешаем горячие клавиши для открытия/закрытия NERD-tree
 nmap <C-N>v :NERDTree<cr>

@@ -31,6 +31,8 @@
 #define y0 stupid_cmath_too
 
 typedef long long LL;
+template<typename T1,typename T2> ostream& operator<<(ostream &O,pair<T1,T2> t) {return O<<"("<<t.first<<","<<t.second<<")";}
+template<typename T> ostream& operator<<(ostream &O,vector<T> t){for(int _=0;_<(int)t.size();++_)s<<t[_]<<" ";return s; }
 
 using namespace std;
 

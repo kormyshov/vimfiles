@@ -19,3 +19,12 @@
 [submodule "bundle/cpp4cf"]
 	path = bundle/cpp4cf
 	url = https://github.com/kormyshov/cpp4cf
+[submodule "bundle/sonoma"]
+	path = bundle/sonoma
+	url = https://github.com/vim-scripts/sonoma.vim
+[submodule "bundle/OmniCppComplete"]
+	path = bundle/OmniCppComplete
+	url = https://github.com/vim-scripts/OmniCppComplete
+[submodule "bundle/ctags"]
+	path = bundle/ctags
+	url = https://github.com/vim-scripts/ctags.vim
