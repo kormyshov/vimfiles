@@ -1,0 +1,46 @@
+Модуль algebra
+	pow
+	phi
+	inverse
+	inverse_all
+	gcd
+	lcm
+	gcdex
+	getDivisors
+	factorize
+	eratosfen
+	fibonacci
+	grey
+	reverse_grey
+	factmod
+	isPrime
+Модуль array
+	lbound -- Ускоренный бинпоиск
+		slbound -- прекалк (после каждого изменения)
+		lbound -- вычисление lower_bound
+Модуль BI
+	BI
+Модуль compressor
+	compressor
+Модуль cpp
+	pb, mp, sz, vi, vvi, pii
+	#i, #d
+	fill, sort, rsort
+	if, If, ife, Ife
+	wh, Wh
+	for, For, forab, Forab
+	forr, Forr, forrab, Forrab
+	forv, Forv, forrv, Forrv
+	cont, br
+Модуль graph
+	clique
+Модуль lib
+	test
+Модуль segment
+	RSQ
+	RMaxQ, RMinQ, RMaxQInd, RMinQInd
+	RSQAdd, RMaxQAdd, RMinQAdd
+Модуль string
+	suffix_array
+	pfun, zfun
+	palindromes

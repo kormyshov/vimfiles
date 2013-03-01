@@ -76,8 +76,8 @@ imap <S-tab> <ESC>:tabprevious<cr>i
 map <C-tab> :tabnext<cr>
 nmap <C-tab> :tabnext<cr>
 imap <C-tab> <ESC>:tabnext<cr>i
-nmap <C-t> :tabnew<cr>
-imap <C-t> <ESC>:tabnew<cr>
+nmap <C-t> :tabnew<cr>:NERDTree<cr><C-W><RIGHT>
+imap <C-t> <ESC>:tabnew<cr>:NERDTree<cr><C-W><RIGHT>
 
 " Автодополнение скобок
 imap [ []<LEFT>
@@ -162,4 +162,12 @@ set foldmethod=indent 	" Определять блоки на основе от�
 set foldcolumn=3		" Ширина полосы управления
 set foldlevel=7			" Количество открытых уровней по умолчанию
 set foldopen=all		" Автоматическое открытие свёрток при заходе в них
+
+" Хот-кеи для cpp4cf
+map <C-L> :CFTemplate<CR>89<C-W>i<C-W><RIGHT>:e ~/.vim/snippets/content.txt<CR>18ggzMzrgg<C-W><LEFT>
+nmap <C-L> :CFTemplate<CR>89<C-W>i<C-W><RIGHT>:e ~/.vim/snippets/content.txt<CR>18ggzMzrgg<C-W><LEFT>
+imap <C-L> <ESC>:CFTemplate<CR>89<C-W>i<C-W><RIGHT>:e ~/.vim/snippets/content.txt<CR>18ggzMzrgg<C-W><LEFT>i
+map <C-P> :CFPatch<CR>
+nmap <C-P> :CFPatch<CR>
+imap <C-P> <ESC>:CFPatch<CR>i
 
