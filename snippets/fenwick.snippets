@@ -1,0 +1,306 @@
+snippet fenwick Fenwick
+	class Fenwick{
+		${1:int} *m;
+		int N;
+	public:
+		Fenwick(int n){
+			N = n;
+			m = new $1[N];
+			memset(m, 0, sizeof($1)*N);
+		}
+		Fenwick(int a[], int n){
+			N = n;
+			m = new $1[N];
+			memset(m, 0, sizeof($1)*N);
+			for(int i=0;i<N;++i){
+				m[i] += a[i];
+				if((i|(i+1))<N) m[i|(i+1)] += m[i];
+			}
+		}
+		Fenwick(vector<int> &a){
+			N = a.size();
+			m = new $1[N];
+			memset(m, 0, sizeof($1)*N);
+			for(int i=0;i<N;++i){
+				m[i] += a[i];
+				if((i|(i+1))<N) m[i|(i+1)] += m[i];
+			}
+		}
+		void add(int i, int d){
+			for(;i<N;i|=i+1) m[i] += d;
+		}
+		$1 sum(int i){
+			$1 res = 0;
+			for(;i>=0;i=(i&(i+1))-1) res += m[i];
+			return res;
+		}
+		$1 sum(int l, int r){
+			return sum(r) - sum(l-1);
+		}
+	};
+snippet Fenwick
+	class Fenwick{
+		${1:int} *m;
+		int N;
+	public:
+		Fenwick(int n){
+			N = n;
+			m = new $1[N];
+			memset(m, 0, sizeof($1)*N);
+		}
+		Fenwick(int a[], int n){
+			N = n;
+			m = new $1[N];
+			memset(m, 0, sizeof($1)*N);
+			for(int i=0;i<N;++i){
+				m[i] += a[i];
+				if((i|(i+1))<N) m[i|(i+1)] += m[i];
+			}
+		}
+		Fenwick(vector<int> &a){
+			N = a.size();
+			m = new $1[N];
+			memset(m, 0, sizeof($1)*N);
+			for(int i=0;i<N;++i){
+				m[i] += a[i];
+				if((i|(i+1))<N) m[i|(i+1)] += m[i];
+			}
+		}
+		void add(int i, int d){
+			for(;i<N;i|=i+1) m[i] += d;
+		}
+		$1 sum(int i){
+			$1 res = 0;
+			for(;i>=0;i=(i&(i+1))-1) res += m[i];
+			return res;
+		}
+		$1 sum(int l, int r){
+			return sum(r) - sum(l-1);
+		}
+	};
+snippet fenwick FenwickAdd
+	class FenwickAdd{
+		${1:int} *m, *mt;
+		int N;
+	public:
+		FenwickAdd(int n){
+			N = n;
+			m = new $1[N];
+			mt = new $1[N];
+			memset(m, 0, sizeof($1)*N);
+			memset(mt, 0, sizeof($1)*N);
+		}
+		FenwickAdd(int a[], int n){
+			N = n;
+			m = new $1[N];
+			mt = new $1[N];
+			memset(m, 0, sizeof($1)*N);
+			memset(mt, 0, sizeof($1)*N);
+			for(int i=0;i<N;++i){
+				m[i] += a[i];
+				if((i|(i+1))<N) m[i|(i+1)] += m[i];
+			}
+		}
+		FenwickAdd(vector<int> &a){
+			N = a.size();
+			m = new $1[N];
+			mt = new $1[N];
+			memset(m, 0, sizeof($1)*N);
+			memset(mt, 0, sizeof($1)*N);
+			for(int i=0;i<N;++i){
+				m[i] += a[i];
+				if((i|(i+1))<N) m[i|(i+1)] += m[i];
+			}
+		}
+		void add(int i, int d){
+			for(;i<N;i|=i+1) m[i] += d;
+		}
+		void add_range(int r, int d){
+			if(r<0) return ;
+			for(int i=r;i>=0;i=(i&(i+1))-1) mt[i] += d;
+			for(int i=r|(r+1);i<N;i|=i+1) m[i] += d*(r-(i&(i+1))+1);
+		}
+		void add_range(int l, int r, int d){
+			add_range(r, d);
+			add_range(l-1, -d);
+		}
+		$1 sum(int r){
+			if(r<0) return 0;
+			$1 res = 0;
+			for(int i=r;i>=0;i=(i&(i+1))-1) res += m[i] + mt[i]*(i-(i&(i+1))+1);
+			for(int i=r|(r+1);i<N;i|=i+1) res += mt[i]*(r-(i&(i+1))+1);
+			return res;
+		}
+		$1 sum(int l, int r){
+			return sum(r) - sum(l-1);
+		}
+	};
+snippet FenwickAdd
+	class FenwickAdd{
+		${1:int} *m, *mt;
+		int N;
+	public:
+		FenwickAdd(int n){
+			N = n;
+			m = new $1[N];
+			mt = new $1[N];
+			memset(m, 0, sizeof($1)*N);
+			memset(mt, 0, sizeof($1)*N);
+		}
+		FenwickAdd(int a[], int n){
+			N = n;
+			m = new $1[N];
+			mt = new $1[N];
+			memset(m, 0, sizeof($1)*N);
+			memset(mt, 0, sizeof($1)*N);
+			for(int i=0;i<N;++i){
+				m[i] += a[i];
+				if((i|(i+1))<N) m[i|(i+1)] += m[i];
+			}
+		}
+		FenwickAdd(vector<int> &a){
+			N = a.size();
+			m = new $1[N];
+			mt = new $1[N];
+			memset(m, 0, sizeof($1)*N);
+			memset(mt, 0, sizeof($1)*N);
+			for(int i=0;i<N;++i){
+				m[i] += a[i];
+				if((i|(i+1))<N) m[i|(i+1)] += m[i];
+			}
+		}
+		void add(int i, int d){
+			for(;i<N;i|=i+1) m[i] += d;
+		}
+		void add_range(int r, int d){
+			if(r<0) return ;
+			for(int i=r;i>=0;i=(i&(i+1))-1) mt[i] += d;
+			for(int i=r|(r+1);i<N;i|=i+1) m[i] += d*(r-(i&(i+1))+1);
+		}
+		void add_range(int l, int r, int d){
+			add_range(r, d);
+			add_range(l-1, -d);
+		}
+		$1 sum(int r){
+			if(r<0) return 0;
+			$1 res = 0;
+			for(int i=r;i>=0;i=(i&(i+1))-1) res += m[i] + mt[i]*(i-(i&(i+1))+1);
+			for(int i=r|(r+1);i<N;i|=i+1) res += mt[i]*(r-(i&(i+1))+1);
+			return res;
+		}
+		$1 sum(int l, int r){
+			return sum(r) - sum(l-1);
+		}
+	};
+snippet fenwick FenwickMin
+	class FenwickMin{
+		int *md, *mu, N;
+	public:
+		FenwickMin(int n){
+			N = n;
+			md = new int[N];
+			mu = new int[N];
+			memset(md, 127, sizeof(int)*N);
+			memset(mu, 127, sizeof(int)*N);
+		}
+		FenwickMin(int a[], int n){
+			N = n;
+			md = new int[N];
+			mu = new int[N];
+			memset(md, 127, sizeof(int)*N);
+			memset(mu, 127, sizeof(int)*N);
+			for(int i=N-1, t=i&(i-1);i>0;--i, t=i&(i-1)){
+				if(md[i]>a[i]) md[i]=a[i];
+				if(t>0 && md[t]>md[i]) md[t]=md[i];
+			}
+			for(int i=0, t=i|(i+1);i<N;++i, t=i|(i+1)){
+				if(mu[i]>a[i]) mu[i]=a[i];
+				if(t<N && mu[t]>mu[i]) mu[t]=mu[i];
+			}
+		}
+		FenwickMin(vector<int> &a){
+			N = a.size();
+			md = new int[N];
+			mu = new int[N];
+			memset(md, 127, sizeof(int)*N);
+			memset(mu, 127, sizeof(int)*N);
+			for(int i=N-1, t=i&(i-1);i>0;--i, t=i&(i-1)){
+				if(md[i]>a[i]) md[i]=a[i];
+				if(t>0 && md[t]>md[i]) md[t]=md[i];
+			}
+			for(int i=0, t=i|(i+1);i<N;++i, t=i|(i+1)){
+				if(mu[i]>a[i]) mu[i]=a[i];
+				if(t<N && mu[t]>mu[i]) mu[t]=mu[i];
+			}
+		}
+		void set(int n, int d){
+			for(int i=n;i>=0;i=(i&(i+1))-1) if(md[i]<d) md[i]=d;
+			for(int i=n;i<N;i|=i+1) if(mu[i]<d) mu[i]=d;
+		}
+		int min(int l, int r){
+			int res=INF;
+			if(!l){
+				for(;r>=0;r=(r&(r+1))-1) if(res>mu[r])res=mu[r];
+				return res;
+			}
+			for(;(r&(r+1))>=l;r=(r&(r+1))-1) if(res>mu[r])res=mu[r];
+			for(;(l|(l-1))<=r;l=(l|(l-1))+1) if(res>md[l])res=md[l];
+			return res;
+		}
+	};
+snippet FenwickMin
+	class FenwickMin{
+		int *md, *mu, N;
+	public:
+		FenwickMin(int n){
+			N = n;
+			md = new int[N];
+			mu = new int[N];
+			memset(md, 127, sizeof(int)*N);
+			memset(mu, 127, sizeof(int)*N);
+		}
+		FenwickMin(int a[], int n){
+			N = n;
+			md = new int[N];
+			mu = new int[N];
+			memset(md, 127, sizeof(int)*N);
+			memset(mu, 127, sizeof(int)*N);
+			for(int i=N-1, t=i&(i-1);i>0;--i, t=i&(i-1)){
+				if(md[i]>a[i]) md[i]=a[i];
+				if(t>0 && md[t]>md[i]) md[t]=md[i];
+			}
+			for(int i=0, t=i|(i+1);i<N;++i, t=i|(i+1)){
+				if(mu[i]>a[i]) mu[i]=a[i];
+				if(t<N && mu[t]>mu[i]) mu[t]=mu[i];
+			}
+		}
+		FenwickMin(vector<int> &a){
+			N = a.size();
+			md = new int[N];
+			mu = new int[N];
+			memset(md, 127, sizeof(int)*N);
+			memset(mu, 127, sizeof(int)*N);
+			for(int i=N-1, t=i&(i-1);i>0;--i, t=i&(i-1)){
+				if(md[i]>a[i]) md[i]=a[i];
+				if(t>0 && md[t]>md[i]) md[t]=md[i];
+			}
+			for(int i=0, t=i|(i+1);i<N;++i, t=i|(i+1)){
+				if(mu[i]>a[i]) mu[i]=a[i];
+				if(t<N && mu[t]>mu[i]) mu[t]=mu[i];
+			}
+		}
+		void set(int n, int d){
+			for(int i=n;i>=0;i=(i&(i+1))-1) if(md[i]<d) md[i]=d;
+			for(int i=n;i<N;i|=i+1) if(mu[i]<d) mu[i]=d;
+		}
+		int min(int l, int r){
+			int res=INF;
+			if(!l){
+				for(;r>=0;r=(r&(r+1))-1) if(res>mu[r])res=mu[r];
+				return res;
+			}
+			for(;(r&(r+1))>=l;r=(r&(r+1))-1) if(res>mu[r])res=mu[r];
+			for(;(l|(l-1))<=r;l=(l|(l-1))+1) if(res>md[l])res=md[l];
+			return res;
+		}
+	};

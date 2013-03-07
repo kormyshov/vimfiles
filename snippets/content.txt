@@ -32,6 +32,10 @@
 	forr, Forr, forrab, Forrab
 	forv, Forv, forrv, Forrv
 	cont, br
+Модуль fenwick
+	Fenwick
+	FenwickAdd
+	FenwickMin
 Модуль graph
 	clique
 Модуль lib
