@@ -1,0 +1,108 @@
+snippet DSU "DSU" !b
+class DSU{
+	int *p, *r;
+	int N, c;
+public:
+	DSU(int n){
+		c = N = n;
+		p = new int[N];
+		r = new int[N];
+		memset(r, 0, sizeof(r));
+		for(int i=0; i<N; ++i) p[i] = i;
+	}
+	int get(int x){
+		int t=x, tmp;
+		while(x!=p[x]) x=p[x];
+		while(p[t]!=x){
+			tmp = p[t];
+			p[t] = x;
+			t = tmp;
+		}
+		return x;
+	}
+	bool unite(int a, int b){
+		a = get(a);
+		b = get(b);
+		if(a==b) return false;
+		if(r[a] < r[b]) swap(a, b);
+		if(r[a]==r[b]) ++r[a];
+		p[b]=a;
+		--c;
+		return true;
+	}
+	int count(){
+		return c;
+	}
+};
+$0
+endsnippet
+snippet Stex "Stex" !b
+// Stack with ${1:min} ${2:max} ${3:comp}
+template<class T, class Compare = ${1/(min)/less/}${2/(max)/greater/}$3<T> >
+class Stex{
+	stack<T> st, mn;
+	Compare f;
+public:
+	bool empty(){
+		return st.empty();
+	}
+	int size(){
+		 return st.size();
+	}
+	T top(){
+		return st.top();
+	}
+	T operator()(){
+		return mn.top();
+	}
+	void push(const T& x){
+		mn.push(mn.empty() || f(x,mn.top())?x:mn.top());
+		st.push(x);
+	}
+	void pop(){
+		st.pop();
+		mn.pop();
+	}
+};
+$0
+endsnippet
+snippet Qex "Qex" !b
+// Queue with ${1:min} ${2:max} ${3:comp}
+template<class T, class Compare = ${1/(min)/less/}${2/(max)/greater/}$3<T> >
+class Qex{
+	Stex<T, Compare> st1, st2;
+	Compare f;
+public:
+	bool empty(){
+		return st1.empty() && st2.empty();
+	}
+	int size(){
+		return st1.size() + st2.size();
+	}
+	T front(){
+		move();
+		return st2.top();
+	}
+	T operator()(){
+		move();
+		return (st1.empty() || f(st2(),st1())?st2():st1());
+	}
+	void push(const T& x){
+		st1.push(x);
+	}
+	void pop(){
+		move();
+		st2.pop();
+	}
+	void move(){
+		if(!st2.empty()) return ;
+		T t;
+		while(!st1.empty()){
+			t = st1.top();
+			st1.pop();
+			st2.push(t);
+		}
+	}
+};
+$0
+endsnippet
