@@ -21,20 +21,17 @@
 Модуль BI
 	BI
 Модуль compressor
-	Compressor
+	compressor
 Модуль cpp
 	pb, mp, sz, vi, vvi, pii
 	#i, #d
 	fill, sort, rsort
-	if, ife
-	wh
-	for, forab
-	forr, forrab
-	forv, forrv
+	if, If, ife, Ife
+	wh, Wh
+	for, For, forab, Forab
+	forr, Forr, forrab, Forrab
+	forv, Forv, forrv, Forrv
 	cont, br
-	ri, rii, riii
-	rd, rdd, rddd
-	rc, rs, rm, rv
 Модуль fenwick
 	Fenwick
 	FenwickAdd

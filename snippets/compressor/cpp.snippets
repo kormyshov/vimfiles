@@ -1,0 +1,25 @@
+snippet Compressor "class Compressor" !b
+class Compressor {
+	vector<int> v;
+public:
+	Compressor(vector<int> _a)
+	{
+		v.clear();
+		sort(_a.begin(), _a.end());
+		v.push_back(-INF);
+		v.push_back(_a[0]);
+		for(int _i=1; _i<(int)_a.size(); ++_i)
+			if(_a[_i]!=_a[_i-1])
+				v.push_back(_a[_i]);
+		v.push_back(INF);
+	}
+	int size()
+	{
+		return v.size();
+	}
+	int get(int a)
+	{
+		return lower_bound(v.begin(), v.end(), a) - v.begin();
+	}
+};
+endsnippet

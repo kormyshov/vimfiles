@@ -38,6 +38,7 @@ template<typename T> ostream& operator<<(ostream &O,vector<T> t){for(int _=0;_<(
 
 int main()
 {
+	ios_base::sync_with_stdio(0);
 
 	return 0;
 }
