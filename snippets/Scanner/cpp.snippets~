@@ -1,3 +1,0 @@
-snippet pb "push_back" !b
-push_back($0)
-endsnippet

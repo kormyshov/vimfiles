@@ -119,7 +119,7 @@ nmap <C-e> \ci
 imap <C-e> <Esc>\cii
 
 " Устанавливаем директорию для сниппетов
-let g:UltiSnipsSnippetDirectories=["snippets","snippets/Scanner","snippets/lib","snippets/algebra","snippets/array","snippets/graph","snippets/string","snippets/compressor","snippets/segment","snippets/fenwick"]
+let g:UltiSnipsSnippetDirectories=["snippets","snippets/Scanner","snippets/lib","snippets/algebra","snippets/array","snippets/graph","snippets/string","snippets/compressor","snippets/segment","snippets/fenwick","snippets/DataStruct"]
 
 " Не переходить по звёздочке на следующее
 nnoremap * *N
