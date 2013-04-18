@@ -1,25 +1,25 @@
 snippet pb "push_back" i
 push_back($0)
 endsnippet
-snippet mp "make_pair"
+snippet mp "make_pair" i
 make_pair(${1}, ${2})$0
 endsnippet
 snippet sz "size" i
 size()$0
 endsnippet
-snippet all "begin, end"
+snippet all "begin, end" i
 ${1:v}.begin(), $1.end()$0
 endsnippet
-snippet vi "vector<int>"
+snippet vi "vector<int>" i
 vector<int> ${1:v}
 endsnippet
-snippet vect "vector<>"
+snippet vect "vector<>" i
 vector<${1:double}> $0
 endsnippet
-snippet vvi "vector<int> []"
+snippet vvi "vector<int> []" i
 vector<int> ${1:g}[${2:100500}]$0
 endsnippet
-snippet pii "pair<int,int>"
+snippet pii "pair<int,int>" i
 pair<int,int> ${1:p}
 endsnippet
 snippet #i "#include <>" !b
@@ -37,97 +37,97 @@ endsnippet
 snippet rsort "reverse sort()"
 sort(${1:v}.rbegin(), $1.rend());$0
 endsnippet
-snippet if ""
+snippet if "" i
 if(${1:/* ... */}) ${2:// code...}
 endsnippet
-snippet ife ""
+snippet ife "" i
 if(${1:/* ... */}) ${2:// code...}
 else ${3:// code...}
 endsnippet
-snippet wh "while"
+snippet wh "while" i
 while(${1:/* ... */}){
 	${2:// code...}
 }
 endsnippet
-snippet for ""
+snippet for "" i
 for(${1:i}=0; ${1/(int )?(\w+)/$2/}<${2:N}; ++${1/(int )?(\w+)/$2/}){
 	${3:// code...}
 }
 endsnippet
-snippet forab ""
+snippet forab "" i
 for(${1:i}=${2:1}; ${1/(int )?(\w+)/$2/}<=${3:N}; ++${1/(int )?(\w+)/$2/}){
 	${4:// code...}
 }
 endsnippet
-snippet forr ""
+snippet forr "" i
 for(${1:i}=${2:N}-1; ${1/(int )?(\w+)/$2/}>=0; --${1/(int )?(\w+)/$2/}){
 	${3:// code...}
 }
 endsnippet
-snippet forrab ""
+snippet forrab "" i
 for(${1:i}=${2:N}; ${1/(int )?(\w+)/$2/}>=${3:1}; --${1/(int )?(\w+)/$2/}){
 	${4:// code...}
 }
 endsnippet
-snippet forv ""
+snippet forv "" i
 for(${1:i}=0; ${1/(int )?(\w+)/$2/}<(int)${2:v}.size(); ++${1/(int )?(\w+)/$2/}){
 	${3:// code...}
 }
 endsnippet
-snippet forrv ""
+snippet forrv "" i
 for(${1:i}=(int)${2:v}.size()-1; ${1/(int )?(\w+)/$2/}>=0; --${1/(int )?(\w+)/$2/}){
 	${3:// code...}
 }
 endsnippet
-snippet cont "continue ;"
+snippet cont "continue ;" i
 continue ;$0
 endsnippet
-snippet br "break ;"
+snippet br "break ;" i
 break ;$0
 endsnippet
-snippet ri "scanf(%d)"
+snippet ri "scanf(%d)" !b
 scanf("%d", &${1:a});$0
 endsnippet
-snippet rii "scanf(%d%d)"
+snippet rii "scanf(%d%d)" !b
 scanf("%d%d", &${1:a}, &${2:b});$0
 endsnippet
-snippet riii "scanf(%d%d%d)"
+snippet riii "scanf(%d%d%d)" !b
 scanf("%d%d%d", &${1:a}, &${2:b}, &${3:c});$0
 endsnippet
-snippet rd "scanf(%lf)"
+snippet rd "scanf(%lf)" !b
 scanf("%lf", &${1:a});$0
 endsnippet
-snippet rdd "scanf(%lf%lf)"
+snippet rdd "scanf(%lf%lf)" !b
 scanf("%lf%lf", &${1:a}, &${2:b});$0
 endsnippet
-snippet rddd "scanf(%lf%lf%lf)"
+snippet rddd "scanf(%lf%lf%lf)" !b
 scanf("%lf%lf%lf", &${1:a}, &${2:b}, &${3:c});$0
 endsnippet
-snippet rc "scanf(%c)"
+snippet rc "scanf(%c)" !b
 scanf("%c", &${1:a});$0
 endsnippet
-snippet rcc "scanf(%c%c)"
+snippet rcc "scanf(%c%c)" !b
 scanf("%c%c", &${1:a}, &${2:b});$0
 endsnippet
-snippet rccc "scanf(%c%c%c)"
+snippet rccc "scanf(%c%c%c)" !b
 scanf("%c%c%c", &${1:a}, &${2:b}, &${3:c});$0
 endsnippet
-snippet rs "scanf(%s)"
+snippet rs "scanf(%s)" !b
 scanf("%s", &${1:a});$0
 endsnippet
-snippet rm "read mas"
+snippet rm "read mas" !b
 for(int _=0;_<${1:n};++_) scanf("%d", &${2:m}[_]);
 endsnippet
-snippet rm1 "read mas[1..N]"
+snippet rm1 "read mas[1..N]" !b
 for(int _=1;_<=${1:n};++_) scanf("%d", &${2:m}[_]);
 endsnippet
-snippet rv "read vector"
+snippet rv "read vector" !b
 for(int _=0,__;_<${1:n};++_){
 	scanf("%d", &__);
 	${2:v}.push_back(__);
 }
 endsnippet
-snippet rvp "read vector<pair>"
+snippet rvp "read vector<pair>" i
 for(int _=0,_1,_2;_<${1:n»;++_}){
 	scanf("%d%d", &_1, &_2);
 	${2:v}.push_back(make_pair(_1, _2));

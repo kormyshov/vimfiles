@@ -121,11 +121,48 @@ void eratosfen(vector<int> &_m)
 	for(int _i=2; _i < _n; ++_i) _m[_i] = 1;
 	_m[0] = _m[1] = 0;
 	for(int _i=2; _i * 1LL * _i < _n; ++_i)
-		if(_m[i])
+		if(_m[_i])
 			for(int _j=_i*_i; _j<_n; _j+=_i)
 				_m[_j] = 0;
 }
-${2}
+$0
+endsnippet
+snippet atkin "void atkin(vi&)" !b
+void atkin(vector<int> &_m){
+	int _n = _m.size(), _sqrt, _i, _j, _i2 = 0, _a;
+	_sqrt = 2*(int)sqrt(_n);
+	for(_i=0; _i < _n; ++_i) _m[_i] = 0;
+	_m[2] = _m[3] = 1;
+	for(_i=1; _i < _sqrt; _i+=2){
+		_i2 += _i;
+		_a = 4*_i2;
+		for(_j=1; _a < _n; _j+=2){
+			if(_a%12 == 1 || _a%12 == 5)
+				_m[_a] ^= 1;
+			_a += _j;
+		}
+		_a = 3*_i2;
+		for(_j=1; _a < _n; _j+=2){
+			if(_a%12 == 7)
+				_m[_a] ^= 1;
+			_a += _j;
+		}
+		_a = 3*_i2;
+		for(_j=1; _j < _i; _j+=2){
+			_a -= _j;
+			if(_a < _n && _a%12 == 11)
+				_m[_a] ^= 1;
+		}
+	}
+	_sqrt >>= 1;
+	for(_i=5; _i < _sqrt; ++_i)
+		if(_m[_i]){
+			_a = _i*_i;
+			for(_j=_a; _j < _n; _j+=_a)
+				_m[_j] = 0;
+		}
+}
+$0
 endsnippet
 snippet fibonacci "<T> fibonacci(<T2>, <T>)" !b
 ${1:int} fibonacci(${2:int} _n, $1 _mod=0)

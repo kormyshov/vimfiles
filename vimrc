@@ -88,7 +88,7 @@ imap <C-t> <ESC>:tabnew<cr>:NERDTree<cr><C-W><RIGHT>
 
 " Автодополнение скобок
 imap [ []<A-h>
-imap { {}<A-h>
+imap { {<CR><C-o>$<CR>}<A-k><C-o>$
 imap ( ()<A-h>
 
 " Делаем файлы сценариев исполняемыми
@@ -144,7 +144,7 @@ set foldlevel=7			" Количество открытых уровней по у
 set foldopen=all		" Автоматическое открытие свёрток при заходе в них
 
 " Хот-кеи для cpp4cf
-map <C-l> :CFTemplate<CR>89<C-W>i<C-W>l:e ~/.vim/snippets/content.txt<CR>18ggzMzrgg<C-W>h
+map <C-l> :CFTemplate<CR>89<C-W>i<C-W>l:e ~/.vim/snippets/content.txt<CR>19ggzMzrgg<C-W>h
 map <C-P> :CFPatch<CR>
 
 " Отключаем работу стрелочек

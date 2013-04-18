@@ -9,6 +9,7 @@
 	getDivisors
 	factorize
 	eratosfen
+	atkin
 	fibonacci
 	grey
 	reverse_grey
@@ -23,7 +24,8 @@
 Модуль compressor
 	Compressor
 Модуль cpp
-	pb, mp, sz, vi, vvi, pii
+	pb, mp, sz, all
+	vi, vect, vvi, pii
 	#i, #d
 	fill, sort, rsort
 	if, ife
@@ -34,11 +36,18 @@
 	cont, br
 	ri, rii, riii
 	rd, rdd, rddd
-	rc, rs, rm, rv
+	rc, rcc, rccc
+	rs, rm, rv, rvp
+Модуль DataStruct
+	DSU
+	Stex
+	Qex
 Модуль fenwick
 	Fenwick
 	FenwickAdd
 	FenwickMin
+	Fenwick2D
+	FenwickMap
 Модуль graph
 	clique
 Модуль lib
