@@ -206,3 +206,85 @@ public:
 };
 $0
 endsnippet
+snippet Fenwick2D "Fenwick2D" !b
+class Fenwick2D{
+	${1:int} **mm;
+	int N, M;
+public:
+	Fenwick2D(int n, int m){
+		N = n;
+		M = m;
+		mm = new $1*[N];
+		for(int i=0; i<N; ++i){
+			mm[i] = new $1[M];
+			memset(mm[i], 0, sizeof($1)*M);
+		}
+	}
+	Fenwick2D(int **a, int n, int m){
+		N = n;
+		M = m;
+		mm = new $1*[N];
+		for(int i=0; i<N; ++i){
+			mm[i] = new $1[M];
+			memset(mm[i], 0, sizeof($1)*M);
+		}
+		for(int i=0; i<N; ++i){
+			for(int j=0; j<M; ++j){
+				mm[i][j] += a[i][j];
+				if((j|(j+1))<M) mm[i][j|(j+1)] += mm[i][j];
+				if((i|(i+1))<N) mm[i|(i+1)][j] += mm[i][j];
+			}
+		}
+	}
+	Fenwick2D(vector<int> a[], int n){
+		N = n;
+		M = a[0].size();
+		mm = new $1*[N];
+		for(int i=0; i<N; ++i){
+			mm[i] = new $1[M];
+			memset(mm[i], 0, sizeof($1)*M);
+		}
+		for(int i=0; i<N; ++i){
+			for(int j=0; j<M; ++j){
+				mm[i][j] += a[i][j];
+				if((j|(j+1))<M) mm[i][j|(j+1)] += mm[i][j];
+				if((i|(i+1))<N) mm[i|(i+1)][j] += mm[i][j];
+			}
+		}
+	}
+	void add(int i, int jj, $1 d){
+		for(;i<N; i|=i+1) for(int j=jj; j<M; j|=j+1) mm[i][j] += d;
+	}
+	$1 sum(int i, int jj){
+		$1 res = 0;
+		for(;i>=0;i=(i&(i+1))-1) for(int j=jj; j>=0; j=(j&(j+1))-1) res += mm[i][j];
+		return res;
+	}
+	$1 sum(int li, int lj, int ri, int rj){
+		return sum(ri,rj)-sum(ri,lj-1)-sum(li-1,rj)+sum(li-1,lj-1);
+	}
+};
+$0
+endsnippet
+snippet FenwickMap "Fenwick on the map" !b
+class FenwickMap{
+	map<${1:int},${2:int}> m;
+	$1 N;
+public:
+	FenwickMap($1 n){
+		N = n;
+	}
+	void add($1 i, $2 d){
+		for(;i<N;i|=i+1) m[i] += d;
+	}
+	$2 sum($1 i){
+		$2 res = 0;
+		for(;i>=0;i=(i&(i+1))-1) if(m.count(i)) res += m[i];
+		return res;
+	}
+	$2 sum($1 l, $1 r){
+		return sum(r) - sum(l-1);
+	}
+};
+$0
+endsnippet
