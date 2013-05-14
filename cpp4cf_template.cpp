@@ -1,10 +1,11 @@
 #include <iostream>
 #include <fstream>
 #include <cstdio>
-#include <iomanip>
 #include <cstring>
 #include <memory.h>
 #include <cmath>
+#include <pthread.h>
+#include <semaphore.h>
 
 #include <vector>
 #include <queue>

@@ -12,9 +12,14 @@ Bundle "UltiSnips"
 Bundle "matchit.zip"
 Bundle "The-NERD-tree"
 Bundle "The-NERD-Commenter"
+Bundle "jcf/vim-latex"
+Bundle "Rip-Rip/clang_complete"
 Bundle "kormyshov/cpp4cf"
 
-filetype plugin indent on
+" Применять типы файлов
+filetype on
+filetype plugin on
+filetype indent on
 
 " Отключаем панель инструментов
 set guioptions-=T
@@ -49,8 +54,14 @@ set scrolloff=5
 " Показывать незавершённые команды в статусбаре
 set showcmd
 
+" Настройка строки состояния
+"
+set statusline=%F%m%r%h%w\ [%{&fileformat},%{&fileencoding}]\ [%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
+set laststatus=2 " всегда показывать строку состояния
+
+
 " Нумерация строк
-set nu
+"set nu
 " Относительная нумерация
 set relativenumber
 
@@ -62,6 +73,8 @@ set fo+=cr
 
 " Перелистывание страниц в командном режиме на пробел
 nmap <Space> <PageDown>
+" Добавление строки на <Enter> в командном режиме
+nmap <CR> o<Esc>
 
 " Copy/Paste в глобальный клипборд
 vmap <C-C> "+yi
@@ -86,10 +99,13 @@ imap <C-tab> <ESC>:tabnext<cr>i
 nmap <C-t> :tabnew<cr>:NERDTree<cr><C-W><RIGHT>
 imap <C-t> <ESC>:tabnew<cr>:NERDTree<cr><C-W><RIGHT>
 
-" Автодополнение скобок
-imap [ []<A-h>
-imap { {<CR><C-o>$<CR>}<A-k><C-o>$
-imap ( ()<A-h>
+" Автодополнение скобок в С++
+function! AutocompleteBraces()
+	imap [ []<A-h>
+	imap ( ()<A-h>
+	imap { {<CR><C-o>$<CR>}<A-k><C-o>$
+endfunction
+au Filetype c,cpp,h call AutocompleteBraces()
 
 " Делаем файлы сценариев исполняемыми
 au BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/" | silent !chmod a+x | endif | endif
@@ -120,6 +136,11 @@ imap <C-e> <Esc>\cii
 
 " Устанавливаем директорию для сниппетов
 let g:UltiSnipsSnippetDirectories=["snippets","snippets/Scanner","snippets/lib","snippets/algebra","snippets/array","snippets/graph","snippets/string","snippets/compressor","snippets/segment","snippets/fenwick","snippets/DataStruct"]
+
+" Автодополнение по <C-Space>
+let g:clang_complete_auto=0
+imap <C-Space> <C-X><C-U>
+let g:clang_close_preview=1
 
 " Не переходить по звёздочке на следующее
 nnoremap * *N
@@ -175,8 +196,8 @@ function! BindF5_C()
 		map <F5> :w!<cr>:make<cr>:cw<cr>
 		imap <F5> <esc>:w!<cr>:make<cr>:cw<cr>
 	else
-		map <F5> :w!<cr>:!g++ -Wall -O2 -fno-optimize-sibling-calls -static % -o %:r -lm<cr>:cw<cr>
-		imap <F5> <Esc>:w!<cr>:!g++ -Wall -O2 -fno-optimize-sibling-calls -static % -o %:r -lm<cr>:cw<cr>
+		map <F5> :w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -static % -o %:r -lm<cr>:cw<cr>
+		imap <F5> <Esc>:w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -static % -o %:r -lm<cr>:cw<cr>
 	endif
 endfunction
 au FileType c,cpp,h call BindF5_C()
@@ -187,9 +208,22 @@ function! BindF9_C()
 		map <F9> :w!<cr>:make<cr>:cw<cr>:! ./%<<cr>
 		imap <F9> <esc>:w!<cr>:make<cr>:cw<cr>:! ./%<<cr>
 	else
-		map <F9> :w!<cr>:!g++ -Wall -O2 -fno-optimize-sibling-calls -static % -o %:r -lm<cr>:cw<cr>:! ./%<<cr>
-		imap <F9> <Esc>:w!<cr>:!g++ -Wall -O2 -fno-optimize-sibling-calls -static % -o %:r -lm<cr>:cw<cr>:! ./%<<cr>
+		map <F9> :w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -static % -o %:r -lm<cr>:cw<cr>:! ./%<<cr>
+		imap <F9> <Esc>:w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -static % -o %:r -lm<cr>:cw<cr>:! ./%<<cr>
 	endif
 endfunction
 au FileType c,cpp,h call BindF9_C()
 
+" Добавляем компиляцию и просмотр для tex-файлов, сокращая команды плагина
+" vim-latex
+function! BindF5_tex()
+	map <F5> :w!<cr>\ll
+	imap <F5> <Esc>:w!<cr>\ll
+endfunction
+au FileType tex,plaintex call BindF5_tex()
+
+function! BindF9_tex()
+	map <F9> :w!<cr>\ll\lv
+	imap <F9> <Esc>:w!<cr>\ll\lv
+endfunction
+au FileType tex,plaintex call BindF9_tex()

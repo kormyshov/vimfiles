@@ -5,3 +5,81 @@ ${1}
 */
 $0
 endsnippet
+snippet gcj "MultiThread solver for GCJ" !b
+ifstream in("input.txt");
+ofstream out("output.txt");
+
+#define MAX_T ${1:101}
+#define MAX_Threads ${2:4}
+sem_t sem[MAX_T], sem_count;
+pthread_t pthread[MAX_T];
+
+class Answer{
+public:
+	int ans;
+	friend ostream& operator <<(ostream& out, const Answer &a){
+		out<<a.ans;
+		return out;
+	}
+};
+Answer ans[MAX_T];
+
+void* solve(void *_id){
+	int id = *(int*)_id;
+	// считывание данных
+
+
+
+	// завершение считывания
+	sem_post(&sem[id+1]);
+	// основное решение
+
+
+
+	// окончание решения
+	//sem_wait(&sem[id]);
+	// вывод данных
+
+	//out<<"Case #"<<id<<": ";
+
+
+	cout<<"Write in "<<id<<endl;
+	// окончание вывода
+	sem_post(&sem[id+1]);
+	sem_post(&sem_count);
+	pthread_exit(0);
+}
+
+void gcj_solve(){
+	cout<<"Start solver.\n";
+	int T;
+	char s[99];
+	in>>T;
+
+	sem_init(&sem_count, 0, MAX_Threads);
+	sem_init(&sem[1], 0, 2);
+	for(int ii=2; ii<=T; ++ii) sem_init(&sem[ii], 0, 0);
+
+	for(int ii=0; ii<T;){
+		cout<<"Wait start "<<ii<<" thread.\n";
+		sem_wait(&sem[ii+1]);
+		sem_wait(&sem_count);
+		++ii;
+		cout<<"Go "<<ii<<" thread.\n";
+		if(pthread_create(&pthread[ii], NULL, solve, &ii) != 0){
+			sprintf(s, "Creating the %d thread", ii);
+			perror(s);
+			return ;
+		}
+	}
+	for(int ii=1; ii<=T; ++ii){
+		if(pthread_join(pthread[ii], NULL) != 0){
+			sprintf(s, "Joining the %d thread", ii);
+			perror(s);
+			return ;
+		}
+	}
+	for(int ii=1; ii<=T; ++ii) out<<"Case #"<<ii<<": "<<ans[ii]<<endl;
+	cout<<"End solver.\n";
+}
+endsnippet

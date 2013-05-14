@@ -738,3 +738,260 @@ public:
 };
 $0
 endsnippet
+snippet RSQSet "RSQSet" !b
+class RSQSet{
+	${1:LL} *m, *mt;
+	int N;
+	int def;
+public:
+	RSQSet(int n){
+		def = ${2:-1234567890};
+		N = n;
+		m = new $1[4*N];
+		mt= new $1[4*N];
+		memset(m, 0, sizeof($1)*4*N);
+		for(int i=0;i<4*N;++i)
+			mt[i] = def;
+	}
+	RSQSet(int a[], int n){
+		def = $2;
+		N = n;
+		m = new $1[4*N];
+		mt= new $1[4*N];
+		init(a, 1, 0, N-1);
+		for(int i=0;i<4*N;++i)
+			mt[i] = def;
+	}
+	RSQSet(vector<int> &v){
+		def = $2;
+		N = v.size();
+		m = new $1[4*N];
+		mt= new $1[4*N];
+		init(v, 1, 0, N-1);
+		for(int i=0;i<4*N;++i)
+			mt[i] = def;
+	}
+	void init(int a[], int v, int vl, int vr){
+		if(vl==vr){
+			m[v] = a[vl];
+			return ;
+		}
+		int mid = (vl+vr)>>1;
+		init(a, v<<1, vl, mid);
+		init(a, v<<1|1, mid+1, vr);
+		m[v] = m[v<<1] + m[v<<1|1];
+	}
+	void init(vector<int> &a, int v, int vl, int vr){
+		if(vl==vr){
+			m[v] = a[vl];
+			return ;
+		}
+		int mid = (vl+vr)>>1;
+		init(a, v<<1, vl, mid);
+		init(a, v<<1|1, mid+1, vr);
+		m[v] = m[v<<1] + m[v<<1|1];
+	}
+	void set(int l, int r, $1 d){
+		set(l, r, d, 1, 0, N-1);
+	}
+	void set(int l, int r, $1 d, int v, int vl, int vr){
+		if(l>r) return ;
+		if(l<=vl && r>=vr){
+			mt[v] = d;
+			m[v]  = d*(r-l+1);
+			return ;
+		}
+		int mid = (vl+vr)>>1;
+		if(mt[v]!=def){
+			mt[v<<1|1] = mt[v<<1] = mt[v];
+			m[v<<1] = mt[v]*(mid-vl+1);
+			m[v<<1|1]=mt[v]*(vr-mid);
+			mt[v] = def;
+		}
+		set(l, MIN(r, mid), d, v<<1, vl, mid);
+		set(MAX(l, mid+1), r, d, v<<1|1, mid+1, vr);
+		m[v] = m[v<<1] + m[v<<1|1];
+	}
+	$1 sum(int l, int r){
+		return sum(l, r, 1, 0, N-1);
+	}
+	$1 sum(int l, int r, int v, int vl, int vr){
+		if(l>r) return 0;
+		if(l<=vl && r>=vr) return m[v];
+		if(mt[v]!=def) return mt[v]*(r-l+1);
+		int mid = (vl+vr)>>1;
+		return sum(l, MIN(r, mid), v<<1, vl, mid)
+			 + sum(MAX(l, mid+1), r, v<<1|1, mid+1, vr);
+	}
+};
+endsnippet
+snippet RMaxQSet "RMaxQSet" !b
+class RMaxQSet{
+	${1:int} *m, *mt;
+	int N;
+	int def;
+public:
+	RMaxQSet(int n){
+		def = ${2:-1234567890};
+		N = n;
+		m = new $1[4*N];
+		mt= new $1[4*N];
+		memset(m, 128, sizeof(LL)*4*N);
+		for(int i=0;i<4*N;++i)
+			mt[i] = def;
+	}
+	RMaxQSet(int a[], int n){
+		def = $2;
+		N = n;
+		m = new $1[4*N];
+		mt= new $1[4*N];
+		init(a, 1, 0, N-1);
+		for(int i=0;i<4*N;++i)
+			mt[i] = def;
+	}
+	RMaxQSet(vector<int> &v){
+		def = $2;
+		N = v.size();
+		m = new $1[4*N];
+		mt= new $1[4*N];
+		init(v, 1, 0, N-1);
+		for(int i=0;i<4*N;++i)
+			mt[i] = def;
+	}
+	void init(int a[], int v, int vl, int vr){
+		if(vl==vr){
+			m[v] = a[vl];
+			return ;
+		}
+		int mid = (vl+vr)>>1;
+		init(a, v<<1, vl, mid);
+		init(a, v<<1|1, mid+1, vr);
+		m[v] = MAX(m[v<<1], m[v<<1|1]);
+	}
+	void init(vector<int> &a, int v, int vl, int vr){
+		if(vl==vr){
+			m[v] = a[vl];
+			return ;
+		}
+		int mid = (vl+vr)>>1;
+		init(a, v<<1, vl, mid);
+		init(a, v<<1|1, mid+1, vr);
+		m[v] = MAX(m[v<<1], m[v<<1|1]);
+	}
+	void set(int l, int r, $1 d){
+		set(l, r, d, 1, 0, N-1);
+	}
+	void set(int l, int r, $1 d, int v, int vl, int vr){
+		if(l>r) return ;
+		if(l<=vl && r>=vr){
+			m[v] = mt[v] = d;
+			return ;
+		}
+		int mid = (vl+vr)>>1;
+		if(mt[v]!=def){
+			mt[v<<1|1] = mt[v<<1] = mt[v];
+			m[v<<1|1] = m[v<<1] = mt[v];
+			mt[v] = def;
+		}
+		set(l, MIN(r, mid), d, v<<1, vl, mid);
+		set(MAX(l, mid+1), r, d, v<<1|1, mid+1, vr);
+		m[v] = MAX(m[v<<1], m[v<<1|1]);
+	}
+	$1 max(int l, int r){
+		return max(l, r, 1, 0, N-1);
+	}
+	$1 max(int l, int r, int v, int vl, int vr){
+		if(l>r) return -INF;
+		if(l<=vl && r>=vr) return m[v];
+		if(mt[v]!=def) return mt[v];
+		int mid = (vl+vr)>>1;
+		return std::max(max(l, MIN(r, mid), v<<1, vl, mid),
+			 	max(MAX(l, mid+1), r, v<<1|1, mid+1, vr));
+	}
+};
+endsnippet
+snippet RMinQSet "RMinQSet" !b
+class RMinQSet{
+	${1:int} *m, *mt;
+	int N;
+	int def;
+public:
+	RMinQSet(int n){
+		def = ${2:-1234567890};
+		N = n;
+		m = new $1[4*N];
+		mt= new $1[4*N];
+		memset(m, 127, sizeof(LL)*4*N);
+		for(int i=0;i<4*N;++i)
+			mt[i] = def;
+	}
+	RMinQSet(int a[], int n){
+		def = $2;
+		N = n;
+		m = new $1[4*N];
+		mt= new $1[4*N];
+		init(a, 1, 0, N-1);
+		for(int i=0;i<4*N;++i)
+			mt[i] = def;
+	}
+	RMinQSet(vector<int> &v){
+		def = $2;
+		N = v.size();
+		m = new $1[4*N];
+		mt= new $1[4*N];
+		init(v, 1, 0, N-1);
+		for(int i=0;i<4*N;++i)
+			mt[i] = def;
+	}
+	void init(int a[], int v, int vl, int vr){
+		if(vl==vr){
+			m[v] = a[vl];
+			return ;
+		}
+		int mid = (vl+vr)>>1;
+		init(a, v<<1, vl, mid);
+		init(a, v<<1|1, mid+1, vr);
+		m[v] = MIN(m[v<<1], m[v<<1|1]);
+	}
+	void init(vector<int> &a, int v, int vl, int vr){
+		if(vl==vr){
+			m[v] = a[vl];
+			return ;
+		}
+		int mid = (vl+vr)>>1;
+		init(a, v<<1, vl, mid);
+		init(a, v<<1|1, mid+1, vr);
+		m[v] = MIN(m[v<<1], m[v<<1|1]);
+	}
+	void set(int l, int r, $1 d){
+		set(l, r, d, 1, 0, N-1);
+	}
+	void set(int l, int r, $1 d, int v, int vl, int vr){
+		if(l>r) return ;
+		if(l<=vl && r>=vr){
+			m[v] = mt[v] = d;
+			return ;
+		}
+		int mid = (vl+vr)>>1;
+		if(mt[v]!=def){
+			mt[v<<1|1] = mt[v<<1] = mt[v];
+			m[v<<1|1] = m[v<<1] = mt[v];
+			mt[v] = def;
+		}
+		set(l, MIN(r, mid), d, v<<1, vl, mid);
+		set(MAX(l, mid+1), r, d, v<<1|1, mid+1, vr);
+		m[v] = MIN(m[v<<1], m[v<<1|1]);
+	}
+	$1 min(int l, int r){
+		return min(l, r, 1, 0, N-1);
+	}
+	$1 min(int l, int r, int v, int vl, int vr){
+		if(l>r) return INF;
+		if(l<=vl && r>=vr) return m[v];
+		if(mt[v]!=def) return mt[v];
+		int mid = (vl+vr)>>1;
+		return std::min(min(l, MIN(r, mid), v<<1, vl, mid),
+			 	min(MAX(l, mid+1), r, v<<1|1, mid+1, vr));
+	}
+};
+endsnippet
