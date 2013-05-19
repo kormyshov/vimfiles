@@ -17,7 +17,7 @@
 #include <algorithm>
 
 #define ABS(a) ((a)<0?(-(a)):(a))
-#define SIGN(a) ((a)<0?(-1):((a)>0?(1):(0)))
+#define SIGN(a) (((a)>0)-((a)<0))
 #define SQR(a) ((a)*(a))
 #define MAX(a,b) ((a)>(b)?(a):(b))
 #define MIN(a,b) ((a)<(b)?(a):(b))

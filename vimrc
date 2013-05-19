@@ -21,6 +21,8 @@ filetype on
 filetype plugin on
 filetype indent on
 
+imap <esc> <esc>:silent !~/.vim/chit_us.sh<cr>
+
 " Отключаем панель инструментов
 set guioptions-=T
 " Отключаем меню
@@ -227,3 +229,6 @@ function! BindF9_tex()
 	imap <F9> <Esc>:w!<cr>\ll\lv
 endfunction
 au FileType tex,plaintex call BindF9_tex()
+
+" Вычисление выражений
+imap <silent> <A-e> <C-r>=string(eval(input("Calculate: ")))<CR>
