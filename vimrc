@@ -21,7 +21,7 @@ filetype on
 filetype plugin on
 filetype indent on
 
-imap <esc> <esc>:silent !~/.vim/chit_us.sh<cr>
+imap <esc> <esc>:silent !~/.vim/to_us.sh<cr>
 
 " Отключаем панель инструментов
 set guioptions-=T
