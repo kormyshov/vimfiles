@@ -5,6 +5,25 @@ ${1}
 */
 $0
 endsnippet
+snippet stov "For SRM string to vector<int>"
+vector<int> stov(string s){
+	stringstream ss(s);
+	vector<int> v;
+	int a;
+	while(ss>>a) v.push_back(a);
+	return v;
+}
+endsnippet
+snippet vstov "For SRM vector<string> to vector<int>"
+vector<int> vstov(vector<string> vs){
+	stringstream ss;
+	for(int i=0; i<(int)vs.size(); ++i)	ss<<vs[i];
+	int a;
+	vector<int> v;
+	while(ss>>a) v.push_back(a);
+	return v;
+}
+endsnippet
 snippet gcj "MultiThread solver for GCJ" !b
 ifstream in("input.txt");
 ofstream out("output.txt");

@@ -52,12 +52,14 @@
 	clique
 Модуль lib
 	test
+	gcj
 Модуль Scanner
 	Scanner
 Модуль segment
 	RSQ
 	RMaxQ, RMinQ, RMaxQInd, RMinQInd
 	RSQAdd, RMaxQAdd, RMinQAdd
+	RSQSet, RMaxQSet, RMinQSet
 Модуль string
 	suffix_array
 	pfun, zfun

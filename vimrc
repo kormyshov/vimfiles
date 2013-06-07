@@ -21,7 +21,8 @@ filetype on
 filetype plugin on
 filetype indent on
 
-imap <esc> <esc>:silent !~/.vim/to_us.sh<cr>
+imap <Esc> <Esc>:silent !~/.vim/to_us.sh<cr>
+nmap <Esc> :silent !~/.vim/to_us.sh<cr>
 
 " Отключаем панель инструментов
 set guioptions-=T
@@ -57,7 +58,6 @@ set scrolloff=5
 set showcmd
 
 " Настройка строки состояния
-"
 set statusline=%F%m%r%h%w\ [%{&fileformat},%{&fileencoding}]\ [%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
 set laststatus=2 " всегда показывать строку состояния
 
@@ -84,8 +84,7 @@ imap <C-V> <Esc>"+gpi
 
 " Сохрание на F2
 nmap <F2> :w!<cr>
-vmap <F2> <esc>:w!<cr>i
-imap <F2> <esc>:w!<cr>a
+imap <F2> <C-o>:w!<cr>
 
 " Разделение окна по Ctrl+W+i и Ctrl+W+-
 nmap <C-W>i <C-W>v
@@ -94,12 +93,12 @@ nmap <C-W>- <C-W>s
 " Перемещение по вкладкам
 map <S-tab> :tabprevious<cr>
 nmap <S-tab> :tabprevious<cr>
-imap <S-tab> <ESC>:tabprevious<cr>i
+imap <S-tab> <C-o>:tabprevious<cr>
 map <C-tab> :tabnext<cr>
 nmap <C-tab> :tabnext<cr>
-imap <C-tab> <ESC>:tabnext<cr>i
-nmap <C-t> :tabnew<cr>:NERDTree<cr><C-W><RIGHT>
-imap <C-t> <ESC>:tabnew<cr>:NERDTree<cr><C-W><RIGHT>
+imap <C-tab> <C-o>:tabnext<cr>
+nmap <C-t> :tabnew<cr>:NERDTree<cr><C-W>l
+imap <C-t> <ESC>:tabnew<cr>:NERDTree<cr><C-W>l
 
 " Автодополнение скобок в С++
 function! AutocompleteBraces()
@@ -124,12 +123,10 @@ set lines=46
 
 " Вешаем горячие клавиши для открытия/закрытия NERD-tree
 nmap <C-N>v :NERDTree<cr>
-vmap <C-N>v <esc>:NERDTree<cr>i
-imap <C-N>v <esc>:NERDTree<cr>i
+imap <C-N>v <C-o>:NERDTree<cr>
 
 nmap <C-N>x :NERDTreeClose<cr>
-vmap <C-N>x <esc>:NERDTreeClose<cr>i
-imap <C-N>x <esc>:NERDTreeClose<cr>i
+imap <C-N>x <C-o>:NERDTreeClose<cr>
 
 " Инвертирование комментариев по Ctrl+E с помощью NERDCommenter
 map <C-e> \ci
@@ -137,7 +134,7 @@ nmap <C-e> \ci
 imap <C-e> <Esc>\cii
 
 " Устанавливаем директорию для сниппетов
-let g:UltiSnipsSnippetDirectories=["snippets","snippets/Scanner","snippets/lib","snippets/algebra","snippets/array","snippets/graph","snippets/string","snippets/compressor","snippets/segment","snippets/fenwick","snippets/DataStruct"]
+let g:UltiSnipsSnippetDirectories=["snippets","snippets/Scanner","snippets/lib","snippets/algebra","snippets/array","snippets/graph","snippets/string","snippets/compressor","snippets/segment","snippets/fenwick","snippets/DataStruct","snippets/BI"]
 
 " Автодополнение по <C-Space>
 let g:clang_complete_auto=0
@@ -196,7 +193,7 @@ function! BindF5_C()
 	if filereadable("Makefile")
 		set makeprg=make
 		map <F5> :w!<cr>:make<cr>:cw<cr>
-		imap <F5> <esc>:w!<cr>:make<cr>:cw<cr>
+		imap <F5> <Esc>:w!<cr>:make<cr>:cw<cr>
 	else
 		map <F5> :w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -static % -o %:r -lm<cr>:cw<cr>
 		imap <F5> <Esc>:w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -static % -o %:r -lm<cr>:cw<cr>
@@ -208,7 +205,7 @@ function! BindF9_C()
 	if filereadable("Makefile")
 		set makeprg=make
 		map <F9> :w!<cr>:make<cr>:cw<cr>:! ./%<<cr>
-		imap <F9> <esc>:w!<cr>:make<cr>:cw<cr>:! ./%<<cr>
+		imap <F9> <Esc>:w!<cr>:make<cr>:cw<cr>:! ./%<<cr>
 	else
 		map <F9> :w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -static % -o %:r -lm<cr>:cw<cr>:! ./%<<cr>
 		imap <F9> <Esc>:w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -static % -o %:r -lm<cr>:cw<cr>:! ./%<<cr>
