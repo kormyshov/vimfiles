@@ -28,10 +28,25 @@ snippet gcj "MultiThread solver for GCJ" !b
 ifstream in("input.txt");
 ofstream out("output.txt");
 
+// Не забудь в main добавить вызов gcj_solve()
 #define MAX_T ${1:101}
 #define MAX_Threads ${2:4}
-sem_t sem[MAX_T], sem_count;
+sem_t sem[MAX_T], sem_count, sem_stack;
 pthread_t pthread[MAX_T];
+stack<int> thread_stack;
+
+int thread_pop(){
+	sem_wait(&sem_stack);
+	int r = thread_stack.top();
+	thread_stack.pop();
+	sem_post(&sem_stack);
+	return r;
+}
+void thread_push(int a){
+	sem_wait(&sem_stack);
+	thread_stack.push(a);
+	sem_post(&sem_stack);
+}
 
 class Answer{
 public:
@@ -44,7 +59,8 @@ public:
 Answer ans[MAX_T];
 
 void* solve(void *_id){
-	int id = *(int*)_id;
+	const int id = *(int*)_id;
+	const int num_th = thread_pop();
 	// считывание данных
 
 
@@ -64,6 +80,7 @@ void* solve(void *_id){
 
 	cout<<"Write in "<<id<<endl;
 	// окончание вывода
+	thread_push(num_th);
 	sem_post(&sem[id+1]);
 	sem_post(&sem_count);
 	pthread_exit(0);
@@ -76,8 +93,10 @@ void gcj_solve(){
 	in>>T;
 
 	sem_init(&sem_count, 0, MAX_Threads);
+	sem_init(&sem_stack, 0, 1);
 	sem_init(&sem[1], 0, 2);
 	for(int ii=2; ii<=T; ++ii) sem_init(&sem[ii], 0, 0);
+	for(int ii=0; ii<MAX_Threads; ++ii) thread_stack.push(ii);
 
 	for(int ii=0; ii<T;){
 		cout<<"Wait start "<<ii<<" thread.\n";

@@ -206,6 +206,113 @@ public:
 };
 $0
 endsnippet
+snippet FenwickMax "FenwickMax" !b
+class FenwickMax{
+	${1:int} *md, *mu;
+	int N;
+public:
+	FenwickMax(int n){
+		N = n;
+		md = new $1[N];
+		mu = new $1[N];
+		memset(md, 127, sizeof($1)*N);
+		memset(mu, 127, sizeof($1)*N);
+	}
+	FenwickMax(int a[], int n){
+		N = n;
+		md = new $1[N];
+		mu = new $1[N];
+		memset(md, 127, sizeof($1)*N);
+		memset(mu, 127, sizeof($1)*N);
+		for(int i=N-1, t=i&(i-1);i>0;--i, t=i&(i-1)){
+			if(md[i]<a[i]) md[i]=a[i];
+			if(t>0 && md[t]<md[i]) md[t]=md[i];
+		}
+		for(int i=0, t=i|(i+1);i<N;++i, t=i|(i+1)){
+			if(mu[i]<a[i]) mu[i]=a[i];
+			if(t<N && mu[t]<mu[i]) mu[t]=mu[i];
+		}
+	}
+	FenwickMax(vector<int> &a){
+		N = a.size();
+		md = new $1[N];
+		mu = new $1[N];
+		memset(md, 127, sizeof($1)*N);
+		memset(mu, 127, sizeof($1)*N);
+		for(int i=N-1, t=i&(i-1);i>0;--i, t=i&(i-1)){
+			if(md[i]<a[i]) md[i]=a[i];
+			if(t>0 && md[t]<md[i]) md[t]=md[i];
+		}
+		for(int i=0, t=i|(i+1);i<N;++i, t=i|(i+1)){
+			if(mu[i]<a[i]) mu[i]=a[i];
+			if(t<N && mu[t]<mu[i]) mu[t]=mu[i];
+		}
+	}
+	void relax(int n, $1 d){
+		for(int i=n;i>0;i&=i-1) if(md[i]<d) md[i]=d;
+		for(int i=n;i<N;i|=i+1) if(mu[i]<d) mu[i]=d;
+	}
+	$1 min(int l, int r){
+		$1 res=INF;
+		if(!l){
+			for(;r>=0;r=(r&(r+1))-1) if(res<mu[r])res=mu[r];
+			return res;
+		}
+		for(;(r&(r+1))>=l;r=(r&(r+1))-1) if(res<mu[r])res=mu[r];
+		for(;(l|(l-1))<=r;l=(l|(l-1))+1) if(res<md[l])res=md[l];
+		return res;
+	}
+	void add(int n, $1 d){
+		if(d<0){
+			d += (n&1 ? md[n] : mu[n]);
+			relax(n, d);
+			return ;
+		}
+		$1 t;
+		int to, tmp;
+		if(n&1){
+			md[n] += d;
+			t = md[n];
+			to = (n&(n+1))-1;
+			for(int i=n-1; i>=0 && i>to; i=(i&(i+1))-1)
+				if(t<mu[i]) t = mu[i];
+			mu[n] = t;
+		}else{
+			mu[n] += d;
+			t = mu[n];
+			to = (n|(n-1))+1;
+			for(int i=n+1; i<N && i<to; i=(i|(i-1))+1)
+				if(t<md[i]) t = md[i];
+			md[n] = t;
+		}
+		t = mu[n];
+		for(int i=n, j=n; i<N; i=to){
+			if(i+1<N && t<md[i+1]) t = md[i+1];
+			to = i|(i+1);
+			tmp = (to&(to+1))-1;
+			while(tmp != (j&(j+1))-1){
+				j = (j&(j+1))-1;
+				if(t<mu[j]) t = mu[j];
+			}
+			if(to<N && mu[to]>t) mu[to] = t;
+			else break;
+		}
+		t = md[n];
+		for(int i=n, j=n; i>0; i=to){
+			if(t<mu[i-1]) t = mu[i-1];
+			to = i&(i-1);
+			tmp = (to|(to-1))+1;
+			while(tmp != (j|(j-1))+1){
+				j = (j|(j-1))+1;
+				if(j<N && t<md[j]) t = md[j];
+			}
+			if(to>0 && md[to]>t) md[to] = t;
+			else break;
+		}
+	}
+};
+$0
+endsnippet
 snippet Fenwick2D "Fenwick2D" !b
 class Fenwick2D{
 	${1:int} **mm;

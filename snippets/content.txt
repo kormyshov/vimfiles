@@ -15,6 +15,7 @@
 	reverse_grey
 	factmod
 	isPrime
+	Cnk
 Модуль array
 	lbound -- Ускоренный бинпоиск
 		slbound -- прекалк (после каждого изменения)
@@ -37,7 +38,7 @@
 	ri, rii, riii
 	rd, rdd, rddd
 	rc, rcc, rccc
-	rs, rm, rv, rvp
+	rs, rm, rm1, rv, rvp
 Модуль DataStruct
 	DSU
 	Stex
@@ -45,13 +46,15 @@
 Модуль fenwick
 	Fenwick
 	FenwickAdd
-	FenwickMin
+	FenwickMin, FenwickMax
 	Fenwick2D
 	FenwickMap
 Модуль graph
 	clique
+	Dijkstra, DijkstraHeap
 Модуль lib
 	test
+	stov, vstov
 	gcj
 Модуль Scanner
 	Scanner

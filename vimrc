@@ -100,14 +100,6 @@ imap <C-tab> <C-o>:tabnext<cr>
 nmap <C-t> :tabnew<cr>:NERDTree<cr><C-W>l
 imap <C-t> <ESC>:tabnew<cr>:NERDTree<cr><C-W>l
 
-" Автодополнение скобок в С++
-function! AutocompleteBraces()
-	imap [ []<A-h>
-	imap ( ()<A-h>
-	imap { {<CR><C-o>$<CR>}<A-k><C-o>$
-endfunction
-au Filetype c,cpp,h call AutocompleteBraces()
-
 " Делаем файлы сценариев исполняемыми
 au BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/" | silent !chmod a+x | endif | endif
 
@@ -141,6 +133,9 @@ let g:clang_complete_auto=0
 imap <C-Space> <C-X><C-U>
 let g:clang_close_preview=1
 
+" Исправляем C-T для cpp из-за clang
+let g:clang_jumpto_back_key='<C-['
+
 " Не переходить по звёздочке на следующее
 nnoremap * *N
 
@@ -154,7 +149,7 @@ autocmd CursorMoved * silent! exe printf("match Search /\\<%s\\>/", expand('<cwo
 nnoremap <A-1> ciw
 
 " По Alt-5 изменить хвост текущего слова
-nnoremap <A-5> cw
+nnoremap <A-2> cw
 
 " Настройка сворачиваемости блоков кода
 set foldenable 			" Включить фолдинг
@@ -165,7 +160,7 @@ set foldopen=all		" Автоматическое открытие свёрток
 
 " Хот-кеи для cpp4cf
 map <C-l> :CFTemplate<CR>89<C-W>i<C-W>l:e ~/.vim/snippets/content.txt<CR>19ggzMzrgg<C-W>h
-map <C-P> :CFPatch<CR>
+map <C-p> :CFPatch<CR>
 
 " Отключаем работу стрелочек
 inoremap <Up> <NOP>
@@ -182,6 +177,9 @@ imap <A-h> <Esc>i
 imap <A-j> <C-o>j
 imap <A-k> <C-o>k
 imap <A-l> <Esc>la
+
+" Вычисление выражений
+imap <silent> <A-e> <C-r>=string(eval(input("Calculate: ")))<CR>
 
 " Оптимизация для RAIC
 " map <C-K> :! ./compile-g++.sh
@@ -209,9 +207,19 @@ function! BindF9_C()
 	else
 		map <F9> :w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -static % -o %:r -lm<cr>:cw<cr>:! ./%<<cr>
 		imap <F9> <Esc>:w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -static % -o %:r -lm<cr>:cw<cr>:! ./%<<cr>
+		map <C-F9> :w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -static % -o %:r -lm<cr>:cw<cr>:! xclip -o -selection clipboard<cr>:! xclip -o -selection clipboard \| ./%<<cr>
+		imap <C-F9> <Esc>:w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -static % -o %:r -lm<cr>:cw<cr>:! xclip -o -selectopn clipboard<cr>:! xclip -o -selection clipboard \| ./%<<cr>
 	endif
 endfunction
 au FileType c,cpp,h call BindF9_C()
+
+" Автодополнение скобок в С++
+function! AutocompleteBraces()
+	imap [ []<A-h>
+	imap ( ()<A-h>
+	imap { {<CR><C-o>$<CR>}<A-k><C-o>$
+endfunction
+au Filetype c,cpp,h call AutocompleteBraces()
 
 " Добавляем компиляцию и просмотр для tex-файлов, сокращая команды плагина
 " vim-latex
@@ -227,5 +235,4 @@ function! BindF9_tex()
 endfunction
 au FileType tex,plaintex call BindF9_tex()
 
-" Вычисление выражений
-imap <silent> <A-e> <C-r>=string(eval(input("Calculate: ")))<CR>
+"au BufEnter $MYVIMRC source $MYVIMRC
