@@ -1,25 +1,30 @@
 snippet Compressor "class Compressor" !b
 class Compressor {
-	vector<int> v;
+	vector<${1:int}> v;
 public:
-	Compressor(vector<int> _a)
+	Compressor(vector<$1> _a)
 	{
 		v.clear();
 		sort(_a.begin(), _a.end());
-		v.push_back(-INF);
+		v.push_back(-${1/(LL)?(int)?/$1/}INF);
 		v.push_back(_a[0]);
 		for(int _i=1; _i<(int)_a.size(); ++_i)
 			if(_a[_i]!=_a[_i-1])
 				v.push_back(_a[_i]);
-		v.push_back(INF);
+		v.push_back(${1/(LL)?(int)?/$1/}INF);
 	}
 	int size()
 	{
 		return v.size();
 	}
-	int get(int a)
+	int get($1 a)
 	{
 		return lower_bound(v.begin(), v.end(), a) - v.begin();
+	}
+	bool search($1 a, int &ind)
+	{
+		ind = lower_bound(v.begin(), v.end(), a) - v.begin();
+		return (ind < v.size()) && (v[ind] == a);
 	}
 };
 endsnippet

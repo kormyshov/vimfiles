@@ -130,3 +130,10 @@ vector<int> Dijkstra(int s){
 	return dijkstra_d;
 }
 endsnippet
+snippet Floyd "Floyd inline" !b
+for(int _floyd_k_=0; _floyd_k_<${1:n}; ++_floyd_k_)
+	for(int _floyd_i_=0; _floyd_i_<$1; ++_floyd_i_)
+		for(int _floyd_j_=0; _floyd_j_<$1; ++_floyd_j_)
+			${2:mm}[_floyd_i_][_floyd_j_] = min($2[_floyd_i_][_floyd_j_],
+							$2[_floyd_i_][_floyd_k_]+$2[_floyd_k_][_floyd_j_]);
+endsnippet

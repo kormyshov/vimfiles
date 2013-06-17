@@ -126,7 +126,7 @@ nmap <C-e> \ci
 imap <C-e> <Esc>\cii
 
 " Устанавливаем директорию для сниппетов
-let g:UltiSnipsSnippetDirectories=["snippets","snippets/Scanner","snippets/lib","snippets/algebra","snippets/array","snippets/graph","snippets/string","snippets/compressor","snippets/segment","snippets/fenwick","snippets/DataStruct","snippets/BI"]
+let g:UltiSnipsSnippetDirectories=["snippets","snippets/Scanner","snippets/lib","snippets/algebra","snippets/array","snippets/graph","snippets/string","snippets/compressor","snippets/segment","snippets/fenwick","snippets/DataStruct","snippets/BI","snippets/Persistent"]
 
 " Автодополнение по <C-Space>
 let g:clang_complete_auto=0
@@ -134,7 +134,7 @@ imap <C-Space> <C-X><C-U>
 let g:clang_close_preview=1
 
 " Исправляем C-T для cpp из-за clang
-let g:clang_jumpto_back_key='<C-['
+let g:clang_jumpto_back_key='<C-[>'
 
 " Не переходить по звёздочке на следующее
 nnoremap * *N
@@ -148,7 +148,7 @@ autocmd CursorMoved * silent! exe printf("match Search /\\<%s\\>/", expand('<cwo
 " По Alt-1 редактировать текущее слово
 nnoremap <A-1> ciw
 
-" По Alt-5 изменить хвост текущего слова
+" По Alt-2 изменить хвост текущего слова
 nnoremap <A-2> cw
 
 " Настройка сворачиваемости блоков кода

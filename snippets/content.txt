@@ -52,10 +52,13 @@
 Модуль graph
 	clique
 	Dijkstra, DijkstraHeap
+	Floyd
 Модуль lib
 	test
 	stov, vstov
 	gcj
+Модуль Persistent
+	PersistentStack
 Модуль Scanner
 	Scanner
 Модуль segment

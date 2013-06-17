@@ -238,8 +238,8 @@ snippet Cnk "C_n^k" !b
 ${1:LL} Cnk(int _n, int _k)
 {
 	$1 _r = 1;
-	int _t = min(_k, _n-_k);
-	for(int _i=_t+1; _i < _n; ++_i)
+	int _t = max(_k, _n-_k);
+	for(int _i=_t+1; _i <= _n; ++_i)
 	{
 		_r *= _i;
 		_r /= _i - _t;
