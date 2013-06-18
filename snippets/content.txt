@@ -58,6 +58,8 @@
 	test
 	stov, vstov
 	gcj
+Модуль matrix
+	Matrix
 Модуль Persistent
 	PersistentStack
 Модуль Scanner

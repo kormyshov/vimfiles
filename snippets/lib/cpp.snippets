@@ -53,6 +53,7 @@ public:
 	int ans;
 	friend ostream& operator <<(ostream& out, const Answer &a){
 		out<<a.ans;
+		//out<< setprecision(12) <<a.ans;
 		return out;
 	}
 };

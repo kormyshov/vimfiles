@@ -77,6 +77,11 @@ public:
 		return *this;
 	}
 
+	inline Point& operator=(const Point &a){
+		set(a);
+		return *this;
+	}
+
 	friend istream& operator>>(istream& in, Point &a){
 		$1 x, y;
 		in>>x>>y;
@@ -173,6 +178,11 @@ public:
 	}
 	inline Point3D operator/=($1 k){
 		x /= k; y /= k; z /= k;
+		return *this;
+	}
+
+	inline Point3D& operator=(const Point3D &a){
+		set(a);
 		return *this;
 	}
 
