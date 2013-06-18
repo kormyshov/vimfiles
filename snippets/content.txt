@@ -1,8 +1,8 @@
 Модуль algebra
 	pow
 	phi
-	inverse
-	inverse_all
+	inverse, inverse_all
+	inverse_all_fact
 	gcd
 	lcm
 	gcdex
@@ -11,11 +11,11 @@
 	eratosfen
 	atkin
 	fibonacci
-	grey
-	reverse_grey
+	grey, reverse_grey
 	factmod
 	isPrime
 	Cnk
+	isSquare, isPow2
 Модуль array
 	lbound -- Ускоренный бинпоиск
 		slbound -- прекалк (после каждого изменения)
@@ -29,8 +29,7 @@
 	vi, vect, vvi, pii
 	#i, #d
 	fill, sort, rsort
-	if, ife
-	wh
+	if, ife, wh
 	for, forab
 	forr, forrab
 	forv, forrv
