@@ -126,7 +126,7 @@ nmap <C-e> \ci
 imap <C-e> <Esc>\cii
 
 " Устанавливаем директорию для сниппетов
-let g:UltiSnipsSnippetDirectories=["snippets","snippets/Scanner","snippets/lib","snippets/algebra","snippets/array","snippets/graph","snippets/string","snippets/compressor","snippets/segment","snippets/fenwick","snippets/DataStruct","snippets/BI","snippets/Persistent"]
+let g:UltiSnipsSnippetDirectories=["snippets","snippets/Scanner","snippets/lib","snippets/algebra","snippets/array","snippets/graph","snippets/string","snippets/compressor","snippets/segment","snippets/fenwick","snippets/DataStruct","snippets/BI","snippets/Persistent","snippets/geometry"]
 
 " Автодополнение по <C-Space>
 let g:clang_complete_auto=0

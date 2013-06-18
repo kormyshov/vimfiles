@@ -1,0 +1,189 @@
+snippet Point "Plain point" !b
+class Point{
+	${1:double} x, y;
+public:
+	inline Point():
+		x(($1)0), y(($1)0) {};
+	inline Point($1 _x, $1 _y):
+		x(_x), y(_y) {};
+	inline Point(const Point &a):
+		x(a.get_x()), y(a.get_y()) {};
+
+	inline $1 get_x() const {return x;}
+	inline $1 get_y() const {return y;}
+
+	inline void set($1 _x, $1 _y){
+		x = _x; y = _y;
+	}
+	inline void set(const Point &a){
+		x = a.get_x(); y = a.get_y();
+	}
+
+	inline double length() const {
+		return sqrt(x*x+y*y+.0);
+	}
+
+	inline Point operator-=(const Point &a){
+		x -= a.get_x(); y -= a.get_y();
+		return *this;
+	}
+	inline Point operator-(const Point &a) const {
+		Point res(*this);
+		res -= a;
+		return res;
+	}
+
+	inline Point operator-() const {
+		return Point(-x, -y);
+	}
+
+	inline Point operator+=(const Point &a){
+		x += a.get_x(); y += a.get_y();
+		return *this;
+	}
+	inline Point operator+(const Point &a) const {
+		Point res(*this);
+		res += a;
+		return res;
+	}
+
+	inline $1 scalar(const Point &a) const {
+		return x*a.get_x() + y*a.get_y();
+	}
+	inline $1 operator%(const Point &a) const {
+		return scalar(a);
+	}
+
+	inline $1 operator*(const Point &a) const {
+		return x*a.get_y() - y*a.get_x();
+	}
+
+	inline Point operator*($1 k) const {
+		return Point(x*k, y*k);
+	}
+	inline friend Point operator*(const $1 k, const Point &a){
+		return a*k;
+	}
+	inline Point operator*=($1 k){
+		x *= k; y *= k;
+		return *this;
+	}
+
+	inline Point operator/($1 k) const {
+		return Point(x/k, y/k);
+	}
+	inline Point operator/=($1 k){
+		x /= k; y /= k;
+		return *this;
+	}
+
+	friend istream& operator>>(istream& in, Point &a){
+		$1 x, y;
+		in>>x>>y;
+		a.set(x, y);
+		return in;
+	}
+	friend ostream& operator<<(ostream& out, const Point &a){
+		return out<<a.get_x()<<" "<<a.get_y();
+	}
+};
+endsnippet
+snippet Point3D "Space point" !b
+class Point3D{
+	${1:double} x, y, z;
+public:
+	inline Point3D():
+		x(($1)0), y(($1)0), z(($1)0) {};
+	inline Point3D($1 _x, $1 _y, $1 _z):
+		x(_x), y(_y), z(_z) {};
+	inline Point3D(const Point3D &a):
+		x(a.get_x()), y(a.get_y()), z(a.get_z()) {};
+
+	inline $1 get_x() const {return x;}
+	inline $1 get_y() const {return y;}
+	inline $1 get_z() const {return z;}
+
+	inline void set($1 _x, $1 _y, $1 _z){
+		x = _x; y = _y; z = _z;
+	}
+	inline void set(const Point3D &a){
+		x = a.get_x(); y = a.get_y(); z = a.get_z();
+	}
+
+	inline double length() const {
+		return sqrt(x*x+y*y+z*z+.0);
+	}
+
+	inline Point3D operator-=(const Point3D &a){
+		x -= a.get_x(); y -= a.get_y(); z -= a.get_z();
+		return *this;
+	}
+	inline Point3D operator-(const Point3D &a) const {
+		Point3D res(*this);
+		res -= a;
+		return res;
+	}
+
+	inline Point3D operator-() const {
+		return Point3D(-x, -y, -z);
+	}
+
+	inline Point3D operator+=(const Point3D &a){
+		x += a.get_x(); y += a.get_y(); z += a.get_z();
+		return *this;
+	}
+	inline Point3D operator+(const Point3D &a) const {
+		Point3D res(*this);
+		res += a;
+		return res;
+	}
+
+	inline $1 scalar(const Point3D &a) const {
+		return x*a.get_x() + y*a.get_y() + z*a.get_z();
+	}
+	inline $1 operator%(const Point3D &a) const {
+		return scalar(a);
+	}
+
+	inline Point3D operator*(const Point3D &a) const {
+		return Point3D(
+				y*a.get_z() - z*a.get_y(),
+				z*a.get_x() - x*a.get_z(),
+				x*a.get_y() - y*a.get_x()
+			);
+	}
+	inline Point3D operator*=(const Point3D &a){
+		set(*this * a);
+		return *this;
+	}
+
+	inline Point3D operator*($1 k) const {
+		return Point3D(x*k, y*k, z*k);
+	}
+	inline friend Point3D operator*(const $1 k, const Point3D &a){
+		return a*k;
+	}
+	inline Point3D operator*=($1 k){
+		x *= k; y *= k; z *= k;
+		return *this;
+	}
+
+	inline Point3D operator/($1 k) const {
+		return Point3D(x/k, y/k, z/k);
+	}
+	inline Point3D operator/=($1 k){
+		x /= k; y /= k; z /= k;
+		return *this;
+	}
+
+	friend istream& operator>>(istream& in, Point3D &a){
+		double x, y, z;
+		in>>x>>y>>z;
+		a.set(x, y, z);
+		return in;
+	}
+	friend ostream& operator<<(ostream& out, const Point3D &a){
+		return out<<a.get_x()<<" "<<a.get_y()<<" "<<a.get_z();
+	}
+};
+endsnippet

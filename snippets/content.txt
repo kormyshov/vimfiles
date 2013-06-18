@@ -49,6 +49,8 @@
 	FenwickMin, FenwickMax
 	Fenwick2D
 	FenwickMap
+Модуль geometry
+	Point, Point3D
 Модуль graph
 	clique
 	Dijkstra, DijkstraHeap
