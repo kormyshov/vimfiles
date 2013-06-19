@@ -8,17 +8,17 @@ public:
 		m = new $1[4*N];
 		memset(m, 0, sizeof($1)*4*N);
 	}
-	RSQ(int a[], int n){
+	RSQ($1 a[], int n){
 		N = n;
 		m = new $1[4*N];
 		init(a, 1, 0, N-1);
 	}
-	RSQ(vector<int> &v){
+	RSQ(vector<$1> &v){
 		N = v.size();
 		m = new $1[4*N];
 		init(v, 1, 0, N-1);
 	}
-	void init(int a[], int v, int vl, int vr){
+	void init($1 a[], int v, int vl, int vr){
 		if(vl==vr){
 			m[v] = a[vl];
 			return ;
@@ -28,7 +28,7 @@ public:
 		init(a, v<<1|1, mid+1, vr);
 		m[v] = m[v<<1] + m[v<<1|1];
 	}
-	void init(vector<int> &a, int v, int vl, int vr){
+	void init(vector<$1> &a, int v, int vl, int vr){
 		if(vl==vr){
 			m[v] = a[vl];
 			return ;
@@ -992,6 +992,81 @@ public:
 		int mid = (vl+vr)>>1;
 		return std::min(min(l, MIN(r, mid), v<<1, vl, mid),
 			 	min(MAX(l, mid+1), r, v<<1|1, mid+1, vr));
+	}
+};
+endsnippet
+snippet RGcdQ "Segment tree for gcd" !b
+class RGcdQ{
+	${1:int} *m;
+	int N;
+public:
+	RGcdQ(int n){
+		N = n;
+		m = new $1[4*N];
+		memset(m, 0, sizeof($1)*4*N);
+	}
+	RGcdQ($1 a[], int n){
+		N = n;
+		m = new $1[4*N];
+		init(a, 1, 0, N-1);
+	}
+	RGcdQ(vector<$1> &v){
+		N = v.size();
+		m = new $1[4*N];
+		init(v, 1, 0, N-1);
+	}
+	void init($1 a[], int v, int vl, int vr){
+		if(vl==vr){
+			m[v] = a[vl];
+			return ;
+		}
+		int mid = (vl+vr)>>1;
+		init(a, v<<1, vl, mid);
+		init(a, v<<1|1, mid+1, vr);
+		m[v] = m[v<<1] + m[v<<1|1];
+	}
+	void init(vector<$1> &a, int v, int vl, int vr){
+		if(vl==vr){
+			m[v] = a[vl];
+			return ;
+		}
+		int mid = (vl+vr)>>1;
+		init(a, v<<1, vl, mid);
+		init(a, v<<1|1, mid+1, vr);
+		m[v] = m[v<<1] + m[v<<1|1];
+	}
+	void add(int i, $1 d){
+		add(i, d, 1, 0, N-1);
+	}
+	void add(int i, $1 d, int v, int vl, int vr){
+		if(vl==i && vr==i){
+			m[v] += d;
+			return ;
+		}
+		int mid = (vl+vr)>>1;
+		if(mid >= i) add(i, d, v<<1, vl, mid);
+		else add(i, d, v<<1|1, mid+1, vr);
+		m[v] = _gcd(m[v<<1], m[v<<1|1]);
+	}
+	$1 gcd(int l, int r){
+		return max(($1)1, gcd(l, r, 1, 0, N-1));
+	}
+	$1 gcd(int l, int r, int v, int vl, int vr){
+		if(l>r) return 0;
+		if(l<=vl && r>=vr) return m[v];
+		int mid = (vl+vr)>>1;
+		return _gcd(gcd(l, MIN(r, mid), v<<1, vl, mid),
+			        gcd(MAX(l, mid+1), r, v<<1|1, mid+1, vr));
+	}
+	inline $1 _gcd($1 _a, $1 _b)
+	{
+		if(_a<0) _a=-_a;
+		if(_b<0) _b=-_b;
+		while(_a!=0 && _b!=0) if(_a > _b) _a%=_b; else _b%=_a;
+		return _a+_b;
+	}
+	$1 gcd(){
+		return max((LL)1, m[1]);
 	}
 };
 endsnippet
