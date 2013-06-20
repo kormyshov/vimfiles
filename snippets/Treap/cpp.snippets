@@ -1,0 +1,58 @@
+snippet Treap "Basic treap" !b
+struct ct_node{
+	${1:int} x;
+	${2:int} y;
+	ct_node *l, *r;
+};
+typedef ct_node* p_ct_node;
+
+void merge(p_ct_node &_t, p_ct_node _l, p_ct_node _r){
+	if(!_l || !_r) _t = _l ? _l : _r;
+	else if(_l->y < _r->y)
+		merge(_l->r, _l->r, _r), _t = _l;
+	else
+		merge(_r->l, _l, _r->l), _t = _r;
+}
+
+void split(p_ct_node _t, int _x, p_ct_node &_l, p_ct_node &_r) {
+	if (!_t)
+		_l = _r = NULL;
+	else if (_x < _t->x)
+		split(_t->l, _x, _l, _t->l),  _r = _t;
+	else
+		split(_t->r, _x, _t->r, _r),  _l = _t;
+}
+
+p_ct_node search(p_ct_node &_t, $1 _x){
+	if(!_t) return NULL;
+	p_ct_node res;
+	if(_x < _t->x){
+		res = search(_t->l, _x);
+		if(!res) return _t;
+		else return res;
+	}
+	if(_x > _t->x) return search(_t->r, _x);
+	return _t;
+}
+
+void insert(p_ct_node &_t, p_ct_node _it){
+	if(!_t){
+		_t = _it;
+	}else if(_it->y > _t->y){
+		split(_t, _it->x, _it->l, _it->r);
+		_t = _it;
+	}else
+		insert(_it->x < _t->x ? _t->l : _t->r, _it);
+}
+
+void insert(p_ct_node &_t, $1 _x, $2 _y){
+	p_ct_node _it = new ct_node;
+	_it->x = _x; _it->y = _y;
+	_it->l = _it->r = NULL;
+	insert(_t, _it);
+}
+
+void insert(p_ct_node &_t, $1 _x){
+	insert(_t, _x, rand());
+}
+endsnippet
