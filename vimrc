@@ -7,6 +7,8 @@ call vundle#rc()
 
 Bundle "gmarik/vundle"
 Bundle "sonoma.vim"
+Bundle "bling/vim-airline"
+Bundle "mhinz/vim-startify"
 Bundle "ack.vim"
 Bundle "UltiSnips"
 Bundle "matchit.zip"
@@ -14,6 +16,7 @@ Bundle "The-NERD-tree"
 Bundle "The-NERD-Commenter"
 Bundle "jcf/vim-latex"
 Bundle "Rip-Rip/clang_complete"
+Bundle "haskell.vim"
 Bundle "kormyshov/cpp4cf"
 
 " Применять типы файлов
@@ -58,7 +61,7 @@ set scrolloff=5
 set showcmd
 
 " Настройка строки состояния
-set statusline=%F%m%r%h%w\ [%{&fileformat},%{&fileencoding}]\ [%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
+"set statusline=%F%m%r%h%w\ [%{&fileformat},%{&fileencoding}]\ [%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
 set laststatus=2 " всегда показывать строку состояния
 
 
@@ -113,6 +116,28 @@ au BufWritePost *.h,*.php,*.c,*.cpp,*.htm*.html silent call cursor(au_line, au_c
 set columns=180
 set lines=46
 
+" Настройка vim-airline
+let g:airline_theme='light'
+let g:airline_powerline_fonts=1
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '◀'
+let g:airline_linecolumn_prefix = '≬'
+let g:airline_section_b = '%03.3b'
+
+" Настройка закладок в startify
+let g:startify_bookmarks = [ '~/.vimrc' ]
+let g:startify_custom_header = [
+\ '|  ______  __                                      __  __                          __                __                  ',
+\ '| /\__  _\/\ \      __              __            /\ \/\ \  __                    /\ \              /\ \                 ',
+\ '| \/_/\ \/\ \ \___ /\_\    ____    /\_\    ____   \ \ \ \ \/\_\    ___ ___        \ \ \____     __  \ \ \____  __  __    ',
+\ '|    \ \ \ \ \  _ `\/\ \  /'',__\   \/\ \  /'',__\   \ \ \ \ \/\ \ /'' __` __`\       \ \ ''__`\  /''__`\ \ \ ''__`\/\ \/\ \   ',
+\ '|     \ \ \ \ \ \ \ \ \ \/\__, `\   \ \ \/\__, `\   \ \ \_/ \ \ \/\ \/\ \/\ \  __   \ \ \L\ \/\ \L\.\_\ \ \L\ \ \ \_\ \  ',
+\ '|      \ \_\ \ \_\ \_\ \_\/\____/    \ \_\/\____/    \ `\___/\ \_\ \_\ \_\ \_\/\ \   \ \_,__/\ \__/.\_\\ \_,__/\/`____ \ ',
+\ '|       \/_/  \/_/\/_/\/_/\/___/      \/_/\/___/      `\/__/  \/_/\/_/\/_/\/_/\ \/    \/___/  \/__/\/_/ \/___/  `/___/> \',
+\ '|                                                                              \/                                  /\___/',
+\ '|                                                                                                                  \/__/ ',
+\ ]
+
 " Вешаем горячие клавиши для открытия/закрытия NERD-tree
 nmap <C-N>v :NERDTree<cr>
 imap <C-N>v <C-o>:NERDTree<cr>
@@ -126,7 +151,24 @@ nmap <C-e> \ci
 imap <C-e> <Esc>\cii
 
 " Устанавливаем директорию для сниппетов
-let g:UltiSnipsSnippetDirectories=["snippets","snippets/Scanner","snippets/lib","snippets/algebra","snippets/array","snippets/graph","snippets/string","snippets/compressor","snippets/segment","snippets/fenwick","snippets/DataStruct","snippets/BI","snippets/Persistent","snippets/geometry","snippets/matrix","snippets/Treap"]
+let g:UltiSnipsSnippetDirectories=[
+	\ "snippets",
+	\ "snippets/Scanner",
+	\ "snippets/lib",
+	\ "snippets/algebra",
+	\ "snippets/array",
+	\ "snippets/graph",
+	\ "snippets/string",
+	\ "snippets/compressor",
+	\ "snippets/segment",
+	\ "snippets/fenwick",
+	\ "snippets/DataStruct",
+	\ "snippets/BI",
+	\ "snippets/Persistent",
+	\ "snippets/geometry",
+	\ "snippets/matrix",
+	\ "snippets/Treap"
+	\ ]
 
 " Автодополнение по <C-Space>
 let g:clang_complete_auto=0
@@ -177,6 +219,13 @@ imap <A-h> <Esc>i
 imap <A-j> <C-o>j
 imap <A-k> <C-o>k
 imap <A-l> <Esc>la
+
+" Перемещение одной строки вверх/вниз
+nmap <C-Up> ddkP
+nmap <C-Down> ddp
+" Перемещение выделенного текста вверх/вниз
+vmap <C-Up> xkP`[V`]
+vmap <C-Down> xp`[V`]
 
 " Вычисление выражений
 imap <silent> <A-e> <C-r>=string(eval(input("Calculate: ")))<CR>
@@ -236,3 +285,4 @@ endfunction
 au FileType tex,plaintex call BindF9_tex()
 
 "au BufEnter $MYVIMRC source $MYVIMRC
+
