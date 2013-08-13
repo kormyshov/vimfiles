@@ -139,3 +139,108 @@ int hash2(const string &_s)
 	return _r;
 }
 endsnippet
+snippet Bor "Class Bor" !b
+class Bor{
+	int mm[${1:100500}][${2:27}], len;
+	char chr;
+public:
+	Bor(){
+		memset(mm, 0, sizeof(mm));
+		len = 1;
+		chr = 'a';
+	}
+	Bor(char ch){
+		memset(mm, 0, sizeof(mm));
+		len = 1;
+		chr = ch;
+	}
+	void add(const string &s){
+		int c = 0;
+		for(int i=0; i<(int)s.size(); ++i){
+			char ch = s[i] - chr;
+			if(!mm[c][ch]) mm[c][ch] = len++;
+			c = mm[c][ch];
+		}
+		mm[c][26] = 1;
+	}
+	void add(const char s[]){
+		int c = 0;
+		for(int i=0; s[i]; ++i){
+			char ch = s[i] - chr;
+			if(!mm[c][ch]) mm[c][ch] = len++;
+			c = mm[c][ch];
+		}
+		mm[c][26] = 1;
+	}
+	bool search(const string &s){
+		int c = 0;
+		for(int i=0; i<(int)s.size(); ++i){
+			char ch = s[i] - chr;
+			if(!mm[c][ch]) return false;
+			c = mm[c][ch];
+		}
+		return mm[c][26];
+	}
+	bool search(const char s[]){
+		int c = 0;
+		for(int i=0; s[i]; ++i){
+			char ch = s[i] - chr;
+			if(!mm[c][ch]) return false;
+			c = mm[c][ch];
+		}
+		return mm[c][26];
+	}
+};
+endsnippet
+snippet BorM "Class Bor with map" !b
+class BorM{
+	map<char,int> mm[${1:100500}];
+	int len;
+	char chr;
+public:
+	BorM(){
+		len = 1;
+		chr = 'a';
+	}
+	BorM(char ch){
+		len = 1;
+		chr = ch;
+	}
+	void add(const string &s){
+		int c = 0;
+		for(int i=0; i<(int)s.size(); ++i){
+			char ch = s[i] - chr;
+			if(!mm[c].count(ch)) mm[c][ch] = len++;
+			c = mm[c][ch];
+		}
+		mm[c][26] = 1;
+	}
+	void add(const char s[]){
+		int c = 0;
+		for(int i=0; s[i]; ++i){
+			char ch = s[i] - chr;
+			if(!mm[c].count(ch)) mm[c][ch] = len++;
+			c = mm[c][ch];
+		}
+		mm[c][26] = 1;
+	}
+	bool search(const string &s){
+		int c = 0;
+		for(int i=0; i<(int)s.size(); ++i){
+			char ch = s[i] - chr;
+			if(!mm[c].count(ch)) return false;
+			c = mm[c][ch];
+		}
+		return mm[c].count(26);
+	}
+	bool search(const char s[]){
+		int c = 0;
+		for(int i=0; s[i]; ++i){
+			char ch = s[i] - chr;
+			if(!mm[c].count(ch)) return false;
+			c = mm[c][ch];
+		}
+		return mm[c].count(26);
+	}
+};
+endsnippet
