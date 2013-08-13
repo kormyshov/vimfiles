@@ -284,5 +284,32 @@ function! BindF9_tex()
 endfunction
 au FileType tex,plaintex call BindF9_tex()
 
+" Добавляем компиляцию и запуск для Pascal
+function! BindF5_pas()
+	if filereadable("Makefile")
+		set makeprg=make
+		map <F5> :w!<cr>:make<cr>:cw<cr>
+		imap <F5> <Esc>:w!<cr>:make<cr>:cw<cr>
+	else
+		map <F5> :w!<cr>:!fpc -So -XS %<cr>:cw<cr>
+		imap <F5> <Esc>:w!<cr>:!fpc -So -XS %<cr>:cw<cr>
+	endif
+endfunction
+au FileType pas,dpr call BindF5_pas()
+
+function! BindF9_pas()
+	if filereadable("Makefile")
+		set makeprg=make
+		map <F9> :w!<cr>:make<cr>:cw<cr>:! ./%<<cr>
+		imap <F9> <Esc>:w!<cr>:make<cr>:cw<cr>:! ./%<<cr>
+	else
+		map <F9> :w!<cr>:!fpc -So -XS %<cr>:cw<cr>:! ./%<<cr>
+		imap <F9> <Esc>:w!<cr>:!fpc -So - XS %<cr>:cw<cr>:! ./%<<cr>
+		map <C-F9> :w!<cr>:!fpc -So -XS %<cr>:cw<cr>:! xclip -o -selection clipboard<cr>:! xclip -o -selection clipboard \| ./%<<cr>
+		imap <C-F9> <Esc>:w!<cr>:!fpc -So -XS %<cr>:cw<cr>:! xclip -o -selectopn clipboard<cr>:! xclip -o -selection clipboard \| ./%<<cr>
+	endif
+endfunction
+au FileType pas,dpr call BindF9_pas()
+
 "au BufEnter $MYVIMRC source $MYVIMRC
 

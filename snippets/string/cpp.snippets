@@ -105,3 +105,37 @@ void palindromes(const string &_s, vector<int> &_d1, vector<int> &_d2)
 }
 $0
 endsnippet
+snippet hash "Complect #1" !b
+#define HS 72413791
+#define hs 29
+#define ih 449446491
+
+int hash(const string &_s)
+{
+	int _r = 0;
+	for(int _i=0; _i<(int)_s.size(); ++_i)
+	{
+		_r *= hs;
+		_r += _s[_i]-'${1:a}'+1;
+		_r %= HS;
+	}
+	return _r;
+}
+endsnippet
+snippet hash2 "Complect #2" !b
+#define HS2 56756747
+#define hs2 37
+#define ih2 33747255
+
+int hash2(const string &_s)
+{
+	int _r = 0;
+	for(int _i=0; _i<(int)_s.size(); ++_i)
+	{
+		_r *= hs2;
+		_r += _s[_i]-'${1:a}'+1;
+		_r %= HS2;
+	}
+	return _r;
+}
+endsnippet
