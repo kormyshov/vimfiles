@@ -1,0 +1,44 @@
+snippet primesTo "Prime numbers to m" !b
+minus [] _ = []
+minus (x:xs) [] = x : xs
+minus (x:xs) (y:ys) | x == y = minus xs ys
+                    | x > y  = minus (x:xs) ys
+					| x < y  = x : minus xs (y:ys)
+
+primesTo m  =  2 : eratos [3,5..m] where
+   eratos (x : xs) | x*x>m = x : xs
+                   | True  = x : eratos (minus xs [x*x, x*x+2*x..m])
+endsnippet
+snippet countDiv "Count divisors number a" !b
+countDiv a = 2 * length [x | x <- [1..(floor $ sqrt $ fromIntegral a)], mod a x == 0]
+endsnippet
+snippet sumDiv "Sum divisors number n" !b
+sumDiv n = sum ([y | x <- [1..(floor $ sqrt $ fromIntegral n)], mod n x == 0, let t = div n x, let y = sumDiv_y x t ])
+
+sumDiv_y a b | a == b = a
+             | otherwise = a + b
+endsnippet
+snippet indMax "Index maximum-element in the list" !b
+indMax [] mx res ind = res
+indMax (x:xs) mx res ind | x > mx = indMax xs x ind (ind+1)
+                         | otherwise = indMax xs mx res (ind+1)
+endsnippet
+snippet fact "Factorial n" !b
+fact n = product [1..n]
+endsnippet
+snippet sumDigit "Sum digit number" !b
+sumDigit 0 = 0
+sumDigit n = (mod n 10) + sumDigit (div n 10)
+endsnippet
+snippet fibs "List of Fibonachi numbers" !b
+fibs = 0 : 1 : zipWith (+) fibs (tail fibs)
+endsnippet
+snippet lower_bound "lower_bound for sort list" !b
+lower_bound (x:xs) n i | x >= n    = i
+                       | otherwise = lower_bound xs n (i+1)
+endsnippet
+snippet powMod "Pow with modulo" !b
+powMod a 0 m = mod 1 m
+powMod a b m | mod b 2 == 0 = pow (mod (a^2) m) (div b 2)
+             | otherwise = mod (a * (pow a (b-1))) m
+endsnippet
