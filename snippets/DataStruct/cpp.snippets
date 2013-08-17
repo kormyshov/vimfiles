@@ -106,3 +106,40 @@ public:
 };
 $0
 endsnippet
+snippet SparseTable "Class SparseTable" !b
+// SparseTable with ${1:min} ${2:max} ${3:comp}
+template<class T = int, class Compare = ${1/(min)/less/}${2/(max)/greater/}$3<T> >
+class SparseTable{
+	T **mm;
+	Compare f;
+	int N, logN, *m;
+public:
+	SparseTable(const vector<T> &v){
+		N = v.size();
+		logN = 0;
+		while(N > (1<<logN)) ++logN;
+		++logN;
+
+		mm = new T*[logN];
+		for(int i=0; i<logN; ++i)
+			mm[i] = new T[N];
+
+		for(int i=0; i<N; ++i)
+			mm[0][i] = v[i];
+
+		for(int i=1, t=1; i<logN; ++i, t<<=1)
+			for(int j=0; j+t<N; ++j)
+				mm[i][j] = f(mm[i-1][j], mm[i-1][j+t]) ? mm[i-1][j] : mm[i-1][j+t];
+
+		m = new int[N+1];
+		m[0] = m[1] = 0;
+		for(int i=2; i<=N; ++i)
+			m[i] = m[i>>1] + 1;
+	}
+	inline T operator ()(int l, int r){
+		int len = r - l + 1;
+		int i = m[len];
+		return f(mm[i][l], mm[i][l+len-(1<<i)]) ? mm[i][l] : mm[i][l+len-(1<<i)];
+	}
+};
+endsnippet
