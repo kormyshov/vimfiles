@@ -20,6 +20,7 @@
 	lbound -- Ускоренный бинпоиск
 		slbound -- прекалк (после каждого изменения)
 		lbound -- вычисление lower_bound
+	next_permutation
 Модуль BI
 	BI
 Модуль compressor
@@ -39,9 +40,8 @@
 	rc, rcc, rccc
 	rs, rm, rm1, rv, rvp
 Модуль DataStruct
-	DSU
-	Stex
-	Qex
+	DSU, Stex, Qex
+	SparseTable
 Модуль fenwick
 	Fenwick
 	FenwickAdd

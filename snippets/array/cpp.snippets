@@ -26,3 +26,15 @@ int lbound(const vector<$1> &_v, $1 _q, bool _restart = false)
 }
 $0
 endsnippet
+snippet next_permutation "bool next_permutation(vi&)" !b
+bool next_permutation(vector<${1:int}> &_v){
+	int _i, _j;
+	for(_i = _v.size()-1; _i>0 && _v[_i]<=_v[_i-1]; --_i);
+	if(!_i) return false;
+	for(--_i, _j = _v.size()-1; _v[_j]<=_v[_i]; --_j);
+	swap(_v[_i], _v[_j]);
+	for(++_i, _j = _v.size()-1; _i<_j; ++_i, --_j)
+		swap(_v[_i], _v[_j]);
+	return true;
+}
+endsnippet
