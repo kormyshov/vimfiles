@@ -1023,7 +1023,7 @@ public:
 		int mid = (vl+vr)>>1;
 		init(a, v<<1, vl, mid);
 		init(a, v<<1|1, mid+1, vr);
-		m[v] = m[v<<1] + m[v<<1|1];
+		m[v] = _gcd(m[v<<1], m[v<<1|1]);
 	}
 	void init(vector<$1> &a, int v, int vl, int vr){
 		if(vl==vr){
@@ -1033,7 +1033,7 @@ public:
 		int mid = (vl+vr)>>1;
 		init(a, v<<1, vl, mid);
 		init(a, v<<1|1, mid+1, vr);
-		m[v] = m[v<<1] + m[v<<1|1];
+		m[v] = _gcd(m[v<<1], m[v<<1|1]);
 	}
 	void add(int i, $1 d){
 		add(i, d, 1, 0, N-1);
@@ -1046,6 +1046,19 @@ public:
 		int mid = (vl+vr)>>1;
 		if(mid >= i) add(i, d, v<<1, vl, mid);
 		else add(i, d, v<<1|1, mid+1, vr);
+		m[v] = _gcd(m[v<<1], m[v<<1|1]);
+	}
+	void set(int i, $1 a){
+		set(i, a, 1, 0, N-1);
+	}
+	void set(int i, $1 a, int v, int vl, int vr){
+		if(vl==i && vr==i){
+			m[v] = a;
+			return ;
+		}
+		int mid = (vl+vr)>>1;
+		if(mid >= i) set(i, a, v<<1, vl, mid);
+		else set(i, a, v<<1|1, mid+1, vr);
 		m[v] = _gcd(m[v<<1], m[v<<1|1]);
 	}
 	$1 gcd(int l, int r){
@@ -1066,7 +1079,74 @@ public:
 		return _a+_b;
 	}
 	$1 gcd(){
-		return max((LL)1, m[1]);
+		return MAX(1, m[1]);
+	}
+};
+endsnippet
+snippet RGcdQfast "RGcdQfast to up" !b
+class RGcdQfast{
+	${1:int} *m;
+	int n, N;
+public:
+	RGcdQfast(int n){
+		N = 1;
+		while(N < n) N <<= 1;
+		m = new $1[N+N];
+		memset(m, 0, sizeof($1)*2*N);
+	}
+	RGcdQfast($1 a[], int n){
+		N = 1;
+		while(N < n) N <<= 1;
+		m = new $1[N+N];
+		for(int i=0;i<n;++i)
+			m[N+i] = a[i];
+		for(int i=N-1;i>0;--i)
+			m[i] = _gcd(m[i<<1], m[i<<1|1]);
+	}
+	RGcdQfast(vector<$1> &v){
+		n = v.size();
+		N = 1;
+		while(N < n) N<<=1;
+		m = new $1[N+N];
+		for(int i=0;i<n;++i)
+			m[N+i] = v[i];
+		for(int i=N-1;i>0;--i)
+			m[i] = _gcd(m[i<<1], m[i<<1|1]);
+	}
+	void add(int i, $1 d){
+		i += N;
+		m[i] += d;
+		for(i>>=1;i>0;i>>=1)
+			m[i] = _gcd(m[i<<1], m[i<<1|1]);
+	}
+	void set(int i, $1 a){
+		i += N;
+		m[i] = a;
+		for(i>>=1;i>0;i>>=1)
+			m[i] = _gcd(m[i<<1], m[i<<1|1]);
+	}
+	$1 gcd(int l, int r){
+		$1 res = 0;
+		l += N;
+		r += N;
+		while(l<r){
+			if(l&1) res = _gcd(res, m[l]), ++l;
+			if((r&1)==0)res = _gcd(res, m[r]), --r;
+			l>>=1;
+			r>>=1;
+		}
+		if(l==r) res = _gcd(res, m[l]);
+		return res;
+	}
+	inline $1 _gcd($1 _a, $1 _b)
+	{
+		if(_a<0) _a=-_a;
+		if(_b<0) _b=-_b;
+		while(_a!=0 && _b!=0) if(_a > _b) _a%=_b; else _b%=_a;
+		return _a+_b;
+	}
+	$1 gcd(){
+		return MAX(1, m[1]);
 	}
 };
 endsnippet

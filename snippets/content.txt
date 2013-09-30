@@ -65,7 +65,7 @@
 Модуль Scanner
 	Scanner
 Модуль segment
-	RSQ, RGcdQ
+	RSQ, RGcdQ, RGcdQfast
 	RMaxQ, RMinQ, RMaxQInd, RMinQInd
 	RSQAdd, RMaxQAdd, RMinQAdd
 	RSQSet, RMaxQSet, RMinQSet
