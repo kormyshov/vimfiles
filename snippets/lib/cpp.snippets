@@ -6,22 +6,22 @@ ${1}
 $0
 endsnippet
 snippet stov "For SRM string to vector<int>"
-vector<int> stov(string s){
-	stringstream ss(s);
-	vector<int> v;
-	int a;
-	while(ss>>a) v.push_back(a);
-	return v;
+vector<int> stov(string &_s){
+	stringstream _ss(_s);
+	vector<int> _v;
+	int _a;
+	while(_ss>>_a) _v.push_back(_a);
+	return _v;
 }
 endsnippet
 snippet vstov "For SRM vector<string> to vector<int>"
-vector<int> vstov(vector<string> vs){
-	stringstream ss;
-	for(int i=0; i<(int)vs.size(); ++i)	ss<<vs[i];
-	int a;
-	vector<int> v;
-	while(ss>>a) v.push_back(a);
-	return v;
+vector<int> vstov(vector<string> &_vs){
+	stringstream _ss;
+	for(int _i=0; _i<(int)_vs.size(); ++_i) _ss<<_vs[_i];
+	int _a;
+	vector<int> _v;
+	while(_ss>>_a) _v.push_back(_a);
+	return _v;
 }
 endsnippet
 snippet gcj "MultiThread solver for GCJ" !b
