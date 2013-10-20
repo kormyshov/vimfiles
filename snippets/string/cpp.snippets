@@ -1,18 +1,18 @@
 snippet suffix_array "void suffix_array(const string&, vi&)" !b
+int _cnt[_MAX_N], _c[_MAX_N], _pn[_MAX_N], _cn[_MAX_N];
+
 void suffix_array(const string &_s, vector<int> &_p)
 {
 	int _i, _cl, _n = (int)_s.size();
 	_p.assign(_n, 0);
 
 	const int _MAX_N = ${1:100500};
-	const int _MAX_Alphabet = ${2:26};
-
-	int _cnt[_MAX_N], _c[_MAX_N], _pn[_MAX_N], _cn[_MAX_N];
+	const int _MAX_Alphabet = ${2:256};
 
 	memset(_cnt, 0, sizeof(_cnt));
-	for(_i=0; _i<_n; ++_i) ++_cnt[_s[_i]${3:-'a'}];
+	for(_i=0; _i<_n; ++_i) ++_cnt[_s[_i]];
 	for(_i=1; _i<_MAX_Alphabet; ++_i) _cnt[_i] += _cnt[_i-1];
-	for(_i=0; _i<_n; ++_i) _p[--_cnt[_s[_i]$3]] = _i;
+	for(_i=0; _i<_n; ++_i) _p[--_cnt[_s[_i]]] = _i;
 	_c[_p[0]] = 0;
 	_cl = 1;
 	for(_i=1; _i<_n; ++_i)
@@ -20,7 +20,7 @@ void suffix_array(const string &_s, vector<int> &_p)
 		if(_s[_p[_i]] != _s[_p[_i-1]]) ++_cl;
 		_c[_p[_i]] = _cl-1;
 	}
-	for(int _h=0; (1<<_h)<_n; ++_h)
+	for(int _h=0; (1<<_h)<_n && _cl<_n; ++_h)
 	{
 		for(_i=0; _i<_n; ++_i)
 		{
@@ -28,7 +28,7 @@ void suffix_array(const string &_s, vector<int> &_p)
 			if(_pn[_i] < 0) _pn[_i] += _n;
 		}
 		memset(_cnt, 0, sizeof(_cnt));
-		for(_i=0; _i<_n; ++_i) ++_cnt[_c[_pn[_i]]];
+		for(_i=0; _i<_n; ++_i) ++_cnt[_c[_i]];
 		for(_i=1; _i<_cl; ++_i) _cnt[_i] += _cnt[_i-1];
 		for(_i=_n-1; _i>=0; --_i) _p[--_cnt[_c[_pn[_i]]]] = _pn[_i];
 		_cn[_p[0]] = 0;
