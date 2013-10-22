@@ -50,6 +50,7 @@
 	FenwickMap
 Модуль geometry
 	Point, Point3D
+	Line, Segment
 Модуль graph
 	clique
 	Dijkstra, DijkstraHeap

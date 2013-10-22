@@ -23,6 +23,16 @@ public:
 		return sqrt(x*x+y*y+.0);
 	}
 
+	inline $1 length2() const {
+		return x*x+y*y;
+	}
+
+	inline Point rotate(double angle) const {
+		double s = sin(angle), c = cos(angle);
+		Point res(x*c-y*s, x*s+y*c);
+		return res;
+	}
+
 	inline Point operator-=(const Point &a){
 		x -= a.get_x(); y -= a.get_y();
 		return *this;
@@ -119,6 +129,10 @@ public:
 		return sqrt(x*x+y*y+z*z+.0);
 	}
 
+	inline $1 length2() const {
+		return x*x+y*y+z*z;
+	}
+
 	inline Point3D operator-=(const Point3D &a){
 		x -= a.get_x(); y -= a.get_y(); z -= a.get_z();
 		return *this;
@@ -194,6 +208,114 @@ public:
 	}
 	friend ostream& operator<<(ostream& out, const Point3D &a){
 		return out<<a.get_x()<<" "<<a.get_y()<<" "<<a.get_z();
+	}
+};
+endsnippet
+snippet Line "Plain line" !b
+Point$0
+class Line{
+protected:
+	Point A, a;
+public:
+	inline Line():
+		A(), a() {};
+	inline Line(const Point &_A, const Point &_a):
+		A(_A), a(_a) {};
+	inline Line(${1:double} x1, $1 y1, $1 dx, $1 dy):
+		A(x1, y1), a(dx, dy) {};
+	inline Line(const Line &l):
+		A(l.get_A()), a(l.get_a()) {};
+
+	inline Point get_A() const {return A;}
+	inline Point get_a() const {return a;}
+
+	inline void set_A($1 x, $1 y){
+		A.set(x, y);
+	}
+	inline void set_A(const Point &p){
+		A.set(p);
+	}
+	inline void set_a($1 x, $1 y){
+		a.set(x, y);
+	}
+	inline void set_a(const Point &p){
+		a.set(p);
+	}
+	inline void set($1 x1, $1 y1, $1 dx, $1 dy){
+		A.set(x1, y1);
+		a.set(dx, dy);
+	}
+	inline void set(const Point &_A, const Point &_a){
+		A.set(_A);
+		a.set(_a);
+	}
+	inline void set(const Line &l){
+		A = l.get_A();
+		a = l.get_a();
+	}
+
+	inline Line rotate(double angle) const {
+		Line res(A, a.rotate(angle));
+		return res;
+	}
+
+	inline $1 onLine(const Point &p) const {
+		return a*(p-A);
+	}
+
+	inline double distance(const Point &p) const {
+		$1 l = a.length2();
+		if(l < EPS) return (p-A).length();
+		return fabs(onLine(p)/sqrt(l+.0));
+	}
+
+	inline bool intersect(const Line &l, Point &p) const {
+		$1 t = a*l.get_a();
+		if(fabs(t) < EPS) return false;
+		t = (l.get_A()-A)*l.get_a() / t;
+		p = A + a * t;
+		return true;
+	}
+	inline pair<bool,Point> intersect(const Line &l) const {
+		pair<bool,Point> p;
+		p.first = intersect(l, p.second);
+		return p;
+	}
+
+	inline Line& operator=(const Line &l){
+		set(l);
+		return *this;
+	}
+
+	friend istream& operator>>(istream& in, Line &l){
+		Point a, b;
+		in>>a>>b;
+		l.set(a, b-a);
+		return in;
+	}
+	friend ostream& operator<<(ostream& out, const Line &l){
+		return out<<"A : "<<l.get_A()<<"; a : "<<l.get_a();
+	}
+};
+endsnippet
+snippet Segment "Plain segment" !b
+Line$0
+class Segment : public Line {
+public:
+	inline bool onSeg(const Point &p){
+		${1:double} t = onLine(p);
+		if(ABS(t) > EPS) return false;
+		return (p.get_x()-A.get_x())*(A.get_x()+a.get_x()-p.get_x())>=0 && (p.get_y()-A.get_y())*(A.get_y()+a.get_y()-p.get_y())>=0;
+	}
+	inline double distance(const Point &p) const {
+		$1 la = a.length2();
+		$1 lb = (A-p).length2();
+		$1 lc = (A+a-p).length2();
+		if(la < EPS) return sqrt(lb+.0);
+		if(lb >= la+lc) return sqrt(lc+.0);
+		else
+		if(lc >= la+lb) return sqrt(lb+.0);
+		return fabs(onLine(p)/sqrt(la+.0));
 	}
 };
 endsnippet
