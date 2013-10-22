@@ -15,7 +15,7 @@
 	factmod
 	isPrime
 	Cnk
-	isSquare, isPow2
+	isSquare, isPow2, bitCount
 Модуль array
 	lbound -- Ускоренный бинпоиск
 		slbound -- прекалк (после каждого изменения)

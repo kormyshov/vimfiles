@@ -50,7 +50,7 @@ inline inverse_all_fact(${1:int} _m, vector<$1> &_v)
 	inverse_all(_m, _v);
 	if(_v.size()) _v[0] = 1;
 	for(int _i = 2; _i < _v.size(); ++_i)
-		_v[_i] = _v[_i] * 1LL*  _v[_i-1] % _m;
+		_v[_i] = _v[_i] * 1LL * _v[_i-1] % _m;
 }
 endsnippet
 snippet gcd "<T> gcd(<T>, <T>)" !b
@@ -255,5 +255,24 @@ snippet isPow2 "bool isPow2(number)" !b
 inline bool isPow2(${1:int} _a)
 {
 	return a>0 && (a&(a-1)) == 0;
+}
+endsnippet
+snippet bitCount "int bitCount(number)" !b
+const int _bitCount_len  = 16;
+const int _bitCount_len2 = _bitCount_len << 1;
+const int _bitCount_len3 = _bitCount_len * 3;
+
+char _bitCount_m[1 << _bitCount_len];
+int bitCount(${1:LL}${2:int} _a)
+{
+	static bool _f;
+	if(!_f)
+	{
+		_bitCount_m[0] = 0;
+		for(int _i = 1; _i < (1 << _bitCount_len); ++_i)
+			_bitCount_m[_i] = _bitCount_m[_i & (_i - 1)] + 1;
+		_f = true;
+	}
+	return _bitCount_m[_a & 0xFFFF] + _bitCount_m[(_a >> _bitCount_len) & 0xFFFF] ${1/(LL)/+ _bitCount_m[(_a >> _bitCount_len2) & 0xFFFF] + _bitCount_m[(_a >> _bitCount_len3) & 0xFFFF]/};
 }
 endsnippet
