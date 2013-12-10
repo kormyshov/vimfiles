@@ -15,7 +15,8 @@
 	factmod
 	isPrime
 	Cnk
-	isSquare, isPow2, bitCount
+	isSquare, isPow2
+	mulmod, powmod
 Модуль array
 	lbound -- Ускоренный бинпоиск
 		slbound -- прекалк (после каждого изменения)
@@ -50,7 +51,6 @@
 	FenwickMap
 Модуль geometry
 	Point, Point3D
-	Line, Segment
 Модуль graph
 	clique
 	Dijkstra, DijkstraHeap
@@ -66,7 +66,7 @@
 Модуль Scanner
 	Scanner
 Модуль segment
-	RSQ, RGcdQ, RGcdQfast
+	RSQ, RGcdQ
 	RMaxQ, RMinQ, RMaxQInd, RMinQInd
 	RSQAdd, RMaxQAdd, RMinQAdd
 	RSQSet, RMaxQSet, RMinQSet

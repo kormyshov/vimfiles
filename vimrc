@@ -24,6 +24,7 @@ filetype on
 filetype plugin on
 filetype indent on
 
+" На Esc менять раскладку на En
 imap <Esc> <Esc>:silent !~/.vim/to_us.sh<cr>
 nmap <Esc> :silent !~/.vim/to_us.sh<cr>
 
@@ -92,6 +93,9 @@ imap <F2> <C-o>:w!<cr>
 " Разделение окна по Ctrl+W+i и Ctrl+W+-
 nmap <C-W>i <C-W>v
 nmap <C-W>- <C-W>s
+
+" Открытие окон ежедневника на Alt+A
+nmap <A-a> :e ~/Dropbox/all/diary/main.tex<CR><C-w>-<C-w>j :e ~/Dropbox/all/lists/main.tex<CR><C-w>i<C-w>l :e ~/Dropbox/all/all.tex<CR>
 
 " Перемещение по вкладкам
 map <S-tab> :tabprevious<cr>
@@ -201,14 +205,14 @@ set foldlevel=7			" Количество открытых уровней по у
 set foldopen=all		" Автоматическое открытие свёрток при заходе в них
 
 " Хот-кеи для cpp4cf
-map <C-l> :CFTemplate<CR>89<C-W>i<C-W>l:e ~/.vim/snippets/content.txt<CR>19ggzMzrgg<C-W>h
+map <C-l> :CFTemplate<CR>89<C-W>i<C-W>l:e ~/.vim/snippets/content.txt<CR>/lbound<CR>zMzrgg<C-W>h
 map <C-p> :CFPatch<CR>
 
 " Отключаем работу стрелочек
-inoremap <Up> <NOP>
-inoremap <Down> <NOP>
-inoremap <Left> <NOP>
-inoremap <Right> <NOP>
+"inoremap <Up> <NOP>
+"inoremap <Down> <NOP>
+"inoremap <Left> <NOP>
+"inoremap <Right> <NOP>
 noremap <Up> <NOP>
 noremap <Down> <NOP>
 noremap <Left> <NOP>
@@ -231,9 +235,9 @@ vmap <C-Down> xp`[V`]
 imap <silent> <A-e> <C-r>=string(eval(input("Calculate: ")))<CR>
 
 " Оптимизация для RAIC
-" map <C-K> :! ./compile-g++.sh
-" map <C-L> :! cat compilation.log
-" map <C-P> :! ./local-runner.sh & sleep 2 && ./MyStrategy
+map <C-K> :! ./compile-g++.sh
+map <C-U> :! cat compilation.log
+map <C-M> :! ./local-runner.sh & sleep 3 && ./MyStrategy
 
 " Добавляем компиляцию и запуск для С-файлов. Подробности на http://habr.ru/blogs/vim/40369
 function! BindF5_C()
