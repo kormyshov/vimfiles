@@ -224,7 +224,7 @@ endsnippet
 snippet isPrime "bool isPrime(<T>)" !b
 inline bool isPrime(${1:int} _n)
 {
-	if(_n<2 || (_n>2 && !(_n&1)) || (_n>3 && (_n%6&3)!=1)) return false;
+	if(_n<2 || (_n>3 && (_n%6&3)!=1)) return false;
 	for($1 _i=5, _k=4; _i*_i<=_n; _i+=_k^6)
 		if(_n%_i==0) return false;
 	return true;
