@@ -55,6 +55,7 @@
 	clique
 	Dijkstra, DijkstraHeap
 	Floyd
+	dfs, dfsex
 Модуль lib
 	test
 	stov, vstov

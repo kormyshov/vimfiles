@@ -137,3 +137,24 @@ for(int _floyd_k_=0; _floyd_k_<${1:n}; ++_floyd_k_)
 			${2:mm}[_floyd_i_][_floyd_j_] = min($2[_floyd_i_][_floyd_j_],
 							$2[_floyd_i_][_floyd_k_]+$2[_floyd_k_][_floyd_j_]);
 endsnippet
+snippet dfs "Standard DFS" !b
+void dfs(int _v){
+	${1:u}[_v] = 1;
+	for(int _i=0; _i<(int)${2:g}[_v].size(); ++_i)
+		if(!$1[$2[_v][_i]]) dfs($2[_v][_i]);
+}
+endsnippet
+snippet dfsex "DFS for modification" !b
+void dfs(int ${1:v}${2:, int p}){
+	${3:u}[$1] = ${9:1};
+	for(int ${4:i}=0; $4<(int)${5:g}[$1].size(); ++$4){
+		int ${6:to} = $5[$1][$4];
+		if(!$3[$6]){
+			dfs($6${11:, $1});
+		}else{
+			${7:// nothing...}
+		}
+	}
+	${8:$3[$1] = ${10:2};}
+}
+endsnippet
