@@ -25,6 +25,20 @@ inline ${1:int} phi($1 _n)
 	return _res;
 }
 endsnippet
+snippet mu "int mu(<T>)" !b
+inline int mu(${1:LL} _n){
+	int res = 1;
+	for(LL d=2; n>1; d+=1+(d>2)){
+        if(d*d>n) d=n;
+        if(n%d==0){
+            res=-res;
+            n/=d;
+            if(n%d==0) return 0;
+        }
+    }
+    return res;
+}
+endsnippet
 snippet inverse "<T> inverse(<T>, <T>)" !b
 gcdex$0
 inline ${1:int} inverse($1 _n, $1 _m)

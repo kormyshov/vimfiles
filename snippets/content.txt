@@ -1,6 +1,6 @@
 Модуль algebra
 	pow
-	phi
+	phi, mu
 	inverse, inverse_all
 	inverse_all_fact
 	gcd
