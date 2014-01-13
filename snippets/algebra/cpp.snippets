@@ -257,6 +257,12 @@ inline ${1:LL} Cnk(int _n, int _k)
 	return _r;
 }
 endsnippet
+snippet Catalan "Catalan_n" !b
+${2:Cnk}
+inline ${1:LL} Catalan(int _n){
+	return Cnk(2 * _n, _n) / (1 + _n);
+}
+endsnippet
 snippet isSquare "bool isSquare(number)" !b
 inline bool isSquare(${1:int} _a)
 {

@@ -14,7 +14,7 @@
 	grey, reverse_grey
 	factmod
 	isPrime
-	Cnk
+	Cnk, Catalan
 	isSquare, isPow2
 	mulmod, powmod
 Модуль array
