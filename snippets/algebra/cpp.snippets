@@ -324,3 +324,51 @@ LL powmod(LL a, LL b, LL m)
 	return r;
 }
 endsnippet
+snippet nmsb "Number most significant bit" !b
+int _nmsb_m[256];
+inline int nmsb(unsigned int _x){
+	static bool _f;
+	if(!_f)
+	{
+		_nmsb_m[0] = -1; _nmsb_m[1] = 0;
+		for(int _i = 2; _i < 256; ++_i)
+			_nmsb_m[_i] = _nmsb_m[_i >> 1] + 1;
+		_f = true;
+	}
+
+	if(_x >> 24 != 0) return _nmsb_m[_x >> 24] + 24;
+	if(_x >> 16 != 0) return _nmsb_m[_x >> 16] + 16;
+	if(_x >>  8 != 0) return _nmsb_m[_x >>  8] +  8;
+	return _nmsb_m[_x];
+}
+endsnippet
+snippet _nmsb_ "Number most significant bit (short version)" !b
+int nmsb(unsigned int _x) {
+	union { double _a; int _b[2]; };
+	_a = _x;
+	return (_b[1] >> 20) - 1023;
+}
+endsnippet
+snippet msb "Most significant bit" !b
+int _msb_m[256];
+inline int msb(unsigned int _x){
+	static bool _f;
+	if(!_f)
+	{
+		_msb_m[0] = 0; _msb_m[1] = 1;
+		for(int _i = 2; _i < 256; ++_i)
+			_msb_m[_i] = _msb_m[_i >> 1] << 1;
+		_f = true;
+	}
+
+	if(_x >> 24 != 0) return _msb_m[_x >> 24] << 24;
+	if(_x >> 16 != 0) return _msb_m[_x >> 16] << 16;
+	if(_x >>  8 != 0) return _msb_m[_x >>  8] <<  8;
+	return _msb_m[_x];
+}
+endsnippet
+snippet lsb "Least significant bit" !b
+inline int lsb(unsigned int _x){
+	return _x & -_x;
+}
+endsnippet

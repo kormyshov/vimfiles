@@ -17,6 +17,7 @@
 	Cnk, Catalan
 	isSquare, isPow2
 	mulmod, powmod
+	nmsb, _nmsb_, msb, lsb
 Модуль array
 	lbound -- Ускоренный бинпоиск
 		slbound -- прекалк (после каждого изменения)
