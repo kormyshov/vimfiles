@@ -257,6 +257,16 @@ inline ${1:LL} Cnk(int _n, int _k)
 	return _r;
 }
 endsnippet
+snippet Cnks "All cnk" !b
+${1:int} cnk[${2:109}][${3:109}];
+memset(cnk, 0, sizeof(cnk));
+cnk[0][0] = 1;
+for(int _=1; _<$2; ++_){
+	cnk[_][0] = 1;
+	for(int __=1; __<$3; ++__)
+		cnk[_][__] = (cnk[_-1][__] + cnk[_-1][__-1])${4: % MOD};
+}
+endsnippet
 snippet Catalan "Catalan_n" !b
 ${2:Cnk}
 inline ${1:LL} Catalan(int _n){

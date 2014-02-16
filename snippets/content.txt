@@ -14,7 +14,7 @@
 	grey, reverse_grey
 	factmod
 	isPrime
-	Cnk, Catalan
+	Cnk, Cnks, Catalan
 	isSquare, isPow2
 	mulmod, powmod
 	nmsb, _nmsb_, msb, lsb
@@ -61,6 +61,7 @@
 	test
 	stov, vstov
 	gcj
+	between, betweenLL
 Модуль matrix
 	Matrix
 Модуль Persistent
