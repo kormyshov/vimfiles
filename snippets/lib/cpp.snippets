@@ -122,3 +122,13 @@ void gcj_solve(){
 	cout<<"End solver.\n";
 }
 endsnippet
+snippet between "bool between(int, int, int)" !b
+bool between(int a, int b, int c){
+	return (a-b)*1LL*(b-c) >= 0;
+}
+endsnippet
+snippet betweenLL "bool between(LL, LL, LL)" !b
+bool between(LL a, LL b, LL c){
+	return (a>=b && b>=c) || (a<=b && b<=c);
+}
+endsnippet
