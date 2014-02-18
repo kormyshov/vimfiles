@@ -62,6 +62,7 @@
 	stov, vstov
 	gcj
 	between, betweenLL
+	cmp
 Модуль matrix
 	Matrix
 Модуль Persistent

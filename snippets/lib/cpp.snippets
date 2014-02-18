@@ -132,3 +132,11 @@ bool between(LL a, LL b, LL c){
 	return (a>=b && b>=c) || (a<=b && b<=c);
 }
 endsnippet
+snippet cmp "Functor for comparator" !b
+class cmp{
+public:
+	bool operator()(${1:int} a, $1 b){
+		return $2;
+	}
+};
+endsnippet
