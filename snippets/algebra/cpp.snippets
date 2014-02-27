@@ -59,7 +59,7 @@ inline void inverse_all(${1:int} _m, vector<$1> &_v)
 endsnippet
 snippet inverse_all_fact "void inverse_all_fact(<T>, v<T>&)"
 inverse_all$0
-inline inverse_all_fact(${1:int} _m, vector<$1> &_v)
+inline void inverse_all_fact(${1:int} _m, vector<$1> &_v)
 {
 	inverse_all(_m, _v);
 	if(_v.size()) _v[0] = 1;
