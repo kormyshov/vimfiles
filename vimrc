@@ -9,6 +9,7 @@ Bundle "gmarik/vundle"
 Bundle "sonoma.vim"
 Bundle "bling/vim-airline"
 Bundle "mhinz/vim-startify"
+Bundle "Conque-Shell"
 Bundle "ack.vim"
 Bundle "UltiSnips"
 Bundle "matchit.zip"
@@ -148,6 +149,10 @@ imap <C-N>v <C-o>:NERDTree<cr>
 
 nmap <C-N>x :NERDTreeClose<cr>
 imap <C-N>x <C-o>:NERDTreeClose<cr>
+
+" Вешаем горячую клавишу для открытия bash'a
+nmap <C-N>b :ConqueTermSplit bash<cr>
+imap <C-N>v <C-o>:ConqueTermSplit bash<cr>
 
 " Инвертирование комментариев по Ctrl+E с помощью NERDCommenter
 map <C-e> \ci
