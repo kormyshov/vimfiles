@@ -263,10 +263,10 @@ function! BindF9_C()
 		map <F9> :w!<cr>:make<cr>:cw<cr>:! ./%<<cr>
 		imap <F9> <Esc>:w!<cr>:make<cr>:cw<cr>:! ./%<<cr>
 	else
-		map <F9> :w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -static % -o %:r -lm<cr>:cw<cr>:! ./%<<cr>
-		imap <F9> <Esc>:w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -static % -o %:r -lm<cr>:cw<cr>:! ./%<<cr>
-		map <C-F9> :w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -static % -o %:r -lm<cr>:cw<cr>:! xclip -o -selection clipboard<cr>:! xclip -o -selection clipboard \| ./%<<cr>
-		imap <C-F9> <Esc>:w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -static % -o %:r -lm<cr>:cw<cr>:! xclip -o -selectopn clipboard<cr>:! xclip -o -selection clipboard \| ./%<<cr>
+		map <F9> :w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -std=c++0x -static % -o %:r -lm<cr>:cw<cr>:! ./%<<cr>
+		imap <F9> <Esc>:w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -std=c++0x -static % -o %:r -lm<cr>:cw<cr>:! ./%<<cr>
+		map <C-F9> :w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -std=c++0x -static % -o %:r -lm<cr>:cw<cr>:! xclip -o -selection clipboard<cr>:! xclip -o -selection clipboard \| ./%<<cr>
+		imap <C-F9> <Esc>:w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -std=c++0x -static % -o %:r -lm<cr>:cw<cr>:! xclip -o -selectopn clipboard<cr>:! xclip -o -selection clipboard \| ./%<<cr>
 	endif
 endfunction
 au FileType c,cpp,h call BindF9_C()
