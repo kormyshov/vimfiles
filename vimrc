@@ -251,8 +251,8 @@ function! BindF5_C()
 		map <F5> :w!<cr>:make<cr>:cw<cr>
 		imap <F5> <Esc>:w!<cr>:make<cr>:cw<cr>
 	else
-		map <F5> :w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -static % -o %:r -lm<cr>:cw<cr>
-		imap <F5> <Esc>:w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -static % -o %:r -lm<cr>:cw<cr>
+		map <F5> :w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -std=c++0x -static % -o %:r -lm<cr>:cw<cr>
+		imap <F5> <Esc>:w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -std=c++0x -static % -o %:r -lm<cr>:cw<cr>
 	endif
 endfunction
 au FileType c,cpp,h call BindF5_C()
