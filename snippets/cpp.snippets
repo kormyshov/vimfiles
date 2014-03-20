@@ -82,6 +82,11 @@ for(${1:i}=(int)${2:v}.size()-1; ${1/(int )?(\w+)/$2/}>=0; --${1/(int )?(\w+)/$2
 	${3:// code...}
 }
 endsnippet
+snippet foreach "" w
+for(auto& ${1:h} : ${2:v}){
+	${3:// code...}
+}
+endsnippet
 snippet cont "continue ;" w
 continue ;$0
 endsnippet

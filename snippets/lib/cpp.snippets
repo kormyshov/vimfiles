@@ -17,7 +17,7 @@ endsnippet
 snippet vstov "For SRM vector<string> to vector<int>"
 vector<int> vstov(vector<string> &_vs){
 	stringstream _ss;
-	for(int _i=0; _i<(int)_vs.size(); ++_i) _ss<<_vs[_i];
+	for(auto _h : _vs) _ss << _h;
 	int _a;
 	vector<int> _v;
 	while(_ss>>_a) _v.push_back(_a);

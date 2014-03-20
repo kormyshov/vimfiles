@@ -29,13 +29,13 @@
 	Compressor
 Модуль cpp
 	pb, mp, sz, all
-	vi, vect, vvi, pii
+	vi, vect, vvi, pii, vpii
 	#i, #d
 	fill, sort, rsort
 	if, ife, wh
 	for, forab
 	forr, forrab
-	forv, forrv
+	forv, forrv, foreach
 	cont, br
 	ri, rii, riii
 	rd, rdd, rddd

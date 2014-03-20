@@ -140,8 +140,8 @@ endsnippet
 snippet dfs "Standard DFS" !b
 void dfs(int _v){
 	${1:u}[_v] = 1;
-	for(int _i=0; _i<(int)${2:g}[_v].size(); ++_i)
-		if(!$1[$2[_v][_i]]) dfs($2[_v][_i]);
+	for(auto _h : ${2:g}[_v])
+		if(!$1[_h]) dfs(_h);
 }
 endsnippet
 snippet dfsex "DFS for modification" !b
@@ -160,16 +160,14 @@ void dfs(int ${1:v}${2:, int p}){
 endsnippet
 snippet kuhn "Kuhn" !b
 int mt[${1:100500}];
-bool kuhn(int v){
-	if(u[v]) return false;
-	u[v] = 1;
-	for(int i=0; i<(int)g[v].size(); ++i){
-		int to = g[v][i];
+bool kuhn(int _v){
+	if(${1:u}[_v]) return false;
+	$1[_v] = 1;
+	for(auto to : ${2:g}[_v])
 		if(mt[to]==-1 || kuhn(mt[to])){
-			mt[to] = v;
+			mt[to] = _v;
 			return true;
 		}
-	}
 	return false;
 }
 endsnippet
