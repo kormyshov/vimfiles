@@ -16,6 +16,7 @@
 	isPrime
 	Cnk, Cnks, Catalan
 	isSquare, isPow2
+	bitCount
 	mulmod, powmod
 	nmsb, _nmsb_, msb, lsb
 Модуль array

@@ -17,6 +17,7 @@ Bundle "The-NERD-tree"
 Bundle "The-NERD-Commenter"
 Bundle "jcf/vim-latex"
 Bundle "Rip-Rip/clang_complete"
+" Bundle "Valloric/YouCompleteMe"
 Bundle "haskell.vim"
 Bundle "kormyshov/cpp4cf"
 
@@ -119,7 +120,7 @@ au BufWritePost *.h,*.php,*.c,*.cpp,*.htm*.html silent call cursor(au_line, au_c
 
 " Выставляем размеры окна
 set columns=180
-set lines=46
+set lines=44
 
 " Настройка vim-airline
 let g:airline_theme='light'
@@ -161,31 +162,45 @@ imap <C-e> <Esc>\cii
 
 " Устанавливаем директорию для сниппетов
 let g:UltiSnipsSnippetDirectories=[
-	\ "snippets",
-	\ "snippets/Scanner",
-	\ "snippets/lib",
-	\ "snippets/algebra",
-	\ "snippets/array",
-	\ "snippets/graph",
-	\ "snippets/string",
-	\ "snippets/compressor",
-	\ "snippets/segment",
-	\ "snippets/fenwick",
-	\ "snippets/DataStruct",
-	\ "snippets/BI",
-	\ "snippets/Persistent",
-	\ "snippets/geometry",
-	\ "snippets/matrix",
-	\ "snippets/Treap"
+	\ "snips",
+	\ "snips/Scanner",
+	\ "snips/lib",
+	\ "snips/algebra",
+	\ "snips/array",
+	\ "snips/graph",
+	\ "snips/string",
+	\ "snips/compressor",
+	\ "snips/segment",
+	\ "snips/fenwick",
+	\ "snips/DataStruct",
+	\ "snips/BI",
+	\ "snips/Persistent",
+	\ "snips/geometry",
+	\ "snips/matrix",
+	\ "snips/Treap"
 	\ ]
+
+" Прописываем путь для clang
+let g:clang_library_path="/usr/lib/llvm-3.4/lib"
 
 " Автодополнение по <C-Space>
 let g:clang_complete_auto=0
 imap <C-Space> <C-X><C-U>
 let g:clang_close_preview=1
 
+" Автодополнение сниппетов от UltiSnips
+let g:clang_snippets=1
+let g:clang_snippets_engine="ultisnips"
+
 " Исправляем C-T для cpp из-за clang
 let g:clang_jumpto_back_key='<C-[>'
+
+" Исправляем конфликт UltiSnips и YCM
+"let g:ycm_key_list_select_completion=[]
+"let g:ycm_key_list_previous_completion=[]
+
+" Добавление дефолтного семантического автокомплита
+"let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/python/ycm/extra_conf_store.py"
 
 " Не переходить по звёздочке на следующее
 nnoremap * *N
