@@ -62,7 +62,7 @@ Answer ans[MAX_T];
 void* solve(void *_id){
 	const int id = *(int*)_id;
 	const int num_th = thread_pop();
-	// считывание данных
+	// считывание данных из потока in
 
 
 
@@ -76,7 +76,7 @@ void* solve(void *_id){
 	//sem_wait(&sem[id]);
 	// вывод данных
 
-	//out<<"Case #"<<id<<": ";
+	//ans[id].ans = 8;
 
 
 	cout<<"Write in "<<id<<endl;
@@ -139,4 +139,24 @@ public:
 		return $2;
 	}
 };
+endsnippet
+snippet nit "number_iterator" !b
+template<typename T>
+struct number_iterator : std::iterator<random_access_iterator_tag, T>{
+	T v;
+	number_iterator(T _v) : v(_v) {}
+	operator T&(){return v;}
+	T operator *() const {return v;}
+};
+template<typename T> number_iterator<T> nit(T e) {return number_iterator<T>(e);}
+
+template <typename T>
+struct number_range {
+	T b,e;
+	number_range(T b, T e):b(b),e(e){}
+	number_iterator<T> begin(){return b;}
+	number_iterator<T> end(){return e;}
+};
+template<typename T> number_range<T> range(T e) {return number_range<T>(0, e);}
+template<typename T> number_range<T> range(T b, T e) {return number_range<T>(b, e);}
 endsnippet

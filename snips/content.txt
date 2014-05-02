@@ -36,12 +36,14 @@
 	if, ife, wh
 	for, forab
 	forr, forrab
-	forv, forrv, foreach
+	forv, forrv
+	foreach, fornit
 	cont, br
 	ri, rii, riii
 	rd, rdd, rddd
 	rc, rcc, rccc
 	rs, rm, rm1, rv, rvp
+	remin, remax
 Модуль DataStruct
 	DSU, Stex, Qex
 	SparseTable
@@ -64,6 +66,7 @@
 	gcj
 	between, betweenLL
 	cmp
+	nit
 Модуль matrix
 	Matrix
 Модуль Persistent

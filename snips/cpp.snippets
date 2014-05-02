@@ -83,7 +83,12 @@ for(${1:i}=(int)${2:v}.size()-1; ${1/(int )?(\w+)/$2/}>=0; --${1/(int )?(\w+)/$2
 }
 endsnippet
 snippet foreach "" w
-for(auto& ${1:h} : ${2:v}){
+for(auto& ${1:a} : ${2:v}){
+	${3:// code...}
+}
+endsnippet
+snippet fornit "for with number_iterator" w
+for(auto ${1:i} : range(${2:n})){
 	${3:// code...}
 }
 endsnippet
