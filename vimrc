@@ -225,7 +225,7 @@ set foldlevel=7			" Количество открытых уровней по у
 set foldopen=all		" Автоматическое открытие свёрток при заходе в них
 
 " Хот-кеи для cpp4cf
-map <C-l> :CFTemplate<CR>89<C-W>i<C-W>l:e ~/.vim/snippets/content.txt<CR>/lbound<CR>zMzrgg<C-W>h
+map <C-l> :CFTemplate<CR>89<C-W>i<C-W>l:e ~/.vim/snips/content.txt<CR>/lbound<CR>zMzrgg<C-W>h
 map <C-p> :CFPatch<CR>
 
 " Отключаем работу стрелочек
