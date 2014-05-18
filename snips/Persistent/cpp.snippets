@@ -5,34 +5,39 @@ class PersistentStack{
 	vector<int> p;
 	T null;
 public:
-	PersistentStack(T _null){
+	PersistentStack(T _null){			// {{{
 		null = _null;
 		v.push_back(null);
 		p.push_back(-1);
 	}
-	PersistentStack(int n, T _null){
+										// }}}
+	PersistentStack(int n, T _null){	// {{{
 		null = _null;
 		v.reserve(n);
 		p.reserve(n);
 		v.push_back(null);
 		p.push_back(-1);
 	}
-
-	bool empty(int n){
+										// }}}
+	bool empty(int n){					// {{{
 		return p[n] == -1;
 	}
-	T top(int n){
+										// }}}
+	T top(int n){						// {{{
 		return v[n];
 	}
-	void push(int n, const T& x){
+										// }}}
+	void push(int n, const T& x){		// {{{
 		v.push_back(x);
 		p.push_back(n);
 	}
-	void pop(int n){
+										// }}}
+	void pop(int n){					// {{{
 		int t = p[n];
 		if(t >= 0)
 			v.push_back(v[t]),
 			p.push_back(p[t]);
 	}
+										// }}}
 };
 endsnippet

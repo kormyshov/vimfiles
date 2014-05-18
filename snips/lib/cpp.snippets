@@ -31,6 +31,7 @@ ofstream out("output.txt");
 // Не забудь в main добавить вызов gcj_solve()
 #define MAX_T ${1:101}
 #define MAX_Threads ${2:4}
+// {{{
 sem_t sem[MAX_T], sem_count, sem_stack;
 pthread_t pthread[MAX_T];
 stack<int> thread_stack;
@@ -47,7 +48,7 @@ void thread_push(int a){
 	thread_stack.push(a);
 	sem_post(&sem_stack);
 }
-
+// }}}
 class Answer{
 public:
 	int ans;
@@ -86,7 +87,7 @@ void* solve(void *_id){
 	sem_post(&sem_count);
 	pthread_exit(0);
 }
-
+// {{{
 void gcj_solve(){
 	cout<<"Start solver.\n";
 	int T;
@@ -121,6 +122,7 @@ void gcj_solve(){
 	for(int ii=1; ii<=T; ++ii) out<<"Case #"<<ii<<": "<<ans[ii]<<endl;
 	cout<<"End solver.\n";
 }
+// }}}
 endsnippet
 snippet between "bool between(int, int, int)" !b
 bool between(int a, int b, int c){
@@ -141,6 +143,7 @@ public:
 };
 endsnippet
 snippet nit "number_iterator" !b
+// {{{
 template<typename T>
 struct number_iterator : std::iterator<random_access_iterator_tag, T>{
 	T v;
@@ -148,7 +151,6 @@ struct number_iterator : std::iterator<random_access_iterator_tag, T>{
 	operator T&(){return v;}
 	T operator *() const {return v;}
 };
-template<typename T> number_iterator<T> nit(T e) {return number_iterator<T>(e);}
 
 template <typename T>
 struct number_range {
@@ -157,6 +159,8 @@ struct number_range {
 	number_iterator<T> begin(){return b;}
 	number_iterator<T> end(){return e;}
 };
+// }}}
+template<typename T> number_iterator<T> nit(T e) {return number_iterator<T>(e);}
 template<typename T> number_range<T> range(T e) {return number_range<T>(0, e);}
 template<typename T> number_range<T> range(T b, T e) {return number_range<T>(b, e);}
 endsnippet

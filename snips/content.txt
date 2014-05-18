@@ -55,6 +55,7 @@
 	FenwickMap
 Модуль geometry
 	Point, Point3D
+	Line, Segment
 Модуль graph
 	clique
 	Dijkstra, DijkstraHeap
@@ -74,7 +75,7 @@
 Модуль Scanner
 	Scanner
 Модуль segment
-	RSQ, RGcdQ
+	RSQ, RGcdQ, RGcdQFast
 	RMaxQ, RMinQ, RMaxQInd, RMinQInd
 	RSQAdd, RMaxQAdd, RMinQAdd
 	RSQSet, RMaxQSet, RMinQSet

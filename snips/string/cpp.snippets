@@ -2,7 +2,7 @@ snippet suffix_array "void suffix_array(const string&, vi&)" !b
 int _cnt[_MAX_N], _c[_MAX_N], _pn[_MAX_N], _cn[_MAX_N];
 
 void suffix_array(const string &_s, vector<int> &_p)
-{
+{ // {{{
 	int _i, _cl, _n = (int)_s.size();
 	_p.assign(_n, 0);
 
@@ -42,12 +42,12 @@ void suffix_array(const string &_s, vector<int> &_p)
 		}
 		memcpy(_c, _cn, sizeof(_c));
 	}
-}
+} // }}}
 $0
 endsnippet
 snippet pfun "void pfun(const string&, vi&)" !b
 void pfun(const string &_s, vector<int> &_v)
-{
+{ // {{{
 	int _j, _n = (int)_s.size();
 	_v.assign(_n, 0);
 	for(int _i=1; _i<_n; ++_i)
@@ -57,12 +57,12 @@ void pfun(const string &_s, vector<int> &_v)
 		if(_s[_i] == _s[_j]) ++_j;
 		_v[_i] = _j;
 	}
-}
+} // }}}
 $0
 endsnippet
 snippet zfun "void zfun(const string&, vi&)" !b
 void zfun(const string &_s, vector<int> &_v)
-{
+{ // {{{
 	int _n = (int)_s.size();
 	_v.assign(_n, 0);
 	for(int _i=1, _l=0, _r=0; _i<_n; ++_i)
@@ -75,12 +75,12 @@ void zfun(const string &_s, vector<int> &_v)
 			_r = _i+_v[_i]-1;
 		}
 	}
-}
+} // }}}
 $0
 endsnippet
 snippet palindromes "void palindromes(const string&, vi&, vi&)" !b
 void palindromes(const string &_s, vector<int> &_d1, vector<int> &_d2)
-{
+{ // {{{
 	int _n = (int)_s.size(), _l, _r, _k;
 	_d1.assign(_n, 0);
 	_d2.assign(_n, 0);
@@ -102,7 +102,7 @@ void palindromes(const string &_s, vector<int> &_d1, vector<int> &_d2)
 		_d2[_i] = --_k;
 		if(_i+_k-1 > _r) { _l=_i-_k; _r=_i+_k-1; }
 	}
-}
+} // }}}
 $0
 endsnippet
 snippet hash "Complect #1" !b
@@ -111,7 +111,7 @@ snippet hash "Complect #1" !b
 #define ih 449446491
 
 int hash(const string &_s)
-{
+{ // {{{
 	int _r = 0;
 	for(int _i=0; _i<(int)_s.size(); ++_i)
 	{
@@ -120,7 +120,7 @@ int hash(const string &_s)
 		_r %= HS;
 	}
 	return _r;
-}
+} // }}}
 endsnippet
 snippet hash2 "Complect #2" !b
 #define HS2 56756747
@@ -128,7 +128,7 @@ snippet hash2 "Complect #2" !b
 #define ih2 33747255
 
 int hash2(const string &_s)
-{
+{ // {{{
 	int _r = 0;
 	for(int _i=0; _i<(int)_s.size(); ++_i)
 	{
@@ -137,24 +137,26 @@ int hash2(const string &_s)
 		_r %= HS2;
 	}
 	return _r;
-}
+} // }}}
 endsnippet
 snippet Bor "Class Bor" !b
 class Bor{
 	int mm[${1:100500}][${2:27}], len;
 	char chr;
 public:
-	Bor(){
+	Bor(){	// {{{
 		memset(mm, 0, sizeof(mm));
 		len = 1;
 		chr = 'a';
 	}
-	Bor(char ch){
+			// }}}
+	Bor(char ch){	// {{{
 		memset(mm, 0, sizeof(mm));
 		len = 1;
 		chr = ch;
 	}
-	void add(const string &s){
+					// }}}
+	void add(const string &s){	// {{{
 		int c = 0;
 		for(int i=0; i<(int)s.size(); ++i){
 			char ch = s[i] - chr;
@@ -163,7 +165,8 @@ public:
 		}
 		mm[c][26] = 1;
 	}
-	void add(const char s[]){
+								// }}}
+	void add(const char s[]){	// {{{
 		int c = 0;
 		for(int i=0; s[i]; ++i){
 			char ch = s[i] - chr;
@@ -172,7 +175,8 @@ public:
 		}
 		mm[c][26] = 1;
 	}
-	bool search(const string &s){
+								// }}}
+	bool search(const string &s){	// {{{
 		int c = 0;
 		for(int i=0; i<(int)s.size(); ++i){
 			char ch = s[i] - chr;
@@ -181,7 +185,8 @@ public:
 		}
 		return mm[c][26];
 	}
-	bool search(const char s[]){
+									// }}}
+	bool search(const char s[]){	// {{{
 		int c = 0;
 		for(int i=0; s[i]; ++i){
 			char ch = s[i] - chr;
@@ -190,6 +195,7 @@ public:
 		}
 		return mm[c][26];
 	}
+									// }}}
 };
 endsnippet
 snippet BorM "Class Bor with map" !b
@@ -198,15 +204,17 @@ class BorM{
 	int len;
 	char chr;
 public:
-	BorM(){
+	BorM(){	// {{{
 		len = 1;
 		chr = 'a';
 	}
-	BorM(char ch){
+			// }}}
+	BorM(char ch){	// {{{
 		len = 1;
 		chr = ch;
 	}
-	void add(const string &s){
+					// }}}
+	void add(const string &s){	// {{{
 		int c = 0;
 		for(int i=0; i<(int)s.size(); ++i){
 			char ch = s[i] - chr;
@@ -215,7 +223,8 @@ public:
 		}
 		mm[c][26] = 1;
 	}
-	void add(const char s[]){
+								// }}}
+	void add(const char s[]){	// {{{
 		int c = 0;
 		for(int i=0; s[i]; ++i){
 			char ch = s[i] - chr;
@@ -224,7 +233,8 @@ public:
 		}
 		mm[c][26] = 1;
 	}
-	bool search(const string &s){
+								// }}}
+	bool search(const string &s){	// {{{
 		int c = 0;
 		for(int i=0; i<(int)s.size(); ++i){
 			char ch = s[i] - chr;
@@ -233,7 +243,8 @@ public:
 		}
 		return mm[c].count(26);
 	}
-	bool search(const char s[]){
+									// }}}
+	bool search(const char s[]){	// {{{
 		int c = 0;
 		for(int i=0; s[i]; ++i){
 			char ch = s[i] - chr;
@@ -242,5 +253,6 @@ public:
 		}
 		return mm[c].count(26);
 	}
+									// }}}
 };
 endsnippet

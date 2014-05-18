@@ -3,14 +3,15 @@ class DSU{
 	int *p, *r;
 	int N, c;
 public:
-	DSU(int n){
+	DSU(int n){						// {{{
 		c = N = n;
 		p = new int[N];
 		r = new int[N];
 		memset(r, 0, sizeof(r));
 		for(int i=0; i<N; ++i) p[i] = i;
 	}
-	int get(int x){
+									// }}}
+	int get(int x){					// {{{
 		int t=x, tmp;
 		while(x!=p[x]) x=p[x];
 		while(p[t]!=x){
@@ -20,7 +21,8 @@ public:
 		}
 		return x;
 	}
-	bool unite(int a, int b){
+									// }}}
+	bool unite(int a, int b){		// {{{
 		a = get(a);
 		b = get(b);
 		if(a==b) return false;
@@ -30,9 +32,11 @@ public:
 		--c;
 		return true;
 	}
-	int count(){
+									// }}}
+	int count(){					// {{{
 		return c;
 	}
+									// }}}
 };
 $0
 endsnippet
@@ -43,26 +47,32 @@ class Stex{
 	stack<T> st, mn;
 	Compare f;
 public:
-	bool empty(){
+	bool empty(){			// {{{
 		return st.empty();
 	}
-	int size(){
+							// }}}
+	int size(){				// {{{
 		 return st.size();
 	}
-	T top(){
+							// }}}
+	T top(){				// {{{
 		return st.top();
 	}
-	T operator()(){
+							// }}}
+	T operator()(){			// {{{
 		return mn.top();
 	}
-	void push(const T& x){
+							// }}}
+	void push(const T& x){	// {{{
 		mn.push(mn.empty() || f(x,mn.top())?x:mn.top());
 		st.push(x);
 	}
-	void pop(){
+							// }}}
+	void pop(){				// {{{
 		st.pop();
 		mn.pop();
 	}
+							// }}}
 };
 $0
 endsnippet
@@ -73,28 +83,34 @@ class Qex{
 	Stex<T, Compare> st1, st2;
 	Compare f;
 public:
-	bool empty(){
+	bool empty(){				// {{{
 		return st1.empty() && st2.empty();
 	}
-	int size(){
+								// }}}
+	int size(){					// {{{
 		return st1.size() + st2.size();
 	}
-	T front(){
+								// }}}
+	T front(){					// {{{
 		move();
 		return st2.top();
 	}
-	T operator()(){
+								// }}}
+	T operator()(){				// {{{
 		move();
 		return (st1.empty() || f(st2(),st1())?st2():st1());
 	}
-	void push(const T& x){
+								// }}}
+	void push(const T& x){		// {{{
 		st1.push(x);
 	}
-	void pop(){
+								// }}}
+	void pop(){					// {{{
 		move();
 		st2.pop();
 	}
-	void move(){
+								// }}}
+	void move(){				// {{{
 		if(!st2.empty()) return ;
 		T t;
 		while(!st1.empty()){
@@ -103,6 +119,7 @@ public:
 			st2.push(t);
 		}
 	}
+								// }}}
 };
 $0
 endsnippet
@@ -114,7 +131,7 @@ class SparseTable{
 	Compare f;
 	int N, logN, *m;
 public:
-	SparseTable(const vector<T> &v){
+	SparseTable(const vector<T> &v){		// {{{
 		N = v.size();
 		logN = 0;
 		while(N > (1<<logN)) ++logN;
@@ -136,16 +153,19 @@ public:
 		for(int i=2; i<=N; ++i)
 			m[i] = m[i>>1] + 1;
 	}
-	inline T operator ()(int l, int r){
+											// }}}
+	inline T operator ()(int l, int r){		// {{{
 		int i = m[r - l + 1];
 		return f(mm[i][l], mm[i][r+1-(1<<i)]) ? mm[i][l] : mm[i][r+1-(1<<i)];
 	}
-	int min_ind(int l, int r){
+											// }}}
+	int min_ind(int l, int r){				// {{{
 		int i = m[r - l + 1];
 		if(!f(mm[i][l], mm[i][r+1-(1<<i)])) l = r+1-(1<<i);
 		for(; i; --i)
 			if(!f(mm[i-1][l], mm[i-1][l+(1<<i-1)])) l += 1<<i-1;
 		return l;
 	}
+											// }}}
 };
 endsnippet

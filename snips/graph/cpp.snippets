@@ -3,7 +3,7 @@ int n;
 vector<LL> g;
 
 int clique(LL cl, LL cand, LL out, int size = 0)
-{
+{ // {{{
     int result = 0;
     LL candintersect = (1LL << n) - 1;
     for (int i = 0; i < n; ++i) if (cand & (1LL << i)) candintersect &= g[i];
@@ -21,10 +21,11 @@ int clique(LL cl, LL cand, LL out, int size = 0)
         out = out | mask;
     }
     return result;
-}
+} // }}}
 $0
 endsnippet
 snippet Dijkstra "Dijkstra with sqrt" !b
+// {{{
 vector<int> dijkstra_d, dijkstra_f, dijkstra_sqrt_d;
 int dijkstra_sqrt_n;
 
@@ -48,8 +49,9 @@ int dijkstra_get(){
 	}
 	return v;
 }
-
-vector<int> Dijkstra(int s){
+// }}}
+vector<int> Dijkstra(int s)
+{ // {{{
 	dijkstra_d.assign(N, INF2);
 	dijkstra_f.assign(N, 0);
 	dijkstra_d[s] = 0;
@@ -69,9 +71,10 @@ vector<int> Dijkstra(int s){
 		}
 	}
 	return dijkstra_d;
-}
+} // }}}
 endsnippet
 snippet DijkstraHeap "Dijkstra with heap" !b
+// {{{
 vector<int> dijkstra_heap, dijkstra_heap_p, dijkstra_d;
 
 void dijkstra_pop(){
@@ -106,8 +109,9 @@ void dijkstra_relax(int v){
 	dijkstra_heap[a] = v;
 	dijkstra_heap_p[v] = a;
 }
-
-vector<int> Dijkstra(int s){
+// }}}
+vector<int> Dijkstra(int s)
+{ // {{{
 	dijkstra_d.assign(N, INF2);
 	dijkstra_d[s] = 0;
 	dijkstra_heap.assign(N+1,0);
@@ -128,7 +132,7 @@ vector<int> Dijkstra(int s){
 		}
 	}
 	return dijkstra_d;
-}
+} // }}}
 endsnippet
 snippet Floyd "Floyd inline" !b
 for(int _floyd_k_=0; _floyd_k_<${1:n}; ++_floyd_k_)

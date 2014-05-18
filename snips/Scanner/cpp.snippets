@@ -5,12 +5,12 @@ char input[BUF_SIZE];
 struct Scanner {
     char* curPos;
 
-    Scanner() {
+    Scanner() {				// {{{
         fread(input, 1, sizeof(input), stdin);
         curPos = input;
     }
-
-    void ensureCapacity() {
+							// }}}
+    void ensureCapacity() {	// {{{
         int size = input + BUF_SIZE - curPos;
         if (size < 100) {
             memcpy(input, curPos, size);
@@ -18,8 +18,8 @@ struct Scanner {
             curPos = input;
         }
     }
-
-    int nextInt() {
+							// }}}
+    int nextInt() {			// {{{
         ensureCapacity();
         while (*curPos <= ' ')
             ++curPos;
@@ -33,12 +33,13 @@ struct Scanner {
             res = res * 10 + (*(curPos++) & 15);
         return sign ? -res : res;
     }
-
-    char nextChar() {
+							// }}}
+    char nextChar() {		// {{{
         ensureCapacity();
         while (*curPos <= ' ')
             ++curPos;
         return *(curPos++);
     }
+							// }}}
 };
 endsnippet

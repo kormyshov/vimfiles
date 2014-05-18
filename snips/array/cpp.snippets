@@ -2,7 +2,7 @@ snippet lbound "fast lower_bound" !b
 vector<${1:int}> _lbound_l1;
 int _lbound_bS;
 void slbound(const vector<$1> &_v)
-{
+{ // {{{
 	_lbound_bS = 0;
 	while(_lbound_bS * _lbound_bS < int(_v.size()))
 		++_lbound_bS;
@@ -12,10 +12,10 @@ void slbound(const vector<$1> &_v)
 		_lbound_l1[_j] = _v[_i];
 	if(_j<_lbound_bS)
 		_lbound_l1[_j] = _v[_v.size()-1];
-}
+} // }}}
 
 int lbound(const vector<$1> &_v, $1 _q, bool _restart = false)
-{
+{ // {{{
 	if(_restart) slbound(_v);
 
 	int _x = int(lower_bound(_lbound_l1.begin(), _lbound_l1.end(), _q) - _lbound_l1.begin());
@@ -23,11 +23,12 @@ int lbound(const vector<$1> &_v, $1 _q, bool _restart = false)
 		return int(lower_bound(_v.begin()+_x*_lbound_bS, (_x+1)*_lbound_bS < int(_v.size()) ? _v.begin()+(_x+1)*_lbound_bS : _v.end(), _q) - _v.begin());
 	else
 		return int(_v.size());
-}
+} // }}}
 $0
 endsnippet
 snippet next_permutation "bool next_permutation(vi&)" !b
-bool next_permutation(vector<${1:int}> &_v){
+bool next_permutation(vector<${1:int}> &_v)
+{ // {{{
 	int _i, _j;
 	for(_i = _v.size()-1; _i>0 && _v[_i]<=_v[_i-1]; --_i);
 	if(!_i) return false;
@@ -36,5 +37,5 @@ bool next_permutation(vector<${1:int}> &_v){
 	for(++_i, _j = _v.size()-1; _i<_j; ++_i, --_j)
 		swap(_v[_i], _v[_j]);
 	return true;
-}
+} // }}}
 endsnippet

@@ -8,28 +8,28 @@ class BI {
 public:
     BI() : sign(1) {}
 
-    BI(long long v) {
+    BI(long long v) { 	// {{{
         *this = v;
     }
-
-    BI(const string &s) {
+						// }}}
+    BI(const string &s) {	// {{{
         read(s);
     }
-
-    void operator=(const BI &v) {
+							// }}}
+    void operator=(const BI &v) {	// {{{
         sign = v.sign;
         a = v.a;
     }
-
-    void operator=(long long v) {
+									// }}}
+    void operator=(long long v) {	// {{{
         sign = 1;
         if (v < 0)
             sign = -1, v = -v;
         for (; v > 0; v = v / BI_base)
             a.push_back(v % BI_base);
     }
-
-    BI operator+(const BI &v) const {
+									// }}}
+    BI operator+(const BI &v) const {	// {{{
         if (sign == v.sign) {
             BI res = v;
 
@@ -45,8 +45,8 @@ public:
         }
         return *this - (-v);
     }
-
-    BI operator-(const BI &v) const {
+										// }}}
+    BI operator-(const BI &v) const {	// {{{
         if (sign == v.sign) {
             if (abs() >= v.abs()) {
                 BI res = *this;
@@ -63,8 +63,8 @@ public:
         }
         return *this + (-v);
     }
-
-    void operator*=(int v) {
+										// }}}
+    void operator*=(int v) {			// {{{
         if (v < 0)
             sign = -sign, v = -v;
         for (int i = 0, carry = 0; i < (int) a.size() || carry; ++i) {
@@ -76,14 +76,14 @@ public:
         }
         trim();
     }
-
-    BI operator*(int v) const {
+										// }}}
+    BI operator*(int v) const {			// {{{
         BI res = *this;
         res *= v;
         return res;
     }
-
-    friend pair<BI, BI> divmod(const BI &a1, const BI &b1) {
+										// }}}
+    friend pair<BI, BI> divmod(const BI &a1, const BI &b1) {	// {{{
         int norm = BI_base / (b1.a.back() + 1);
         BI a = a1.abs() * norm;
         BI b = b1.abs() * norm;
@@ -108,16 +108,16 @@ public:
         r.trim();
         return make_pair(q, r / norm);
     }
-
-    BI operator/(const BI &v) const {
+																// }}}
+    BI operator/(const BI &v) const {	// {{{
         return divmod(*this, v).first;
     }
-
-    BI operator%(const BI &v) const {
+										// }}}
+    BI operator%(const BI &v) const {	// {{{
         return divmod(*this, v).second;
     }
-
-    void operator/=(int v) {
+										// }}}
+    void operator/=(int v) {			// {{{
         if (v < 0)
             sign = -sign, v = -v;
         for (int i = (int) a.size() - 1, rem = 0; i >= 0; --i) {
@@ -127,14 +127,14 @@ public:
         }
         trim();
     }
-
-    BI operator/(int v) const {
+										// }}}
+    BI operator/(int v) const {			// {{{
         BI res = *this;
         res /= v;
         return res;
     }
-
-    int operator%(int v) const {
+										// }}}
+    int operator%(int v) const {		// {{{
         if (v < 0)
             v = -v;
         int m = 0;
@@ -142,21 +142,21 @@ public:
             m = (a[i] + m * (long long) BI_base) % v;
         return m * sign;
     }
-
-    void operator+=(const BI &v) {
+										// }}}
+    void operator+=(const BI &v) {		// {{{
         *this = *this + v;
-    }
-    void operator-=(const BI &v) {
+    }									// }}}
+    void operator-=(const BI &v) {		// {{{
         *this = *this - v;
-    }
-    void operator*=(const BI &v) {
+    }									// }}}
+    void operator*=(const BI &v) {		// {{{
         *this = *this * v;
-    }
-    void operator/=(const BI &v) {
+    }									// }}}
+    void operator/=(const BI &v) {		// {{{
         *this = *this / v;
     }
-
-    bool operator<(const BI &v) const {
+										// }}}
+    bool operator<(const BI &v) const {	// {{{
         if (sign != v.sign)
             return sign < v.sign;
         if (a.size() != v.a.size())
@@ -166,61 +166,61 @@ public:
                 return a[i] * sign < v.a[i] * sign;
         return false;
     }
-
-    bool operator>(const BI &v) const {
+										// }}}
+    bool operator>(const BI &v) const {	// {{{
         return v < *this;
-    }
-    bool operator<=(const BI &v) const {
+    }									// }}}
+    bool operator<=(const BI &v) const {	// {{{
         return !(v < *this);
-    }
-    bool operator>=(const BI &v) const {
+    }										// }}}
+    bool operator>=(const BI &v) const {	// {{{
         return !(*this < v);
-    }
-    bool operator==(const BI &v) const {
+    }										// }}}
+    bool operator==(const BI &v) const {	// {{{
         return !(*this < v) && !(v < *this);
-    }
-    bool operator!=(const BI &v) const {
+    }										// }}}
+    bool operator!=(const BI &v) const {	// {{{
         return *this < v || v < *this;
     }
-
-    void trim() {
+											// }}}
+    void trim() {							// {{{
         while (!a.empty() && !a.back())
             a.pop_back();
         if (a.empty())
             sign = 1;
     }
-
-    bool isZero() const {
+											// }}}
+    bool isZero() const {					// {{{
         return a.empty() || (a.size() == 1 && !a[0]);
     }
-
-    BI operator-() const {
+											// }}}
+    BI operator-() const {					// {{{
         BI res = *this;
         res.sign = -sign;
         return res;
     }
-
-    BI abs() const {
+											// }}}
+    BI abs() const {						// {{{
         BI res = *this;
         res.sign *= res.sign;
         return res;
     }
-
-    long long longValue() const {
+											// }}}
+    long long longValue() const {			// {{{
         long long res = 0;
         for (int i = a.size() - 1; i >= 0; i--)
             res = res * BI_base + a[i];
         return res * sign;
     }
-
-    friend BI gcd(const BI &a, const BI &b) {
+											// }}}
+    friend BI gcd(const BI &a, const BI &b) {	// {{{
         return b.isZero() ? a : gcd(b, a % b);
-    }
-    friend BI lcm(const BI &a, const BI &b) {
+    }											// }}}
+    friend BI lcm(const BI &a, const BI &b) {	// {{{
         return a / gcd(a, b) * b;
     }
-
-    void read(const string &s) {
+												// }}}
+    void read(const string &s) {	// {{{
         sign = 1;
         a.clear();
         int pos = 0;
@@ -237,15 +237,15 @@ public:
         }
         trim();
     }
-
-    friend istream& operator>>(istream &stream, BI &v) {
+									// }}}
+    friend istream& operator>>(istream &stream, BI &v) {	// {{{
         string s;
         stream >> s;
         v.read(s);
         return stream;
     }
-
-    friend ostream& operator<<(ostream &stream, const BI &v) {
+															// }}}
+    friend ostream& operator<<(ostream &stream, const BI &v) {	// {{{
         if (v.sign == -1)
             stream << '-';
         stream << (v.a.empty() ? 0 : v.a.back());
@@ -315,8 +315,8 @@ public:
             res[i + n] += a2b2[i];
         return res;
     }
-
-    BI operator*(const BI &v) const {
+											// }}}
+    BI operator*(const BI &v) const {		// {{{
         vector<int> a6 = convert_base(this->a, BI_digits, 6);
         vector<int> b6 = convert_base(v.a, BI_digits, 6);
         vector<LL> a(a6.begin(), a6.end());
@@ -339,6 +339,7 @@ public:
         res.trim();
         return res;
     }
+											// }}}
 };
 $0
 endsnippet

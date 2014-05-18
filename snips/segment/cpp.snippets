@@ -3,21 +3,25 @@ class RSQ{
 	${1:LL} *m;
 	int N;
 public:
-	RSQ(int n){
+	RSQ(int n){	// {{{
 		N = n;
 		m = new $1[4*N];
 		memset(m, 0, sizeof($1)*4*N);
 	}
-	RSQ($1 a[], int n){
+				// }}}
+	RSQ($1 a[], int n){	// {{{
 		N = n;
 		m = new $1[4*N];
 		init(a, 1, 0, N-1);
 	}
-	RSQ(vector<$1> &v){
+						// }}}
+	RSQ(vector<$1> &v){	// {{{
 		N = v.size();
 		m = new $1[4*N];
 		init(v, 1, 0, N-1);
 	}
+						// }}}
+	// {{{
 	void init($1 a[], int v, int vl, int vr){
 		if(vl==vr){
 			m[v] = a[vl];
@@ -38,7 +42,8 @@ public:
 		init(a, v<<1|1, mid+1, vr);
 		m[v] = m[v<<1] + m[v<<1|1];
 	}
-	void add(int i, $1 d){
+	// }}}
+	void add(int i, $1 d){	// {{{
 		int mid, v=1, vl=0, vr=N-1;
 		while(vl!=i || vr!=i){
 			m[v] += d;
@@ -48,7 +53,8 @@ public:
 		}
 		m[v] += d;
 	}
-	$1 sum(int l, int r){
+							// }}}
+	$1 sum(int l, int r){	// {{{
 		return sum(l, r, 1, 0, N-1);
 	}
 	$1 sum(int l, int r, int v, int vl, int vr){
@@ -58,7 +64,8 @@ public:
 		return sum(l, MIN(r, mid), v<<1, vl, mid)
 			  +sum(MAX(l, mid+1), r, v<<1|1, mid+1, vr);
 	}
-	int ind_with_sum($1 s){
+							// }}}
+	int ind_with_sum($1 s){	// {{{
 		int v=1, vl=0, vr=N-1, mid;
 		while(vl < vr){
 			mid = (vl+vr)>>1;
@@ -68,6 +75,7 @@ public:
 		}
 		return vl;
 	}
+							// }}}
 };
 $0
 endsnippet
@@ -76,21 +84,25 @@ class RMaxQ{
 	${1:int} *m;
 	int N;
 public:
-	RMaxQ(int n){
+	RMaxQ(int n){	// {{{
 		N = n;
 		m = new $1[4*N];
 		memset(m, 128, sizeof($1)*4*N);
 	}
-	RMaxQ(int a[], int n){
+					// }}}
+	RMaxQ(int a[], int n){	// {{{
 		N = n;
 		m = new $1[4*N];
 		init(a, 1, 0, N-1);
 	}
-	RMaxQ(vector<int> &v){
+							// }}}
+	RMaxQ(vector<int> &v){	// {{{
 		N = v.size();
 		m = new $1[4*N];
 		init(v, 1, 0, N-1);
 	}
+							// }}}
+	// {{{
 	void init(int a[], int v, int vl, int vr){
 		if(vl==vr){
 			m[v] = a[vl];
@@ -111,7 +123,8 @@ public:
 		init(a, v<<1|1, mid+1, vr);
 		m[v] = MAX(m[v<<1], m[v<<1|1]);
 	}
-	void add(int i, $1 d){
+	// }}}
+	void add(int i, $1 d){	// {{{
 		add(i, d, 1, 0, N-1);
 	}
 	void add(int i, $1 d, int v, int vl, int vr){
@@ -124,7 +137,8 @@ public:
 		else add(i, d, v<<1|1, mid+1, vr);
 		m[v] = MAX(m[v<<1], m[v<<1|1]);
 	}
-	$1 max(int l, int r){
+							// }}}
+	$1 max(int l, int r){	// {{{
 		return max(l, r, 1, 0, N-1);
 	}
 	$1 max(int l, int r, int v, int vl, int vr){
@@ -134,7 +148,8 @@ public:
 		return std::max(max(l, MIN(r, mid), v<<1, vl, mid),
 			   max(MAX(l, mid+1), r, v<<1|1, mid+1, vr));
 	}
-	int lower_bound($1 a){
+							// }}}
+	int lower_bound($1 a){	// {{{
 		if(m[1]<a) return N;
 		int v=1, vl=0, vr=N-1, mid;
 		while(vl < vr){
@@ -145,7 +160,8 @@ public:
 		}
 		return vl;
 	}
-	int upper_bound($1 a){
+							// }}}
+	int upper_bound($1 a){	// {{{
 		if(m[1]<=a) return N;
 		int v=1, vl=0, vr=N-1, mid;
 		while(vl < vr){
@@ -156,6 +172,7 @@ public:
 		}
 		return vl;
 	}
+							// }}}
 };
 $0
 endsnippet
@@ -164,21 +181,25 @@ class RMinQ{
 	${1:int} *m;
 	int N;
 public:
-	RMinQ(int n){
+	RMinQ(int n){	// {{{
 		N = n;
 		m = new $1[4*N];
 		memset(m, 127, sizeof($1)*4*N);
 	}
-	RMinQ(int a[], int n){
+					// }}}
+	RMinQ(int a[], int n){	// {{{
 		N = n;
 		m = new $1[4*N];
 		init(a, 1, 0, N-1);
 	}
-	RMinQ(vector<int> &v){
+							// }}}
+	RMinQ(vector<int> &v){	// {{{
 		N = v.size();
 		m = new $1[4*N];
 		init(v, 1, 0, N-1);
 	}
+							// }}}
+	// {{{
 	void init(int a[], int v, int vl, int vr){
 		if(vl==vr){
 			m[v] = a[vl];
@@ -199,7 +220,8 @@ public:
 		init(a, v<<1|1, mid+1, vr);
 		m[v] = MIN(m[v<<1], m[v<<1|1]);
 	}
-	void add(int i, $1 d){
+	// }}}
+	void add(int i, $1 d){	// {{{
 		add(i, d, 1, 0, N-1);
 	}
 	void add(int i, $1 d, int v, int vl, int vr){
@@ -212,7 +234,8 @@ public:
 		else add(i, d, v<<1|1, mid+1, vr);
 		m[v] = MIN(m[v<<1], m[v<<1|1]);
 	}
-	$1 min(int l, int r){
+							// }}}
+	$1 min(int l, int r){	// {{{
 		return min(l, r, 1, 0, N-1);
 	}
 	$1 min(int l, int r, int v, int vl, int vr){
@@ -222,7 +245,8 @@ public:
 		return std::min(min(l, MIN(r, mid), v<<1, vl, mid),
 			   min(MAX(l, mid+1), r, v<<1|1, mid+1, vr));
 	}
-	int lower_bound($1 a){
+							// }}}
+	int lower_bound($1 a){	// {{{
 		if(m[1]>a) return N;
 		int v=1, vl=0, vr=N-1, mid;
 		while(vl < vr){
@@ -233,7 +257,8 @@ public:
 		}
 		return vl;
 	}
-	int upper_bound($1 a){
+							// }}}
+	int upper_bound($1 a){	// {{{
 		if(m[1]>=a) return N;
 		int v=1, vl=0, vr=N-1, mid;
 		while(vl < vr){
@@ -244,6 +269,7 @@ public:
 		}
 		return vl;
 	}
+							// }}}
 };
 $0
 endsnippet
@@ -252,25 +278,29 @@ class RMaxQInd{
 	${1:int} *m;
 	int N, *ind;
 public:
-	RMaxQInd(int n){
+	RMaxQInd(int n){	// {{{
 		N = n;
 		m = new $1[4*N];
 		ind = new int[4*N];
 		memset(m, 128, sizeof($1)*4*N);
 		memset(ind, 0, sizeof(int)*4*N);
 	}
-	RMaxQInd(int a[], int n){
+						// }}}
+	RMaxQInd(int a[], int n){	// {{{
 		N = n;
 		m = new $1[4*N];
 		ind = new int[4*N];
 		init(a, 1, 0, N-1);
 	}
-	RMaxQInd(vector<int> &v){
+								// }}}
+	RMaxQInd(vector<int> &v){	// {{{
 		N = v.size();
 		m = new $1[4*N];
 		ind = new int[4*N];
 		init(v, 1, 0, N-1);
 	}
+								// }}}
+	// {{{
 	void init(int a[], int v, int vl, int vr){
 		if(vl==vr){
 			m[v] = a[vl];
@@ -299,7 +329,8 @@ public:
 		m[v] = m[mid];
 		ind[v] = ind[mid];
 	}
-	void add(int i, $1 d){
+	// }}}
+	void add(int i, $1 d){	// {{{
 		add(i, d, 1, 0, N-1);
 	}
 	void add(int i, $1 d, int v, int vl, int vr){
@@ -315,7 +346,8 @@ public:
 		m[v] = m[mid];
 		ind[v] = ind[mid];
 	}
-	$1 max(int l, int r){
+							// }}}
+	$1 max(int l, int r){	// {{{
 		return max(l, r, 1, 0, N-1);
 	}
 	$1 max(int l, int r, int v, int vl, int vr){
@@ -325,7 +357,8 @@ public:
 		return std::max(max(l, MIN(r, mid), v<<1, vl, mid),
 			   max(MAX(l, mid+1), r, v<<1|1, mid+1, vr));
 	}
-	pair<$1, int> max_with_ind(int l, int r){
+							// }}}
+	pair<$1, int> max_with_ind(int l, int r){	// {{{
 		return max_with_ind(l, r, 1, 0, N-1);
 	}
 	pair<$1, int> max_with_ind(int l, int r, int v, int vl, int vr){
@@ -337,7 +370,8 @@ public:
 		if(p2.first > p1.first) return p2;
 		else return p1;
 	}
-	int lower_bound($1 a){
+												// }}}
+	int lower_bound($1 a){	// {{{
 		if(m[1]<a) return N;
 		int v=1, vl=0, vr=N-1, mid;
 		while(vl < vr){
@@ -348,7 +382,8 @@ public:
 		}
 		return vl;
 	}
-	int upper_bound($1 a){
+							// }}}
+	int upper_bound($1 a){	// {{{
 		if(m[1]<=a) return N;
 		int v=1, vl=0, vr=N-1, mid;
 		while(vl < vr){
@@ -359,6 +394,7 @@ public:
 		}
 		return vl;
 	}
+							// }}}
 };
 $0
 endsnippet
@@ -367,25 +403,29 @@ class RMinQInd{
 	${1:int} *m;
 	int N, *ind;
 public:
-	RMinQInd(int n){
+	RMinQInd(int n){	// {{{
 		N = n;
 		m = new $1[4*N];
 		ind = new int[4*N];
 		memset(m, 127, sizeof($1)*4*N);
 		memset(ind, 0, sizeof(int)*4*N);
 	}
-	RMinQInd(int a[], int n){
+						// }}}
+	RMinQInd(int a[], int n){	// {{{
 		N = n;
 		m = new $1[4*N];
 		ind = new int[4*N];
 		init(a, 1, 0, N-1);
 	}
-	RMinQInd(vector<int> &v){
+								// }}}
+	RMinQInd(vector<int> &v){	// {{{
 		N = v.size();
 		m = new $1[4*N];
 		ind = new int[4*N];
 		init(v, 1, 0, N-1);
 	}
+								// }}}
+	// {{{
 	void init(int a[], int v, int vl, int vr){
 		if(vl==vr){
 			m[v] = a[vl];
@@ -414,7 +454,8 @@ public:
 		m[v] = m[mid];
 		ind[v] = ind[mid];
 	}
-	void add(int i, $1 d){
+	// }}}
+	void add(int i, $1 d){	// {{{
 		add(i, d, 1, 0, N-1);
 	}
 	void add(int i, $1 d, int v, int vl, int vr){
@@ -430,7 +471,8 @@ public:
 		m[v] = m[mid];
 		ind[v] = ind[mid];
 	}
-	$1 min(int l, int r){
+							// }}}
+	$1 min(int l, int r){	// {{{
 		return min(l, r, 1, 0, N-1);
 	}
 	$1 min(int l, int r, int v, int vl, int vr){
@@ -440,7 +482,8 @@ public:
 		return std::min(min(l, MIN(r, mid), v<<1, vl, mid),
 			   min(MAX(l, mid+1), r, v<<1|1, mid+1, vr));
 	}
-	pair<$1, int> min_with_ind(int l, int r){
+							// }}}
+	pair<$1, int> min_with_ind(int l, int r){	// {{{
 		return min_with_ind(l, r, 1, 0, N-1);
 	}
 	pair<$1, int> min_with_ind(int l, int r, int v, int vl, int vr){
@@ -452,7 +495,8 @@ public:
 		if(p2.first < p1.first) return p2;
 		else return p1;
 	}
-	int lower_bound($1 a){
+												// }}}
+	int lower_bound($1 a){	// {{{
 		if(m[1]>a) return N;
 		int v=1, vl=0, vr=N-1, mid;
 		while(vl < vr){
@@ -463,7 +507,8 @@ public:
 		}
 		return vl;
 	}
-	int upper_bound($1 a){
+							// }}}
+	int upper_bound($1 a){	// {{{
 		if(m[1]>=a) return N;
 		int v=1, vl=0, vr=N-1, mid;
 		while(vl < vr){
@@ -474,6 +519,7 @@ public:
 		}
 		return vl;
 	}
+							// }}}
 };
 $0
 endsnippet
@@ -482,27 +528,31 @@ class RSQAdd{
 	${1:LL} *m, *mt;
 	int N;
 public:
-	RSQAdd(int n){
+	RSQAdd(int n){	// {{{
 		N = n;
 		m = new $1[4*N];
 		mt = new $1[4*N];
 		memset(m, 0, sizeof($1)*4*N);
 		memset(mt, 0, sizeof($1)*4*N);
 	}
-	RSQAdd(int a[], int n){
+					// }}}
+	RSQAdd(int a[], int n){	// {{{
 		N = n;
 		m = new $1[4*N];
 		mt = new $1[4*N];
 		init(a, 1, 0, N-1);
 		memset(mt, 0, sizeof($1)*4*N);
 	}
-	RSQAdd(vector<int> &v){
+							// }}}
+	RSQAdd(vector<int> &v){	// {{{
 		N = v.size();
 		m = new int[4*N];
 		mt = new int[4*N];
 		init(v, 1, 0, N-1);
 		memset(mt, 0, sizeof($1)*4*N);
 	}
+							// }}}
+	// {{{
 	void init(int a[], int v, int vl, int vr){
 		if(vl==vr){
 			m[v] = a[vl];
@@ -523,7 +573,8 @@ public:
 		init(a, v<<1|1, mid+1, vr);
 		m[v] = m[v<<1] + m[v<<1|1];
 	}
-	void add(int i, $1 d){
+	// }}}
+	void add(int i, $1 d){	// {{{
 		int mid, v=1, vl=0, vr=N-1;
 		while(vl!=i || vr!=i){
 			m[v] += d;
@@ -533,7 +584,8 @@ public:
 		}
 		m[v] += d;
 	}
-	void add(int l, int r, $1 d){
+							// }}}
+	void add(int l, int r, $1 d){	// {{{
 		add(l, r, d, 1, 0, N-1);
 	}
 	void add(int l, int r, $1 d, int v, int vl, int vr){
@@ -548,7 +600,8 @@ public:
 		add(MAX(l, mid+1), r, d, v<<1|1, mid+1, vr);
 		m[v] += d*(r-l+1);
 	}
-	$1 sum(int l, int r){
+									// }}}
+	$1 sum(int l, int r){	// {{{
 		return sum(l, r, 1, 0, N-1);
 	}
 	$1 sum(int l, int r, int v, int vl, int vr){
@@ -559,6 +612,7 @@ public:
 			 + sum(MAX(l, mid+1), r, v<<1|1, mid+1, vr)
 			 + mt[v]*(r-l+1);
 	}
+							// }}}
 };
 $0
 endsnippet
@@ -567,27 +621,31 @@ class RMaxQAdd{
 	${1:int} *m, *mt;
 	int N;
 public:
-	RMaxQAdd(int n){
+	RMaxQAdd(int n){	// {{{
 		N = n;
 		m = new $1[4*N];
 		mt = new $1[4*N];
 		memset(m, 128, sizeof($1)*4*N);
 		memset(mt, 0, sizeof($1)*4*N);
 	}
-	RMaxQAdd(int a[], int n){
+						// }}}
+	RMaxQAdd(int a[], int n){	// {{{
 		N = n;
 		m = new $1[4*N];
 		mt = new $1[4*N];
 		init(a, 1, 0, N-1);
 		memset(mt, 0, sizeof($1)*4*N);
 	}
-	RMaxQAdd(vector<int> &v){
+								// }}}
+	RMaxQAdd(vector<int> &v){	// {{{
 		N = v.size();
 		m = new $1[4*N];
 		mt = new $1[4*N];
 		init(v, 1, 0, N-1);
 		memset(mt, 0, sizeof($1)*4*N);
 	}
+								// }}}
+	// {{{
 	void init(int a[], int v, int vl, int vr){
 		if(vl==vr){
 			m[v] = a[vl];
@@ -608,7 +666,8 @@ public:
 		init(a, v<<1|1, mid+1, vr);
 		m[v] = MAX(m[v<<1], m[v<<1|1]);
 	}
-	void add(int i, $1 d){
+	// }}}
+	void add(int i, $1 d){	// {{{
 		add(i, d, 1, 0, N-1);
 	}
 	void add(int i, $1 d, int v, int vl, int vr){
@@ -621,7 +680,8 @@ public:
 		else add(i, d, v<<1|1, mid+1, vr);
 		m[v] = MAX(m[v<<1], m[v<<1|1]);
 	}
-	void add(int l, int r, $1 d){
+							// }}}
+	void add(int l, int r, $1 d){	// {{{
 		add(l, r, d, 1, 0, N-1);
 	}
 	void add(int l, int r, $1 d, int v, int vl, int vr){
@@ -636,7 +696,8 @@ public:
 		add(MAX(l, mid+1), r, d, v<<1|1, mid+1, vr);
 		m[v] = MAX(m[v<<1], m[v<<1|1]) + mt[v];
 	}
-	$1 max(int l, int r){
+									// }}}
+	$1 max(int l, int r){	// {{{
 		return max(l, r, 1, 0, N-1);
 	}
 	$1 max(int l, int r, int v, int vl, int vr){
@@ -647,6 +708,7 @@ public:
 				max(MAX(l, mid+1), r, v<<1|1, mid+1, vr))
 			  + mt[v];
 	}
+							// }}}
 };
 $0
 endsnippet
@@ -655,27 +717,31 @@ class RMinQAdd{
 	${1:int} *m, *mt;
 	int N;
 public:
-	RMinQAdd(int n){
+	RMinQAdd(int n){	// {{{
 		N = n;
 		m = new $1[4*N];
 		mt = new $1[4*N];
 		memset(m, 127, sizeof($1)*4*N);
 		memset(mt, 0, sizeof($1)*4*N);
 	}
-	RMinQAdd(int a[], int n){
+						// }}}
+	RMinQAdd(int a[], int n){	// {{{
 		N = n;
 		m = new $1[4*N];
 		mt = new $1[4*N];
 		init(a, 1, 0, N-1);
 		memset(mt, 0, sizeof($1)*4*N);
 	}
-	RMinQAdd(vector<int> &v){
+								// }}}
+	RMinQAdd(vector<int> &v){	// {{{
 		N = v.size();
 		m = new $1[4*N];
 		mt = new $1[4*N];
 		init(v, 1, 0, N-1);
 		memset(mt, 0, sizeof($1)*4*N);
 	}
+								// }}}
+	// {{{
 	void init(int a[], int v, int vl, int vr){
 		if(vl==vr){
 			m[v] = a[vl];
@@ -696,7 +762,8 @@ public:
 		init(a, v<<1|1, mid+1, vr);
 		m[v] = MIN(m[v<<1], m[v<<1|1]);
 	}
-	void add(int i, $1 d){
+	// }}}
+	void add(int i, $1 d){	// {{{
 		add(i, d, 1, 0, N-1);
 	}
 	void add(int i, $1 d, int v, int vl, int vr){
@@ -709,7 +776,8 @@ public:
 		else add(i, d, v<<1|1, mid+1, vr);
 		m[v] = MIN(m[v<<1], m[v<<1|1]);
 	}
-	void add(int l, int r, $1 d){
+							// }}}
+	void add(int l, int r, $1 d){	// {{{
 		add(l, r, d, 1, 0, N-1);
 	}
 	void add(int l, int r, $1 d, int v, int vl, int vr){
@@ -724,7 +792,8 @@ public:
 		add(MAX(l, mid+1), r, d, v<<1|1, mid+1, vr);
 		m[v] = MIN(m[v<<1], m[v<<1|1]) + mt[v];
 	}
-	$1 min(int l, int r){
+									// }}}
+	$1 min(int l, int r){	// {{{
 		return min(l, r, 1, 0, N-1);
 	}
 	$1 min(int l, int r, int v, int vl, int vr){
@@ -735,6 +804,7 @@ public:
 				min(MAX(l, mid+1), r, v<<1|1, mid+1, vr))
 			  + mt[v];
 	}
+							// }}}
 };
 $0
 endsnippet
@@ -744,7 +814,7 @@ class RSQSet{
 	int N;
 	int def;
 public:
-	RSQSet(int n){
+	RSQSet(int n){	// {{{
 		def = ${2:-1234567890};
 		N = n;
 		m = new $1[4*N];
@@ -753,7 +823,8 @@ public:
 		for(int i=0;i<4*N;++i)
 			mt[i] = def;
 	}
-	RSQSet(int a[], int n){
+					// }}}
+	RSQSet(int a[], int n){	// {{{
 		def = $2;
 		N = n;
 		m = new $1[4*N];
@@ -762,7 +833,8 @@ public:
 		for(int i=0;i<4*N;++i)
 			mt[i] = def;
 	}
-	RSQSet(vector<int> &v){
+							// }}}
+	RSQSet(vector<int> &v){	// {{{
 		def = $2;
 		N = v.size();
 		m = new $1[4*N];
@@ -771,6 +843,8 @@ public:
 		for(int i=0;i<4*N;++i)
 			mt[i] = def;
 	}
+							// }}}
+	// {{{
 	void init(int a[], int v, int vl, int vr){
 		if(vl==vr){
 			m[v] = a[vl];
@@ -791,7 +865,8 @@ public:
 		init(a, v<<1|1, mid+1, vr);
 		m[v] = m[v<<1] + m[v<<1|1];
 	}
-	void set(int l, int r, $1 d){
+	// }}}
+	void set(int l, int r, $1 d){	// {{{
 		set(l, r, d, 1, 0, N-1);
 	}
 	void set(int l, int r, $1 d, int v, int vl, int vr){
@@ -812,7 +887,8 @@ public:
 		set(MAX(l, mid+1), r, d, v<<1|1, mid+1, vr);
 		m[v] = m[v<<1] + m[v<<1|1];
 	}
-	$1 sum(int l, int r){
+									// }}}
+	$1 sum(int l, int r){	// {{{
 		return sum(l, r, 1, 0, N-1);
 	}
 	$1 sum(int l, int r, int v, int vl, int vr){
@@ -823,6 +899,7 @@ public:
 		return sum(l, MIN(r, mid), v<<1, vl, mid)
 			 + sum(MAX(l, mid+1), r, v<<1|1, mid+1, vr);
 	}
+							// }}}
 };
 endsnippet
 snippet RMaxQSet "RMaxQSet" !b
@@ -831,7 +908,7 @@ class RMaxQSet{
 	int N;
 	int def;
 public:
-	RMaxQSet(int n){
+	RMaxQSet(int n){	// {{{
 		def = ${2:-1234567890};
 		N = n;
 		m = new $1[4*N];
@@ -840,7 +917,8 @@ public:
 		for(int i=0;i<4*N;++i)
 			mt[i] = def;
 	}
-	RMaxQSet(int a[], int n){
+						// }}}
+	RMaxQSet(int a[], int n){	// {{{
 		def = $2;
 		N = n;
 		m = new $1[4*N];
@@ -849,7 +927,8 @@ public:
 		for(int i=0;i<4*N;++i)
 			mt[i] = def;
 	}
-	RMaxQSet(vector<int> &v){
+								// }}}
+	RMaxQSet(vector<int> &v){	// {{{
 		def = $2;
 		N = v.size();
 		m = new $1[4*N];
@@ -858,6 +937,8 @@ public:
 		for(int i=0;i<4*N;++i)
 			mt[i] = def;
 	}
+								// }}}
+	// {{{
 	void init(int a[], int v, int vl, int vr){
 		if(vl==vr){
 			m[v] = a[vl];
@@ -878,7 +959,8 @@ public:
 		init(a, v<<1|1, mid+1, vr);
 		m[v] = MAX(m[v<<1], m[v<<1|1]);
 	}
-	void set(int l, int r, $1 d){
+	// }}}
+	void set(int l, int r, $1 d){	// {{{
 		set(l, r, d, 1, 0, N-1);
 	}
 	void set(int l, int r, $1 d, int v, int vl, int vr){
@@ -897,7 +979,8 @@ public:
 		set(MAX(l, mid+1), r, d, v<<1|1, mid+1, vr);
 		m[v] = MAX(m[v<<1], m[v<<1|1]);
 	}
-	$1 max(int l, int r){
+									// }}}
+	$1 max(int l, int r){	// {{{
 		return max(l, r, 1, 0, N-1);
 	}
 	$1 max(int l, int r, int v, int vl, int vr){
@@ -908,6 +991,7 @@ public:
 		return std::max(max(l, MIN(r, mid), v<<1, vl, mid),
 			 	max(MAX(l, mid+1), r, v<<1|1, mid+1, vr));
 	}
+							// }}}
 };
 endsnippet
 snippet RMinQSet "RMinQSet" !b
@@ -916,7 +1000,7 @@ class RMinQSet{
 	int N;
 	int def;
 public:
-	RMinQSet(int n){
+	RMinQSet(int n){	// {{{
 		def = ${2:-1234567890};
 		N = n;
 		m = new $1[4*N];
@@ -925,7 +1009,8 @@ public:
 		for(int i=0;i<4*N;++i)
 			mt[i] = def;
 	}
-	RMinQSet(int a[], int n){
+						// }}}
+	RMinQSet(int a[], int n){	// {{{
 		def = $2;
 		N = n;
 		m = new $1[4*N];
@@ -934,7 +1019,8 @@ public:
 		for(int i=0;i<4*N;++i)
 			mt[i] = def;
 	}
-	RMinQSet(vector<int> &v){
+								// }}}
+	RMinQSet(vector<int> &v){	// {{{
 		def = $2;
 		N = v.size();
 		m = new $1[4*N];
@@ -943,6 +1029,8 @@ public:
 		for(int i=0;i<4*N;++i)
 			mt[i] = def;
 	}
+								// }}}
+	// {{{
 	void init(int a[], int v, int vl, int vr){
 		if(vl==vr){
 			m[v] = a[vl];
@@ -963,7 +1051,8 @@ public:
 		init(a, v<<1|1, mid+1, vr);
 		m[v] = MIN(m[v<<1], m[v<<1|1]);
 	}
-	void set(int l, int r, $1 d){
+	// }}}
+	void set(int l, int r, $1 d){	// {{{
 		set(l, r, d, 1, 0, N-1);
 	}
 	void set(int l, int r, $1 d, int v, int vl, int vr){
@@ -982,7 +1071,8 @@ public:
 		set(MAX(l, mid+1), r, d, v<<1|1, mid+1, vr);
 		m[v] = MIN(m[v<<1], m[v<<1|1]);
 	}
-	$1 min(int l, int r){
+									// }}}
+	$1 min(int l, int r){	// {{{
 		return min(l, r, 1, 0, N-1);
 	}
 	$1 min(int l, int r, int v, int vl, int vr){
@@ -993,6 +1083,7 @@ public:
 		return std::min(min(l, MIN(r, mid), v<<1, vl, mid),
 			 	min(MAX(l, mid+1), r, v<<1|1, mid+1, vr));
 	}
+							// }}}
 };
 endsnippet
 snippet RGcdQ "Segment tree for gcd" !b
@@ -1000,21 +1091,25 @@ class RGcdQ{
 	${1:int} *m;
 	int N;
 public:
-	RGcdQ(int n){
+	RGcdQ(int n){	// {{{
 		N = n;
 		m = new $1[4*N];
 		memset(m, 0, sizeof($1)*4*N);
 	}
-	RGcdQ($1 a[], int n){
+					// }}}
+	RGcdQ($1 a[], int n){	// {{{
 		N = n;
 		m = new $1[4*N];
 		init(a, 1, 0, N-1);
 	}
-	RGcdQ(vector<$1> &v){
+							// }}}
+	RGcdQ(vector<$1> &v){	// {{{
 		N = v.size();
 		m = new $1[4*N];
 		init(v, 1, 0, N-1);
 	}
+							// }}}
+	// {{{
 	void init($1 a[], int v, int vl, int vr){
 		if(vl==vr){
 			m[v] = a[vl];
@@ -1035,7 +1130,8 @@ public:
 		init(a, v<<1|1, mid+1, vr);
 		m[v] = _gcd(m[v<<1], m[v<<1|1]);
 	}
-	void add(int i, $1 d){
+	// }}}
+	void add(int i, $1 d){	// {{{
 		add(i, d, 1, 0, N-1);
 	}
 	void add(int i, $1 d, int v, int vl, int vr){
@@ -1048,7 +1144,8 @@ public:
 		else add(i, d, v<<1|1, mid+1, vr);
 		m[v] = _gcd(m[v<<1], m[v<<1|1]);
 	}
-	void set(int i, $1 a){
+							// }}}
+	void set(int i, $1 a){	// {{{
 		set(i, a, 1, 0, N-1);
 	}
 	void set(int i, $1 a, int v, int vl, int vr){
@@ -1061,7 +1158,8 @@ public:
 		else set(i, a, v<<1|1, mid+1, vr);
 		m[v] = _gcd(m[v<<1], m[v<<1|1]);
 	}
-	$1 gcd(int l, int r){
+							// }}}
+	$1 gcd(int l, int r){	// {{{
 		return max(($1)1, gcd(l, r, 1, 0, N-1));
 	}
 	$1 gcd(int l, int r, int v, int vl, int vr){
@@ -1078,9 +1176,8 @@ public:
 		while(_a!=0 && _b!=0) if(_a > _b) _a%=_b; else _b%=_a;
 		return _a+_b;
 	}
-	$1 gcd(){
-		return MAX(1, m[1]);
-	}
+							// }}}
+	$1 gcd(){ return MAX(1, m[1]); }
 };
 endsnippet
 snippet RGcdQfast "RGcdQfast to up" !b
@@ -1088,13 +1185,14 @@ class RGcdQfast{
 	${1:int} *m;
 	int n, N;
 public:
-	RGcdQfast(int n){
+	RGcdQfast(int n){	// {{{
 		N = 1;
 		while(N < n) N <<= 1;
 		m = new $1[N+N];
 		memset(m, 0, sizeof($1)*2*N);
 	}
-	RGcdQfast($1 a[], int n){
+						// }}}
+	RGcdQfast($1 a[], int n){	// {{{
 		N = 1;
 		while(N < n) N <<= 1;
 		m = new $1[N+N];
@@ -1103,7 +1201,8 @@ public:
 		for(int i=N-1;i>0;--i)
 			m[i] = _gcd(m[i<<1], m[i<<1|1]);
 	}
-	RGcdQfast(vector<$1> &v){
+								// }}}
+	RGcdQfast(vector<$1> &v){	// {{{
 		n = v.size();
 		N = 1;
 		while(N < n) N<<=1;
@@ -1113,19 +1212,22 @@ public:
 		for(int i=N-1;i>0;--i)
 			m[i] = _gcd(m[i<<1], m[i<<1|1]);
 	}
-	void add(int i, $1 d){
+								// }}}
+	void add(int i, $1 d){	// {{{
 		i += N;
 		m[i] += d;
 		for(i>>=1;i>0;i>>=1)
 			m[i] = _gcd(m[i<<1], m[i<<1|1]);
 	}
-	void set(int i, $1 a){
+							// }}}
+	void set(int i, $1 a){	// {{{
 		i += N;
 		m[i] = a;
 		for(i>>=1;i>0;i>>=1)
 			m[i] = _gcd(m[i<<1], m[i<<1|1]);
 	}
-	$1 gcd(int l, int r){
+							// }}}
+	$1 gcd(int l, int r){	// {{{
 		$1 res = 0;
 		l += N;
 		r += N;
@@ -1145,8 +1247,7 @@ public:
 		while(_a!=0 && _b!=0) if(_a > _b) _a%=_b; else _b%=_a;
 		return _a+_b;
 	}
-	$1 gcd(){
-		return MAX(1, m[1]);
-	}
+							// }}}
+	$1 gcd(){ return MAX(1, m[1]); }
 };
 endsnippet

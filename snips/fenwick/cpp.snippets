@@ -3,12 +3,13 @@ class Fenwick{
 	${1:int} *m;
 	int N;
 public:
-	Fenwick(int n){
+	Fenwick(int n){				// {{{
 		N = n;
 		m = new $1[N];
 		memset(m, 0, sizeof($1)*N);
 	}
-	Fenwick(int a[], int n){
+								// }}}
+	Fenwick(int a[], int n){	// {{{
 		N = n;
 		m = new $1[N];
 		memset(m, 0, sizeof($1)*N);
@@ -17,7 +18,8 @@ public:
 			if((i|(i+1))<N) m[i|(i+1)] += m[i];
 		}
 	}
-	Fenwick(vector<int> &a){
+								// }}}
+	Fenwick(vector<int> &a){	// {{{
 		N = a.size();
 		m = new $1[N];
 		memset(m, 0, sizeof($1)*N);
@@ -26,17 +28,21 @@ public:
 			if((i|(i+1))<N) m[i|(i+1)] += m[i];
 		}
 	}
-	void add(int i, $1 d){
+								// }}}
+	void add(int i, $1 d){		// {{{
 		for(;i<N;i|=i+1) m[i] += d;
 	}
-	$1 sum(int i){
+								// }}}
+	$1 sum(int i){				// {{{
 		$1 res = 0;
 		for(;i>=0;i=(i&(i+1))-1) res += m[i];
 		return res;
 	}
-	$1 sum(int l, int r){
+								// }}}
+	$1 sum(int l, int r){		// {{{
 		return sum(r) - sum(l-1);
 	}
+								// }}}
 };
 $0
 endsnippet
@@ -45,14 +51,15 @@ class FenwickAdd{
 	${1:int} *m, *mt;
 	int N;
 public:
-	FenwickAdd(int n){
+	FenwickAdd(int n){			// {{{
 		N = n;
 		m = new $1[N];
 		mt = new $1[N];
 		memset(m, 0, sizeof($1)*N);
 		memset(mt, 0, sizeof($1)*N);
 	}
-	FenwickAdd(int a[], int n){
+								// }}}
+	FenwickAdd(int a[], int n){	// {{{
 		N = n;
 		m = new $1[N];
 		mt = new $1[N];
@@ -63,7 +70,8 @@ public:
 			if((i|(i+1))<N) m[i|(i+1)] += m[i];
 		}
 	}
-	FenwickAdd(vector<int> &a){
+								// }}}
+	FenwickAdd(vector<int> &a){	// {{{
 		N = a.size();
 		m = new $1[N];
 		mt = new $1[N];
@@ -74,28 +82,34 @@ public:
 			if((i|(i+1))<N) m[i|(i+1)] += m[i];
 		}
 	}
-	void add(int i, $1 d){
+								// }}}
+	void add(int i, $1 d){		// {{{
 		for(;i<N;i|=i+1) m[i] += d;
 	}
-	void add_prefix(int r, $1 d){
+								// }}}
+	void add_prefix(int r, $1 d){	// {{{
 		if(r<0) return ;
 		for(int i=r;i>=0;i=(i&(i+1))-1) mt[i] += d;
 		for(int i=r|(r+1);i<N;i|=i+1) m[i] += d*(r-(i&(i+1))+1);
 	}
-	void add(int l, int r, $1 d){
+									// }}}
+	void add(int l, int r, $1 d){	// {{{
 		add_prefix(r, d);
 		add_prefix(l-1, -d);
 	}
-	$1 sum(int r){
+									// }}}
+	$1 sum(int r){			// {{{
 		if(r<0) return 0;
 		$1 res = 0;
 		for(int i=r;i>=0;i=(i&(i+1))-1) res += m[i] + mt[i]*(i-(i&(i+1))+1);
 		for(int i=r|(r+1);i<N;i|=i+1) res += mt[i]*(r-(i&(i+1))+1);
 		return res;
 	}
-	$1 sum(int l, int r){
+							// }}}
+	$1 sum(int l, int r){	// {{{
 		return sum(r) - sum(l-1);
 	}
+							// }}}
 };
 $0
 endsnippet
@@ -104,14 +118,15 @@ class FenwickMin{
 	${1:int} *md, *mu;
 	int N;
 public:
-	FenwickMin(int n){
+	FenwickMin(int n){				// {{{
 		N = n;
 		md = new $1[N];
 		mu = new $1[N];
 		memset(md, 127, sizeof($1)*N);
 		memset(mu, 127, sizeof($1)*N);
 	}
-	FenwickMin(int a[], int n){
+									// }}}
+	FenwickMin(int a[], int n){		// {{{
 		N = n;
 		md = new $1[N];
 		mu = new $1[N];
@@ -126,7 +141,8 @@ public:
 			if(t<N && mu[t]>mu[i]) mu[t]=mu[i];
 		}
 	}
-	FenwickMin(vector<int> &a){
+									// }}}
+	FenwickMin(vector<int> &a){		// {{{
 		N = a.size();
 		md = new $1[N];
 		mu = new $1[N];
@@ -141,11 +157,13 @@ public:
 			if(t<N && mu[t]>mu[i]) mu[t]=mu[i];
 		}
 	}
-	void relax(int n, $1 d){
+									// }}}
+	void relax(int n, $1 d){		// {{{
 		for(int i=n;i>0;i&=i-1) if(md[i]>d) md[i]=d;
 		for(int i=n;i<N;i|=i+1) if(mu[i]>d) mu[i]=d;
 	}
-	$1 min(int l, int r){
+									// }}}
+	$1 min(int l, int r){			// {{{
 		$1 res=INF;
 		if(!l){
 			for(;r>=0;r=(r&(r+1))-1) if(res>mu[r])res=mu[r];
@@ -155,7 +173,8 @@ public:
 		for(;(l|(l-1))<=r;l=(l|(l-1))+1) if(res>md[l])res=md[l];
 		return res;
 	}
-	void add(int n, $1 d){
+									// }}}
+	void add(int n, $1 d){			// {{{
 		if(d<0){
 			d += (n&1 ? md[n] : mu[n]);
 			relax(n, d);
@@ -203,6 +222,7 @@ public:
 			else break;
 		}
 	}
+									// }}}
 };
 $0
 endsnippet
@@ -211,14 +231,15 @@ class FenwickMax{
 	${1:int} *md, *mu;
 	int N;
 public:
-	FenwickMax(int n){
+	FenwickMax(int n){				// {{{
 		N = n;
 		md = new $1[N];
 		mu = new $1[N];
 		memset(md, 127, sizeof($1)*N);
 		memset(mu, 127, sizeof($1)*N);
 	}
-	FenwickMax(int a[], int n){
+									// }}}
+	FenwickMax(int a[], int n){		// {{{
 		N = n;
 		md = new $1[N];
 		mu = new $1[N];
@@ -233,7 +254,8 @@ public:
 			if(t<N && mu[t]<mu[i]) mu[t]=mu[i];
 		}
 	}
-	FenwickMax(vector<int> &a){
+									// }}}
+	FenwickMax(vector<int> &a){		// {{{
 		N = a.size();
 		md = new $1[N];
 		mu = new $1[N];
@@ -248,11 +270,13 @@ public:
 			if(t<N && mu[t]<mu[i]) mu[t]=mu[i];
 		}
 	}
-	void relax(int n, $1 d){
+									// }}}
+	void relax(int n, $1 d){		// {{{
 		for(int i=n;i>0;i&=i-1) if(md[i]<d) md[i]=d;
 		for(int i=n;i<N;i|=i+1) if(mu[i]<d) mu[i]=d;
 	}
-	$1 min(int l, int r){
+									// }}}
+	$1 min(int l, int r){			// {{{
 		$1 res=INF;
 		if(!l){
 			for(;r>=0;r=(r&(r+1))-1) if(res<mu[r])res=mu[r];
@@ -262,7 +286,8 @@ public:
 		for(;(l|(l-1))<=r;l=(l|(l-1))+1) if(res<md[l])res=md[l];
 		return res;
 	}
-	void add(int n, $1 d){
+									// }}}
+	void add(int n, $1 d){			// {{{
 		if(d<0){
 			d += (n&1 ? md[n] : mu[n]);
 			relax(n, d);
@@ -310,6 +335,7 @@ public:
 			else break;
 		}
 	}
+									// }}}
 };
 $0
 endsnippet
@@ -318,7 +344,7 @@ class Fenwick2D{
 	${1:int} **mm;
 	int N, M;
 public:
-	Fenwick2D(int n, int m){
+	Fenwick2D(int n, int m){				// {{{
 		N = n;
 		M = m;
 		mm = new $1*[N];
@@ -327,7 +353,8 @@ public:
 			memset(mm[i], 0, sizeof($1)*M);
 		}
 	}
-	Fenwick2D(int **a, int n, int m){
+											// }}}
+	Fenwick2D(int **a, int n, int m){		// {{{
 		N = n;
 		M = m;
 		mm = new $1*[N];
@@ -343,7 +370,8 @@ public:
 			}
 		}
 	}
-	Fenwick2D(vector<int> a[], int n){
+											// }}}
+	Fenwick2D(vector<int> a[], int n){		// {{{
 		N = n;
 		M = a[0].size();
 		mm = new $1*[N];
@@ -359,17 +387,21 @@ public:
 			}
 		}
 	}
-	void add(int i, int jj, $1 d){
+											// }}}
+	void add(int i, int jj, $1 d){			// {{{
 		for(;i<N; i|=i+1) for(int j=jj; j<M; j|=j+1) mm[i][j] += d;
 	}
-	$1 sum(int i, int jj){
+											// }}}
+	$1 sum(int i, int jj){					// {{{
 		$1 res = 0;
 		for(;i>=0;i=(i&(i+1))-1) for(int j=jj; j>=0; j=(j&(j+1))-1) res += mm[i][j];
 		return res;
 	}
-	$1 sum(int li, int lj, int ri, int rj){
+											// }}}
+	$1 sum(int li, int lj, int ri, int rj){	// {{{
 		return sum(ri,rj)-sum(ri,lj-1)-sum(li-1,rj)+sum(li-1,lj-1);
 	}
+											// }}}
 };
 $0
 endsnippet
@@ -378,20 +410,24 @@ class FenwickMap{
 	map<${1:int},${2:int}> m;
 	$1 N;
 public:
-	FenwickMap($1 n){
+	FenwickMap($1 n){		// {{{
 		N = n;
 	}
-	void add($1 i, $2 d){
+							// }}}
+	void add($1 i, $2 d){	// {{{
 		for(;i<N;i|=i+1) m[i] += d;
 	}
-	$2 sum($1 i){
+							// }}}
+	$2 sum($1 i){			// {{{
 		$2 res = 0;
 		for(;i>=0;i=(i&(i+1))-1) if(m.count(i)) res += m[i];
 		return res;
 	}
-	$2 sum($1 l, $1 r){
+							// }}}
+	$2 sum($1 l, $1 r){		// {{{
 		return sum(r) - sum(l-1);
 	}
+							// }}}
 };
 $0
 endsnippet
