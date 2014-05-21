@@ -7,6 +7,7 @@ call vundle#rc()
 
 Bundle "gmarik/vundle"
 Bundle "sonoma.vim"
+Bundle "altercation/vim-colors-solarized"
 Bundle "bling/vim-airline"
 Bundle "mhinz/vim-startify"
 Bundle "Conque-Shell"
@@ -36,7 +37,10 @@ set guioptions-=T
 set guioptions-=m
 
 " Цветовая схема
-colorscheme sonoma
+"colorscheme sonoma
+colorscheme solarized
+set background=dark
+"colorscheme jellybeans
 " Установка кодировки отображения
 set enc=utf-8
 " Мигаем вместо пищания

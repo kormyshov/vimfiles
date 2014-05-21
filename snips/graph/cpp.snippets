@@ -175,3 +175,332 @@ bool kuhn(int _v){
 	return false;
 }
 endsnippet
+snippet SimpleEdge "class SimpleEdge" !b
+class SimpleEdge {			// {{{
+	int u;
+public:
+	SimpleEdge(): u(-1) {};
+	SimpleEdge(int _u): u(_u) {};
+	static int type() { return 0; }
+	static int type_w() { return 1; }
+	static int type_f() { return -1; }
+
+	int get_u() { return u; }
+	void set_u(int _u) { u = _u; }
+
+	int get_w() { return 1; }
+};
+							// }}}
+endsnippet
+snippet WeightedEdge "class WeightedEdge" !b
+template<typename T>
+class WeightedEdge {		// {{{
+	int u;
+	T w;
+public:
+	WeightedEdge(): u(-1), w(0) {};
+	WeightedEdge(int _u, T _w = 1): u(_u), w(_w) {};
+	static int type() { return 1; }
+	static T type_w() { return new T; }
+	static int type_f() { return -1; }
+
+	int get_u() { return u; }
+	void set_u(int _u) { u = _u; }
+
+	T get_w() { return w; }
+	void set_w(T _w) { w = _w; }
+};
+							// }}}
+endsnippet
+snippet FlowEdge "class FlowEdge" !b
+template<typename T>
+class FlowEdge {			// {{{
+	int u;
+	T c, f;
+public:
+	FlowEdge(): u(-1), c(0), f(0) {};
+	FlowEdge(int _u, T _c = 1): u(_u), c(_c), f(0) {};
+	static int type() { return 2; }
+	static int type_w() { return 1; }
+	static T type_f() { return new T; }
+
+	int get_u() { return u; }
+	void set_u(int _u) { u = _u; }
+
+	T get_c() { return c; }
+	void set_c(T _c) { c = _c; }
+
+	T get_f() { return f; }
+	void set_f(T _f) { f = _f; }
+
+	int get_w() { return 1; }
+
+	void push(T p) { f += p; }
+};
+							// }}}
+endsnippet
+snippet FlowWeightedEdge "class FlowWeightedEdge" !b
+template<typename T1, typename T2>
+class FlowWeightedEdge {	// {{{
+	int u;
+	T1 w;
+	T2 c, f;
+public:
+	FlowWeightedEdge(): u(-1), w(0), c(0), f(0) {};
+	FlowWeightedEdge(int _u, T1 _w = 1, T2 _c = 1): u(_u), w(_w), c(_c), f(0) {};
+	static int type() { return 3; }
+	static T1 type_w() { return new T1; }
+	static T2 type_f() { return new T2; }
+
+	int get_u() { return u; }
+	void set_u(int _u) { u = _u; }
+
+	T1 get_w() { return w; }
+	void set_w(T1 _w) { w = _w; }
+
+	T2 get_c() { return c; }
+	void set_c(T2 _c) { c = _c; }
+
+	T2 get_f() { return f; }
+	void set_f(T2 _f) { f = _f; }
+
+	void push(T2 p) { f += p; }
+};
+							// }}}
+endsnippet
+snippet Graph "class Graph" !b
+template<typename T>
+class Graph {
+public:
+	int N;
+	vector<int> *g;
+	vector<T> ve;
+
+	Graph(int _N) {	// {{{
+		N = _N;
+		g = new vector<int>[N];
+	}				// }}}
+
+	static int type() { return T::type(); }
+	static ${1:decltype(T::type_w())} type_w() { return T::type_w(); }
+	static ${2:decltype(T::type_f())} type_f() { return T::type_f(); }
+
+	void addEdge(int v, int u) {				// {{{
+		T e(u);
+		g[v].push_back(ve.size());
+		ve.push_back(e);
+	}
+												// }}}
+	template<typename T1>
+	void addEdge(int v, int u, T1 t) {			// {{{
+		T e(u, t);
+		g[v].push_back(ve.size());
+		ve.push_back(e);
+	}
+												// }}}
+	template<typename T1, typename T2>
+	void addEdge(int v, int u, T1 w, T2 c) {	// {{{
+		T e(u, w, c);
+		g[v].push_back(ve.size());
+		ve.push_back(e);
+	}
+												// }}}
+	template<typename T1>
+	void addFlowEdge(int v, int u, T1 c) {		// {{{
+		T e1(u, c);
+		g[v].push_back(ve.size());
+		ve.push_back(e1);
+		T e2(v, 0);
+		g[u].push_back(ve.size());
+		ve.push_back(e2);
+	}
+												// }}}
+	bool isSparse() { return !N || ve.size() * 100 / N < N; }
+};
+endsnippet
+snippet DFS "class dfs for Graph" !b
+class {
+public:
+	vector<int> u;
+
+	template<typename T>
+	void operator ()(T &graph, int v){	// {{{
+		u.assign(graph.N, 0);
+		dfs(graph, v);
+	}
+										// }}}
+	template<typename T>
+	void dfs(T &graph, int v){
+		u[v] = 1;
+		for(auto id : graph.g[v]){
+			int to = graph.ve[id].get_u();
+			if(!u[to]) dfs(graph, to);
+		}
+	}
+
+} dfs;
+endsnippet
+snippet Distance "class Distance for Graph" !b
+class {
+public:
+	vector<int> p;
+
+	template<typename T>
+	vector<${1:decltype(T::type_w())}> operator ()(T &graph, int s){
+		vector<$1> d(graph.N, INF2);
+		d[s] = 0;
+		p.assign(graph.N, -1);
+
+		if(graph.ve.size() == 0) return d;
+
+		if(!(T::type() & 1)){		// bfs {{{
+
+			queue<int> q;
+			q.push(s);
+			while(!q.empty()){
+				int v = q.front();
+				q.pop();
+				for(auto id : graph.g[v]){
+					int to = graph.ve[id].get_u();
+					if(d[to] == INF2)
+						d[to] = d[v] + 1,
+						p[to] = v,
+						q.push(to);
+				}
+			}
+									// }}}
+		}else{
+			if(graph.isSparse()){	// set {{{
+
+				set<pair<$1,int> > st;
+				st.insert(make_pair(0, s));
+				while(!st.empty()){
+					int v = st.begin()->second;
+					st.erase(st.begin());
+					for(auto id : graph.g[v]){
+						int to = graph.ve[id].get_u();
+						auto w = graph.ve[id].get_w();
+						if(d[to] > d[v] + w){
+							st.erase(make_pair(d[to], to));
+							d[to] = d[v] + w;
+							p[to] = v;
+							st.insert(make_pair(d[to], to));
+						}
+					}
+				}
+									// }}}
+			}else{					// sqrt {{{
+
+				int sqrt_n = (int)max(1., sqrt(graph.N*.5));
+				vector<$1> sqrt_d(graph.N/sqrt_n+1, INF2);
+				sqrt_d[s/sqrt_n] = 0;
+				vector<int> f(graph.N, 0);
+
+				for(int i=0; i<graph.N; ++i){
+
+					int v = -1, t = 0;
+					for(int j=1; j<(int)sqrt_d.size(); ++j)
+						if(sqrt_d[t] > sqrt_d[j]) t = j;
+
+					int l = t*sqrt_n, r = min(l+sqrt_n, graph.N);
+					auto dt = sqrt_d[t];
+					sqrt_d[t] = INF2;
+
+					for(int j=l; j<r; ++j) if(!f[j]){
+						if(dt == d[j]) f[j] = 1, --dt, v = j;
+						else sqrt_d[t] = min(sqrt_d[t], d[j]);
+					}
+
+					if(v < 0 || d[v] >= INF2) break;
+
+					for(auto id : graph.g[v]){
+						int to = graph.ve[id].get_u();
+						auto w = graph.ve[id].get_w();
+						if(d[to] > d[v] + w){
+							d[to] = d[v] + w;
+							p[to] = v;
+							sqrt_d[to/sqrt_n] = min(sqrt_d[to/sqrt_n], d[to]);
+						}
+					}
+				}
+									// }}}
+			}
+		}
+
+		return d;
+	}
+
+	vector<int> path(int to){		// {{{
+		vector<int> v;
+		do{
+			v.push_back(to);
+			to = p[to];
+		}while(to >= 0);
+		reverse(v.begin(), v.end());
+		return v;
+	}
+									// }}}
+} Distance;
+endsnippet
+snippet MaxFlow "class MaxFlow for Graph" !b
+class {
+	vector<int> d;
+	vector<int> ptr;
+	int S, T;
+public:
+	template<typename U>
+	${2:decltype(U::type_f())} operator ()(U &graph, int s, int t){	// {{{
+		S = s;
+		T = t;
+		$2 flow = 0, f;
+
+		while(bfs(graph)){
+			ptr.assign(graph.N, 0);
+			while((f = dfs(graph, S)) > EPS)
+				flow += f;
+		}
+		return flow;
+	}
+
+	template<typename U>
+	bool bfs(U &graph){
+		queue<int> q;
+		q.push(S);
+		d.assign(graph.N, -1);
+		d[S] = 0;
+
+		while(!q.empty()){
+			int v = q.front();
+			q.pop();
+			for(auto id : graph.g[v]){
+				auto e = graph.ve[id];
+				if(d[e.get_u()] == -1 && e.get_f() < e.get_c())
+					d[e.get_u()] = d[v] + 1,
+					q.push(e.get_u());
+			}
+
+		}
+
+		return d[T] != -1;
+	}
+
+	template<typename U>
+	$2 dfs(U &graph, int v, $2 f = INF){
+		if(f < EPS) return 0;
+		if(v == T) return f;
+		for(; ptr[v] < (int)graph.g[v].size(); ++ptr[v]){
+			int id = graph.g[v][ptr[v]];
+			auto e = graph.ve[id];
+			if(d[e.get_u()] != d[v] + 1) continue ;
+			auto p = dfs(graph, e.get_u(), min(f, e.get_c()-e.get_f()));
+			if(p > EPS){
+				graph.ve[id].push(p);
+				graph.ve[id^1].push(-p);
+				return p;
+			}
+		}
+		return 0;
+	}
+																// }}}
+} MaxFlow;
+endsnippet

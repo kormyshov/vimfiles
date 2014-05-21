@@ -61,6 +61,13 @@
 	Dijkstra, DijkstraHeap
 	Floyd
 	dfs, dfsex, kuhn
+	SimpleEdge
+	WeightedEdge
+	FlowEdge
+	FlowWeightedEdge
+	Graph
+	DFS, Distance
+	MaxFlow
 Модуль lib
 	test
 	stov, vstov
