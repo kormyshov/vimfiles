@@ -256,3 +256,37 @@ public:
 									// }}}
 };
 endsnippet
+snippet min_cycle_shift "int min_cycle_shift(string)" !b
+int min_cycle_shift(string &_str)
+{	//{{{
+	string _s = _str + _str;
+	int _i = 0, _res = 0;
+	while(_i < _str.size())
+	{
+		_res = _i;
+		int _k = _i, _j = _i + 1;
+		for(;_j < _s.size() && _s[_k] <= _s[_j]; ++_j)
+			if(_s[_k] < _s[_j]) _k = _i;
+			else ++_k;
+		while(_i <= _k) _i += _j - _k;
+	}
+	return _res;
+}	///}}}
+$0
+endsnippet
+snippet count_substring "int count_substring(string)" !b
+pfun$0
+int count_substring(const string &_str)
+{	//{{{
+	string _s = "";
+	vector<int> _v;
+	int _cnt = 0;
+	for(int _i=(int)_str.size()-1; _i>=0; --_i)
+	{
+		_s = _str[_i] + _s;
+		pfun(_s, _v);
+		_cnt += _s.size() - *max_element(_v.begin(), _v.end());
+	}
+	return _cnt;
+}	//}}}
+endsnippet

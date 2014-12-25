@@ -14,6 +14,8 @@ Bundle "Conque-Shell"
 Bundle "ack.vim"
 Bundle "UltiSnips"
 Bundle "matchit.zip"
+Bundle "tpope/vim-fugitive"
+Bundle "dhruvasagar/vim-table-mode"
 Bundle "The-NERD-tree"
 Bundle "The-NERD-Commenter"
 Bundle "jcf/vim-latex"
@@ -30,6 +32,9 @@ filetype indent on
 " На Esc менять раскладку на En
 imap <Esc> <Esc>:silent !~/.vim/to_us.sh<cr>
 nmap <Esc> :silent !~/.vim/to_us.sh<cr>
+
+" Задание переменной Leader
+let mapleader = ' '
 
 " Отключаем панель инструментов
 set guioptions-=T
@@ -69,6 +74,7 @@ set showcmd
 
 " Настройка строки состояния
 "set statusline=%F%m%r%h%w\ [%{&fileformat},%{&fileencoding}]\ [%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
+set statusline=%{fugitive#statusline()}
 set laststatus=2 " всегда показывать строку состояния
 
 
@@ -124,7 +130,7 @@ au BufWritePost *.h,*.php,*.c,*.cpp,*.htm*.html silent call cursor(au_line, au_c
 
 " Выставляем размеры окна
 set columns=180
-set lines=44
+set lines=45
 
 " Настройка vim-airline
 let g:airline_theme='light'
@@ -132,7 +138,8 @@ let g:airline_powerline_fonts=1
 let g:airline_left_sep = '▶'
 let g:airline_right_sep = '◀'
 let g:airline_linecolumn_prefix = '≬'
-let g:airline_section_b = '%03.3b'
+let g:airline_enable_fugitive=1
+"let g:airline_section_b = '%03.3b'
 
 " Настройка закладок в startify
 let g:startify_bookmarks = [ '~/.vimrc' ]
@@ -199,6 +206,17 @@ let g:clang_snippets_engine="ultisnips"
 " Исправляем C-T для cpp из-за clang
 let g:clang_jumpto_back_key='<C-[>'
 
+" Настройка vim-table-mode
+let g:table_mode_separator = '|'
+let g:table_mode_corner = '+'
+nmap <C-N>t :TableModeEnable<cr>
+imap <C-N>t <C-o>:TableModeEnable<cr>
+
+nmap <C-N>d :TableModeDisable<cr>
+imap <C-N>d <C-o>:TableModeDisable<cr>
+"let g:table_mode_toggle_map = <Leader>tm
+
+
 " Исправляем конфликт UltiSnips и YCM
 "let g:ycm_key_list_select_completion=[]
 "let g:ycm_key_list_previous_completion=[]
@@ -259,7 +277,7 @@ vmap <C-Down> xp`[V`]
 imap <silent> <A-e> <C-r>=string(eval(input("Calculate: ")))<CR>
 
 " Оптимизация для RAIC
-map <C-K> :! ./compile-g++.sh
+map <C-K> :! ./compile-g++11.sh
 map <C-U> :! cat compilation.log
 map <C-M> :! ./local-runner.sh & sleep 3 && ./MyStrategy
 
@@ -294,7 +312,8 @@ au FileType c,cpp,h call BindF9_C()
 function! AutocompleteBraces()
 	imap [ []<A-h>
 	imap ( ()<A-h>
-	imap { {<CR><C-o>$<CR>}<A-k><C-o>$
+	imap { {}<A-h>
+	imap $ {<CR><C-o>$<CR>}<A-k><C-o>$
 endfunction
 au Filetype c,cpp,h call AutocompleteBraces()
 

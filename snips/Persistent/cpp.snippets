@@ -3,19 +3,16 @@ template<typename T>
 class PersistentStack{
 	vector<T> v;
 	vector<int> p;
-	T null;
 public:
-	PersistentStack(T _null){			// {{{
-		null = _null;
-		v.push_back(null);
+	PersistentStack(){					// {{{
+		v.push_back(new T);
 		p.push_back(-1);
 	}
 										// }}}
-	PersistentStack(int n, T _null){	// {{{
-		null = _null;
+	PersistentStack(int n){				// {{{
 		v.reserve(n);
 		p.reserve(n);
-		v.push_back(null);
+		v.push_back(new T);
 		p.push_back(-1);
 	}
 										// }}}

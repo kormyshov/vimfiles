@@ -33,12 +33,13 @@
 	vi, vect, vvi, pii, vpii
 	#i, #d
 	fill, sort, rsort
+	np, lb, ub
 	if, ife, wh
 	for, forab
 	forr, forrab
 	forv, forrv
 	foreach, fornit
-	cont, br
+	cont, br, ret
 	ri, rii, riii
 	rd, rdd, rddd
 	rc, rcc, rccc
@@ -90,3 +91,7 @@
 	suffix_array
 	pfun, zfun
 	palindromes
+	hash, hash2
+	Bor, BorM
+	min_cycle_shift
+	count_substring

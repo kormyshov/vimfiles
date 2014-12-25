@@ -40,6 +40,15 @@ endsnippet
 snippet rsort "reverse sort()"
 sort(${1:v}.rbegin(), $1.rend());$0
 endsnippet
+snippet np "next_permutation"
+next_permutation(${1:v}.begin(), $1.end());$0
+endsnippet
+snippet lb "lower_bound"
+lower_bound(${1:v}.begin(), $1.end(), ${2:x})${3: - $1.begin()};$0
+endsnippet
+snippet ub "upper_bound"
+upper_bound(${1:v}.begin(), $1.end(), ${2:x})${3: - $1.begin()};$0
+endsnippet
 snippet if "" w
 if(${1:/* ... */}) ${2:// code...}
 endsnippet
@@ -97,6 +106,9 @@ continue ;$0
 endsnippet
 snippet br "break ;" w
 break ;$0
+endsnippet
+snippet ret "return ;" w
+return ${1:res};$0
 endsnippet
 snippet ri "scanf(%d)" w
 scanf("%d", &${1:n});$0
