@@ -33,9 +33,6 @@ filetype indent on
 imap <Esc> <Esc>:silent !~/.vim/to_us.sh<cr>
 nmap <Esc> :silent !~/.vim/to_us.sh<cr>
 
-" Задание переменной Leader
-let mapleader = ' '
-
 " Отключаем панель инструментов
 set guioptions-=T
 " Отключаем меню
@@ -46,6 +43,7 @@ set guioptions-=m
 colorscheme solarized
 set background=dark
 "colorscheme jellybeans
+
 " Установка кодировки отображения
 set enc=utf-8
 " Мигаем вместо пищания
@@ -74,9 +72,7 @@ set showcmd
 
 " Настройка строки состояния
 "set statusline=%F%m%r%h%w\ [%{&fileformat},%{&fileencoding}]\ [%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
-set statusline=%{fugitive#statusline()}
 set laststatus=2 " всегда показывать строку состояния
-
 
 " Нумерация строк
 "set nu
@@ -95,7 +91,7 @@ nmap <Space> <PageDown>
 nmap <CR> o<Esc>
 
 " Copy/Paste в глобальный клипборд
-vmap <C-C> "+yi
+vmap <C-C> "+y
 imap <C-V> <Esc>"+gpi
 
 " Сохрание на F2
@@ -214,8 +210,6 @@ imap <C-N>t <C-o>:TableModeEnable<cr>
 
 nmap <C-N>d :TableModeDisable<cr>
 imap <C-N>d <C-o>:TableModeDisable<cr>
-"let g:table_mode_toggle_map = <Leader>tm
-
 
 " Исправляем конфликт UltiSnips и YCM
 "let g:ycm_key_list_select_completion=[]
