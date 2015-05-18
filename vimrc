@@ -22,6 +22,8 @@ Bundle "jcf/vim-latex"
 Bundle "Rip-Rip/clang_complete"
 " Bundle "Valloric/YouCompleteMe"
 Bundle "haskell.vim"
+Bundle "klen/python-mode"
+Bundle "davidhalter/jedi-vim"
 Bundle "kormyshov/cpp4cf"
 
 " Применять типы файлов
@@ -38,8 +40,11 @@ set guioptions-=T
 " Отключаем меню
 set guioptions-=m
 
+set guifont=Deja\ Vu\ Sans\ Mono\ 10
+
 " Цветовая схема
 "colorscheme sonoma
+"colorscheme monokai
 colorscheme solarized
 set background=dark
 "colorscheme jellybeans
@@ -175,6 +180,7 @@ let g:UltiSnipsSnippetDirectories=[
 	\ "snips/algebra",
 	\ "snips/array",
 	\ "snips/graph",
+	\ "snips/game",
 	\ "snips/string",
 	\ "snips/compressor",
 	\ "snips/segment",
@@ -210,6 +216,22 @@ imap <C-N>t <C-o>:TableModeEnable<cr>
 
 nmap <C-N>d :TableModeDisable<cr>
 imap <C-N>d <C-o>:TableModeDisable<cr>
+
+" Запуск программы Python для python-mode
+let g:pymode_run_bind = '<F9>'
+
+" Отключение автокомплита python-mode
+let g:pymode_rope = 0
+let g:pymode_rope_completion = 0
+let g:pymode_rope_complete_on_dot = 0
+
+" Отключение документации python-mode
+let g:pymode_doc = 0
+let g:pymode_virtualenv = 1
+let g:pymode_syntax = 1
+let g:pymode_syntax_all = 1
+let g:pymode_syntax_indent_errors = g:pymode_syntax_all
+let g:pymode_syntax_space_errors = g:pymode_syntax_all
 
 " Исправляем конфликт UltiSnips и YCM
 "let g:ycm_key_list_select_completion=[]
@@ -277,28 +299,28 @@ map <C-M> :! ./local-runner.sh & sleep 3 && ./MyStrategy
 
 " Добавляем компиляцию и запуск для С-файлов. Подробности на http://habr.ru/blogs/vim/40369
 function! BindF5_C()
-	if filereadable("Makefile")
-		set makeprg=make
-		map <F5> :w!<cr>:make<cr>:cw<cr>
-		imap <F5> <Esc>:w!<cr>:make<cr>:cw<cr>
-	else
-		map <F5> :w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -std=c++0x -static % -o %:r -lm<cr>:cw<cr>
-		imap <F5> <Esc>:w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -std=c++0x -static % -o %:r -lm<cr>:cw<cr>
-	endif
+	"if filereadable("Makefile")
+		"set makeprg=make
+		"map <F5> :w!<cr>:make<cr>:cw<cr>
+		"imap <F5> <Esc>:w!<cr>:make<cr>:cw<cr>
+	"else
+		map <F5> :w!<cr>:!g++-4.9 -pthread -Wall -Wextra -pedantic -std=gnu++11 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wcast-qual -Wcast-align -fwhole-program -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -lmcheck -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fstack-protector -fno-optimize-sibling-calls % -o %:r -lm<cr>:cw<cr>
+		imap <F5> <Esc>:w!<cr>:!g++-4.9 -pthread -Wall -Wextra -pedantic -std=gnu++11 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wcast-qual -Wcast-align -fwhole-program -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -lmcheck -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fstack-protector -fno-optimize-sibling-calls % -o %:r -lm<cr>:cw<cr>
+	"endif
 endfunction
 au FileType c,cpp,h call BindF5_C()
 
 function! BindF9_C()
-	if filereadable("Makefile")
-		set makeprg=make
-		map <F9> :w!<cr>:make<cr>:cw<cr>:! ./%<<cr>
-		imap <F9> <Esc>:w!<cr>:make<cr>:cw<cr>:! ./%<<cr>
-	else
-		map <F9> :w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -std=c++0x -static % -o %:r -lm<cr>:cw<cr>:! ./%<<cr>
-		imap <F9> <Esc>:w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -std=c++0x -static % -o %:r -lm<cr>:cw<cr>:! ./%<<cr>
-		map <C-F9> :w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -std=c++0x -static % -o %:r -lm<cr>:cw<cr>:! xclip -o -selection clipboard<cr>:! xclip -o -selection clipboard \| ./%<<cr>
-		imap <C-F9> <Esc>:w!<cr>:!g++ -pthread -Wall -O2 -fno-optimize-sibling-calls -std=c++0x -static % -o %:r -lm<cr>:cw<cr>:! xclip -o -selectopn clipboard<cr>:! xclip -o -selection clipboard \| ./%<<cr>
-	endif
+	"if filereadable("Makefile")
+		"set makeprg=make
+		"map <F9> :w!<cr>:make<cr>:cw<cr>:! ./%<<cr>
+		"imap <F9> <Esc>:w!<cr>:make<cr>:cw<cr>:! ./%<<cr>
+	"else
+		map <F9> :w!<cr>:!g++-4.9 -pthread -Wall -O2 -fno-optimize-sibling-calls -std=gnu++11 -static % -o %:r -lm<cr>:cw<cr>:! ./%<<cr>
+		imap <F9> <Esc>:w!<cr>:!g++-4.9 -pthread -Wall -O2 -fno-optimize-sibling-calls -std=gnu++11 -static % -o %:r -lm<cr>:cw<cr>:! ./%<<cr>
+		map <C-F9> :w!<cr>:!g++-4.9 -pthread -Wall -O2 -fno-optimize-sibling-calls -std=gnu++11 -static % -o %:r -lm<cr>:cw<cr>:! xclip -o -selection clipboard<cr>:! xclip -o -selection clipboard \| ./%<<cr>
+		imap <C-F9> <Esc>:w!<cr>:!g++-4.9 -pthread -Wall -O2 -fno-optimize-sibling-calls -std=gnu++11 -static % -o %:r -lm<cr>:cw<cr>:! xclip -o -selectopn clipboard<cr>:! xclip -o -selection clipboard \| ./%<<cr>
+	"endif
 endfunction
 au FileType c,cpp,h call BindF9_C()
 

@@ -1,11 +1,12 @@
 snippet Matrix "class Matrix" !b
+template<typename U> // Создание ${1:целочисленных} ${2:вещественных} матриц
 class Matrix{
-	vector<vector<${1:int}> > mm;
+	vector<vector<U> > mm;
 	int N, M;
 public:
 	inline Matrix(int _N, int _M){ 	// {{{
 		N = _N; M = _M;
-		mm.assign(N, vector<$1>(M, 0));
+		mm.assign(N, vector<U>(M, 0));
 	}
 									// }}}
 	inline Matrix(const Matrix &a){	// {{{
@@ -15,8 +16,8 @@ public:
 									// }}}
 	inline int get_N() const {return N;}
 	inline int get_M() const {return M;}
-	inline vector<vector<$1> > get_mm() const {return mm;}
-	inline $1 get_mm(int n, int m) const {return mm[n][m];}
+	inline vector<vector<U> > get_mm() const {return mm;}
+	inline U get_mm(int n, int m) const {return mm[n][m];}
 
 	inline void set(const Matrix &a){	// {{{
 		N = a.get_N(); M = a.get_M();
@@ -25,7 +26,7 @@ public:
 										// }}}
 	inline void setE(int _N){			// {{{
 		N = M = _N;
-		mm.assign(N, vector<$1>(M, 0));
+		mm.assign(N, vector<U>(M, 0));
 		for(int i=0; i<N; ++i) mm[i][i] = 1;
 	}
 										// }}}
@@ -42,10 +43,10 @@ public:
 		return r;
 	}
 								// }}}
-	inline $1 det() const {		// {{{
-		if(N != M) return ($1)0;
+	inline U det() const {		// {{{
+		if(N != M) return (U)0;
 		Matrix a(*this);
-		$1 res = 1;
+		U res = 1;
 		for(int i=0; i<N; ++i){
 			int j;
 			if(!a[i][i]){
@@ -55,7 +56,7 @@ public:
 						res = -res;
 						break;
 					}
-				if(j == N) return 0;
+				if(j == N) return (U)0;
 			}
 			for(j=i+1; j<N; ++j){
 				if(j < N-1) res *= a[i][i];
@@ -66,6 +67,7 @@ public:
 		return a[N-1][N-1] / res;
 	}
 								// }}}
+	${1/(целочисленных)/\/*/}
 	inline Matrix inverse() const {	// {{{
 		if(N != M) return *this;
 		Matrix a(N, 2*N);
@@ -100,6 +102,7 @@ public:
 				res[i][j] = a[i][j+N];
 		return res;
 	}
+	${1/(целочисленных)/*\//}
 									// }}}
 	inline Matrix operator+(const Matrix &a) const {	// {{{
 		Matrix res(*this);
@@ -146,24 +149,25 @@ public:
 		return *this;
 	}
 														// }}}
-	inline Matrix operator*(const $1 k) const {			// {{{
+	inline Matrix operator*(const U k) const {			// {{{
 		Matrix res(*this);
 		res *= k;
 		return res;
 	}
-	inline Matrix operator*=(const $1 k){
+	inline Matrix operator*=(const U k){
 		for(int i=0; i<N; ++i)
 			for(int j=0; j<M; ++j)
 				mm[i][j] *= k;
 		return *this;
 	}
 														// }}}
+	${2/(вещественных)/\/*/}
 	inline Matrix operator&(const Matrix &a) const {	// умножение по модулю MOD {{{
 		Matrix r(N, a.get_M());
 		for(int i=0; i<N; ++i)
 			for(int j=0; j<a.get_M(); ++j)
 				for(int k=0; k<M; ++k)
-					r[i][j] = (LL)(r[i][j] + mm[i][k] * 1LL * a.get_mm(k, j)) % MOD;
+					r[i][j] = (r[i][j] + mm[i][k] * a.get_mm(k, j)) % MOD;
 		return r;
 	}
 	inline Matrix operator&=(const Matrix &a){
@@ -186,8 +190,9 @@ public:
 		set(*this % a);
 		return *this;
 	}
+	${2/(вещественных)/*\//}
 														// }}}
-	inline vector<$1>& operator[](int n){				// {{{
+	inline vector<U>& operator[](int n){				// {{{
 		return mm[n];
 	}
 														// }}}

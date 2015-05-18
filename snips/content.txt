@@ -19,11 +19,13 @@
 	bitCount
 	mulmod, powmod
 	nmsb, _nmsb_, msb, lsb
+	ModInt
 Модуль array
 	lbound -- Ускоренный бинпоиск
 		slbound -- прекалк (после каждого изменения)
 		lbound -- вычисление lower_bound
 	next_permutation
+	max_segment
 Модуль BI
 	BI
 Модуль compressor
@@ -54,6 +56,8 @@
 	FenwickMin, FenwickMax
 	Fenwick2D
 	FenwickMap
+Модуль game
+	queen_pos
 Модуль geometry
 	Point, Point3D
 	Line, Segment
@@ -67,8 +71,9 @@
 	FlowEdge
 	FlowWeightedEdge
 	Graph
+	EulerPath, EulerBiPath
 	DFS, Distance
-	MaxFlow
+	MaxFlow, Kuhn, HopcroftKarp
 Модуль lib
 	test
 	stov, vstov

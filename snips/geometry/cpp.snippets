@@ -234,6 +234,16 @@ public:
 		A(x1, y1), a(dx, dy) {};
 	inline Line(const Line &l):
 		A(l.get_A()), a(l.get_a()) {};
+	inline Line($1 _A, $1 _B, $1 _C){
+		if(fabs(_A) < EPS)
+			A = Point(0, -_C/_B), a = Point(1, 0);
+		else if(fabs(_B) < EPS)
+			A = Point(-_C/_A, 0), a = Point(0, 1);
+		else if(fabs(_C) < EPS)
+			A = Point(0, 0), a = Point(-_B, _A);
+		else
+			A = Point(0, -_C/_B), a = Point(-_C/_A, _C/_B);
+	}
 
 	inline Point get_A() const {return A;}
 	inline Point get_a() const {return a;}
@@ -320,8 +330,14 @@ snippet Segment "Plain segment" !b
 Line$0
 class Segment : public Line {
 public:
+	inline Segment(): Line() {};
+	inline Segment(const Point &_A, const Point &_a): Line(_A, _a) {};
+	inline Segment(double x1, double y1, double dx, double dy): Line(x1, y1, dx, dy) {};
+	inline Segment(const Segment &s): Line(s.get_A(), s.get_a()) {};
+	inline Segment(${1:double} x1, $1 y1, $1 dx, $1 dy): Line(x1, y1, dx, dy) {};
+
 	inline bool onSeg(const Point &p){				// {{{
-		${1:double} t = onLine(p);
+		$1 t = onLine(p);
 		if(ABS(t) > EPS) return false;
 		return (p.get_x()-A.get_x())*(A.get_x()+a.get_x()-p.get_x())>=0 && (p.get_y()-A.get_y())*(A.get_y()+a.get_y()-p.get_y())>=0;
 	}

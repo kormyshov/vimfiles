@@ -7,8 +7,13 @@ public:
 		c = N = n;
 		p = new int[N];
 		r = new int[N];
-		memset(r, 0, sizeof(r));
+		memset(r, 0, sizeof(int)*N);
 		for(int i=0; i<N; ++i) p[i] = i;
+	}
+									// }}}
+	~DSU(){							// {{{
+		delete []p;
+		delete []r;
 	}
 									// }}}
 	int get(int x){					// {{{
@@ -77,6 +82,7 @@ public:
 $0
 endsnippet
 snippet Qex "Qex" !b
+Stex$0
 // Queue with ${1:min} ${2:max} ${3:comp}
 template<class T, class Compare = ${1/(min)/less/}${2/(max)/greater/}$3<T> >
 class Qex{
@@ -121,7 +127,6 @@ public:
 	}
 								// }}}
 };
-$0
 endsnippet
 snippet SparseTable "Class SparseTable" !b
 // SparseTable with ${1:min} ${2:max} ${3:comp}
@@ -152,6 +157,12 @@ public:
 		m[0] = m[1] = 0;
 		for(int i=2; i<=N; ++i)
 			m[i] = m[i>>1] + 1;
+	}
+											// }}}
+	~SparseTable(){							// {{{
+		delete []m;
+		for(int i=0; i<logN; ++i) delete []mm[i];
+		delete []mm;
 	}
 											// }}}
 	inline T operator ()(int l, int r){		// {{{

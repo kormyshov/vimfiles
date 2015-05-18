@@ -1,0 +1,37 @@
+snippet queen_pos "Gen all position for queen" !b
+#define Board_size ${1:10}
+int _gp[Board_size], _dp[2*Board_size], _up[2*Board_size];
+int positions[`!p
+L = [0, 1, 0, 0, 2, 10, 4, 40, 92, 352, 724, 2680, 14200, 73712, 365596, 2279184]
+snip.rv = L[int('0'+t[1])]
+`][Board_size], _cnt;
+
+void generate_rec(int _i){
+	if(_i == Board_size){
+		_cnt++;
+		if(_cnt < `!p
+L = [0, 1, 0, 0, 2, 10, 4, 40, 92, 352, 724, 2680, 14200, 73712, 365596, 2279184]
+snip.rv = L[int('0'+t[1])]
+`)
+			memcpy(positions[_cnt], positions[_cnt-1], sizeof(positions[_cnt]));
+		return ;
+	}
+
+	for(int _j=0; _j<Board_size; ++_j){
+		if(_gp[_j] || _dp[_i+_j] || _up[_i-_j+Board_size-1]) continue ;
+		_gp[_j] = _dp[_i+_j] = _up[_i-_j+Board_size-1] = 1;
+		positions[_cnt][_i] = _j;
+		generate_rec(_i+1);
+		_gp[_j] = _dp[_i+_j] = _up[_i-_j+Board_size-1] = 0;
+	}
+}
+
+void start_gen(){
+	memset(_gp, 0, sizeof(_gp));
+	memset(_dp, 0, sizeof(_dp));
+	memset(_up, 0, sizeof(_up));
+	_cnt = 0;
+	generate_rec(0);
+}
+$0
+endsnippet

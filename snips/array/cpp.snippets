@@ -39,3 +39,20 @@ bool next_permutation(vector<${1:int}> &_v)
 	return true;
 } // }}}
 endsnippet
+snippet max_segment "T max_segment(T::it, T::it, i&, i&)" !b
+template<typename T>
+${1:LL} max_segment(T _l, T _r, int &_rl, int &_rr)
+{ // {{{
+	$1 _res = *_l, _sum = 0;
+	_rl = _rr = 0;
+	int _mp = -1;
+	for(T _i = _l; _i != _r; ++_i) {
+		_sum += *_i;
+		if(_sum > _res)
+			_res = _sum, _rl = _mp+1, _rr = _i-_l;
+		if(_sum < 0)
+			_sum = 0, _mp = _i-_l;
+	}
+	return _res;
+} // }}}
+endsnippet

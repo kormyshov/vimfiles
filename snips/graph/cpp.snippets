@@ -281,6 +281,8 @@ public:
 		g = new vector<int>[N];
 	}				// }}}
 
+	~Graph() { delete []g; }
+
 	static int type() { return T::type(); }
 	static ${1:decltype(T::type_w())} type_w() { return T::type_w(); }
 	static ${2:decltype(T::type_f())} type_f() { return T::type_f(); }
@@ -315,6 +317,21 @@ public:
 		ve.push_back(e2);
 	}
 												// }}}
+	void clearFlow() {							// {{{
+		for(int i=0; i<(int)ve.size(); ++i)
+			ve[i].set_f(0);
+	}
+												// }}}
+
+	void addBiEdge(int v, int u) { addEdge(v,u); addEdge(u,v); }
+	template<typename T1>
+	void addBiEdge(int v, int u, T1 t) { addEdge(v,u,t); addEdge(u,v,t); }
+	template<typename T1, typename T2>
+	void addBiEdge(int v, int u, T1 w, T2 c) { addEdge(v,u,w,c); addEdge(u,v,w,c); }
+
+	void remEdge(int v, int u) { g[v].pop_back(); ve.pop_back(); }
+	void remBiEdge(int v, int u) { remEdge(v,u); remEdge(u,v); }
+
 	bool isSparse() { return !N || ve.size() * 100 / N < N; }
 };
 endsnippet
@@ -340,6 +357,131 @@ public:
 
 } dfs;
 endsnippet
+snippet EulerPath "class EulerPath for Graph" !b
+class {
+public:
+
+	vector<int> p;
+
+	//
+	// 0 -- none
+	// 1 -- path
+	// 2 -- circle
+	//
+	template<typename T>
+	int operator ()(T &graph) {
+		vector<int> deg(graph.N);
+
+		for(int i=0; i<graph.N; ++i) deg[i] = graph.g[i].size();
+		for(auto e : graph.ve) deg[e.get_u()]--;
+
+		int v = -1, cp = 0, cn = 0;
+		for(int i=0; i<graph.N; ++i) {
+			if(deg[i] == 1) cp++, v = i;
+			if(deg[i] == -1) cn++;
+			if(abs(deg[i]) > 1) return 0;
+		}
+		if(cp > 1 || cn > 1) return 0;
+
+		bool res = 1;
+		if(v < 0) {
+			for(int i=0; i<graph.N; ++i) if(graph.g[i].size()) {v = i; break;}
+			res = 2;
+		}
+
+		stack<int> st;
+		st.push(v);
+		p.clear();
+
+		for(int i=0; i<graph.N; ++i) deg[i] = graph.g[i].size();
+
+		while(!st.empty()) {
+			v = st.top();
+			if(!deg[v]) p.push_back(v), st.pop();
+			else deg[v]--, st.push(graph.ve[graph.g[v][deg[v]]].get_u());
+		}
+
+		if(p.size() < graph.ve.size()) return 0;
+		reverse(p.begin(), p.end());
+		
+		return res;
+	}
+
+	vector<int> get() { return p; }
+
+} EulerPath;
+endsnippet
+snippet EulerBiPath "class EulerBiPath for Graph" !b
+class {
+public:
+
+	vector<int> p;
+
+	//
+	// 0 -- none
+	// 1 -- path
+	// 2 -- circle
+	//
+	template<typename T>
+	int operator ()(T &graph) {
+		vector<int> deg(graph.N);
+
+		int v1 = -1, v2 = -1, res = 2;
+		for(int i=0; i<graph.N; ++i)
+			if(graph.g[i].size() & 1)
+				if(v1 < 0) v1 = i;
+				else if(v2 < 0) v2 = i;
+				else res = 0;
+
+		if(!res) return 0;
+
+		if(v1 != -1) {
+			res = 1;
+			graph.addBiEdge(v1, v2);
+		}
+
+		for(int i=0; i<graph.N; ++i) deg[i] = graph.g[i].size();
+
+		int v = 0;
+		while(!deg[v]) v++;
+
+		stack<int> st;
+		st.push(v);
+		p.clear();
+		vector<char> u(graph.ve.size(), 0);
+
+		while(!st.empty()) {
+			v = st.top();
+			while(deg[v] && u[graph.g[v][deg[v]-1]]) deg[v]--;
+			if(!deg[v]) p.push_back(v), st.pop();
+			else{
+				deg[v]--;
+				int id = graph.g[v][deg[v]];
+				u[id] = u[id^1] = 1;
+				st.push(graph.ve[id].get_u());
+			}
+		}
+
+		if(p.size() * 2 < graph.ve.size()) return 0;
+
+		if(res == 1){
+			graph.remBiEdge(v1, v2);
+			for(int i=0; i<p.size()-1; ++i)
+				if(p[i]==v1 && p[i+1]==v2 || p[i]==v2 && p[i+1]==v1) {
+					reverse(p.begin(), p.begin()+i+1);
+					reverse(p.begin()+i+1, p.end());
+					reverse(p.begin(), p.end());
+					break;
+				}
+		}
+		
+		return res;
+	}
+
+	vector<int> get() { return p; }
+
+} EulerBiPath;
+endsnippet
 snippet Distance "class Distance for Graph" !b
 class {
 public:
@@ -362,7 +504,7 @@ public:
 				q.pop();
 				for(auto id : graph.g[v]){
 					int to = graph.ve[id].get_u();
-					if(d[to] == INF2)
+					if(d[to] > d[v] + 1)
 						d[to] = d[v] + 1,
 						p[to] = v,
 						q.push(to);
@@ -503,4 +645,150 @@ public:
 	}
 																// }}}
 } MaxFlow;
+endsnippet
+snippet Kuhn "class Kuhn for Graph" !b
+class {
+	vector<int> mt, u;
+	int res;
+public:
+
+	template<typename T>
+	int operator ()(T &graph){
+
+		mt.assign(graph.N, -1);
+		res = 0;
+
+		for(int f=1; f;){
+			f = 0;
+			u.assign(graph.N, 0);
+			for(int v=0; v<graph.N; ++v)
+				if(mt[v] == -1 && dfs(graph, v))
+					f = 1, res++;
+		}
+		return res;
+	}
+
+	template<typename T>
+	bool dfs(T &graph, int v){
+		u[v] = 1;
+		for(auto id : graph.g[v]){
+			int to = graph.ve[id].get_u();
+			if(mt[to] == -1 || (!u[mt[to]] && dfs(graph, mt[to]))){
+				mt[to] = v;
+				mt[v] = to;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	vector<int> get_mt(){ return mt; }
+
+	template<typename T>
+	vector<int> get_nums(T &graph){
+		vector<int> nums;
+		for(int v=0; v<graph.N; ++v)
+			for(auto id : graph.g[v])
+				if(mt[v] == graph.ve[id].get_u()) nums.push_back(id);
+
+		return nums;
+	}
+
+} Kuhn;
+endsnippet
+snippet HopcroftKarp "class HopcroftKarp for Graph" !b
+class {
+	vector<int> mt, u, part1, dist;
+	int res;
+public:
+
+	template<typename T>
+	int operator ()(T &graph){
+
+		if(!gen_part1(graph)) return -1;
+
+		mt.assign(graph.N, -1);
+		res = 0;
+
+		for(int f=1; f;){
+			f = 0;
+			bfs(graph);
+			for(auto v : part1)
+				if(mt[v] == -1 && dfs(graph, v))
+					f = 1, res++;
+		}
+		return res;
+	}
+
+	template<typename T>
+	void bfs(T &graph){
+		dist.assign(graph.N, INF);
+		queue<int> q;
+		for(auto v : part1)
+			if(mt[v] == -1)
+				dist[v] = 0, q.push(v);
+
+		while(!q.empty()){
+			int v = q.front();
+			q.pop();
+			if(v == -1) continue ;
+			for(auto id : graph.g[v]){
+				int to = graph.ve[id].get_u();
+				if(dist[to] != INF) continue ;
+				dist[to] = dist[v]+1;
+				to = mt[to];
+				if(to != -1 && dist[to] == INF)
+					dist[to] = dist[v]+2, q.push(to);
+			}
+		}
+	}
+	template<typename T>
+	bool dfs(T &graph, int v){
+		for(auto id : graph.g[v]){
+			int to = graph.ve[id].get_u();
+			if(dist[to] != dist[v]+1) continue ;
+			if(mt[to] == -1 || (dist[mt[to]] == dist[v]+2) && dfs(graph, mt[to])){
+				mt[to] = v;
+				mt[v] = to;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	template<typename T>
+	bool gen_part1(T &graph){
+		part1.clear();
+		u.assign(graph.N, 0);
+		bool f = true;
+		for(int i=0; i<graph.N; ++i)
+			if(!u[i]) f &= gen_dfs(graph, i);
+		return f;
+	}
+	template<typename T>
+	bool gen_dfs(T &graph, int v, int c=1){
+		u[v] = c;
+		if(c == 1) part1.push_back(v);
+		for(auto id : graph.g[v]){
+			int to = graph.ve[id].get_u();
+			if(!u[to])
+				if(!gen_dfs(graph, to, c^3)) return false;
+			else if(u[to] == c) return false;
+		}
+		return true;
+	}
+
+	vector<int> get_mt(){ return mt; }
+
+	template<typename T>
+	vector<int> get_nums(T &graph){
+		vector<int> nums;
+		for(int v=0; v<graph.N; ++v)
+			for(auto id : graph.g[v])
+				if(mt[v] == graph.ve[id].get_u()) nums.push_back(id);
+
+		return nums;
+	}
+
+} HopcroftKarp;
 endsnippet

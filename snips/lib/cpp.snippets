@@ -155,7 +155,7 @@ struct number_iterator : std::iterator<random_access_iterator_tag, T>{
 template <typename T>
 struct number_range {
 	T b,e;
-	number_range(T b, T e):b(b),e(e){}
+	number_range(T _b, T _e):b(_b),e(_e){}
 	number_iterator<T> begin(){return b;}
 	number_iterator<T> end(){return e;}
 };

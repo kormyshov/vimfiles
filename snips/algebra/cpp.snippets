@@ -388,3 +388,60 @@ inline int lsb(unsigned int _x)
 	return _x & -_x;
 } // }}}
 endsnippet
+snippet ModInt "class ModInt<T, MOD>" !b
+template<typename T, unsigned long long mod = 1000000007>
+class ModInt {
+	T a;
+public:
+	typedef ModInt<T,mod> U;
+
+	ModInt(): a(0) {};
+	ModInt(T b): a(b % mod) {};
+
+	inline T get() const {return a;}
+	void set(const T b) {a = b % mod;}
+	void set(const U b) {a = b.a;}
+
+	U& operator = (const T b) {set(b);return (*this);}
+	U& operator = (const U b) {set(b);return (*this);}
+	
+	U& operator += (const U b) {
+		if((a += b.a) >= mod)
+			a -= mod;
+		return (*this);
+	}
+	U operator + (const U b) const {
+		U r(a);
+		return r += b;
+	}
+
+	U& operator -= (const U b) {
+		if((a += mod - b.a) >= mod)
+			a -= mod;
+		return (*this);
+	}
+	U operator - (const U b) const {
+		U r(a);
+		return r -= b;
+	}
+
+	U& operator *= (const U b) {
+		a = a * (LL)(b.a) % mod;
+		//a = mulmod(a, b.a, mod); // Для LL раскомментировать строку с mulmod $0
+		return (*this);
+	}
+	U operator * (const U b) const {
+		U r(a);
+		return r *= b;
+	}
+
+    friend istream& operator>>(istream &stream, U &v) {
+		stream >> v.a;
+        return stream;
+    }
+    friend ostream& operator<<(ostream &stream, const U &v) {
+		stream << v.a;
+        return stream;
+    }
+};
+endsnippet
